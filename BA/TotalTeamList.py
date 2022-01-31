@@ -1,10 +1,13 @@
+# Python3 script that pulls all FRC registered teams for the current year and
+#	writes the full team list to the Teams table in the Team 195 DB
+# Script is intended to be run once at the beginning of the season
+
 import mysql.connector as mariaDB
 import tbapy
 import datetime
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 currentYear = datetime.datetime.today().year
-
 
 def onlyascii(s):
     return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
@@ -25,38 +28,41 @@ totalTeams = tba.teams(year=currentYear)
 teamList = []
 
 for team in totalTeams:
+    
     tempNick = ''
+    tempLocation = ''
+    tempCity = ''
+    tempStateProv = ''
+    tempCountry = ''
+    
     teamNum = team.get('team_number')
-    teamCity = str(team.city)
-    teamStateProv = str(team.state_prov)
-    teamCountry = str(team.country)
-    cityState = str(team.city) + ' ' + str(team.state_prov) + ' ' + str(team.country)
-    queryLocation = ''
-    queryCity = ''
-    queryStateProv = ''
-    queryCountry = ''
+    cityState = str(team.city) + ' ' + str(team.state_prov) + ' ' + str(team.country)    
+    
     tempNick = onlyascii(team.nickname)
+    tempLocation = onlyascii(cityState)
+    tempCity = onlyascii(team.city)
+    tempStateProv = onlyascii(team.state_prov)
+    tempCountry = onlyascii(team.country)
+    
     if len(tempNick) > 50:
         tempNick = tempNick[:40]
-    queryLocation = onlyascii(cityState)
-    queryCity = onlyascii(teamCity)
-    queryStateProv = onlyascii(teamStateProv)
-    queryCountry = onlyascii(teamCountry)
-    if len(queryLocation) > 50:
-        queryLocation = queryLocation[:40]
-    if len(queryCity) > 50:
-        queryCity = queryCity[:40]
-    if len(queryStateProv) > 50:
-        queryStateProv = queryStateProv[:40]
-    if len(queryCountry) > 50:
-        queryCountry = queryCountry[:40]
+    if len(tempLocation) > 50:
+        tempLocation = tempLocation[:40]
+    if len(tempCity) > 50:
+        tempCity = tempCity[:40]
+    if len(tempStateProv) > 50:
+        tempStateProv = tempStateProv[:40]
+    if len(tempCountry) > 50:
+        tempCountry = tempCountry[:40]
+    
     query = "INSERT INTO Teams (Team, TeamName, TeamLocation, TeamCity, TeamStateProv, TeamCountry) VALUES " + \
             "('" + str(teamNum) + \
             "','" + str(tempNick) + \
-            "','" + str(queryLocation) + \
-            "','" + str(queryCity) + \
-            "','" + str(queryStateProv) + \
-            "','" + str(queryCountry) + "');"
+            "','" + str(tempLocation) + \
+            "','" + str(tempCity) + \
+            "','" + str(tempStateProv) + \
+            "','" + str(tempCountry) + "');"
     print(query)
+    
     cursor.execute(query)
     conn.commit()
