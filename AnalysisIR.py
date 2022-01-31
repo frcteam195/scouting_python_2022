@@ -4,25 +4,26 @@ import datetime
 import time
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 from analysisTypes.autonomous import autonomous # Works in Database
-from analysisTypes.ballSummary import ballSummary
-from analysisTypes.brokeDown import brokeDown # Works in Database
-from analysisTypes.climb import climb # Works in Database
-from analysisTypes.groundPickup import groundPickup # Works in Database
-from analysisTypes.hopperLoad import hopperLoad # Works in Database
-from analysisTypes.lostComm import lostComm # Works in Database
-from analysisTypes.matchVideos import matchVideos # Works in Database
-from analysisTypes.playedDefense import playedDefense # Works in Database
-from analysisTypes.subSBroke import subSBroke # Works in Database
-from analysisTypes.totalBalls import totalBalls # Works in Database
-from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
-from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
-from analysisTypes.totalOuterBalls import totalOuterBalls # Works in Database
-from analysisTypes.totalScore import totalScore # Works in Database
-from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
-from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
-from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
-from analysisTypes.startingPosition import startingPosition # Works in Database
+# from analysisTypes.ballSummary import ballSummary
+# from analysisTypes.brokeDown import brokeDown # Works in Database
+# from analysisTypes.climb import climb # Works in Database
+# from analysisTypes.groundPickup import groundPickup # Works in Database
+# from analysisTypes.hopperLoad import hopperLoad # Works in Database
+# from analysisTypes.lostComm import lostComm # Works in Database
+# from analysisTypes.matchVideos import matchVideos # Works in Database
+# from analysisTypes.playedDefense import playedDefense # Works in Database
+# from analysisTypes.subSBroke import subSBroke # Works in Database
+# from analysisTypes.totalBalls import totalBalls # Works in Database
+# from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
+# from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
+# from analysisTypes.totalOuterBalls import totalOuterBalls # Works in Database
+# from analysisTypes.totalScore import totalScore # Works in Database
+# from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
+# from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
+# from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
+# from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
+
 # Define a Class called analysis
 class analysis():
     # Inside the class there are several functions defined _run_query, _setColumns, _wipeCEA, _getTeams,
@@ -37,11 +38,11 @@ class analysis():
         start_time = time.time()
 
         # Connection to AWS Testing database - use when you would destroy tables with proper data
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='Einstein195',
-        #                             host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        self.conn = mariaDB.connect(user='admin',
+                                    passwd='Einstein195',
+                                    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                    database='team195_scouting')
+        self.cursor = self.conn.cursor()
 
         # Pi DB with remote access (e.g. from laptop)
         # self.conn = mariaDB.connect(user='admin',
@@ -58,11 +59,11 @@ class analysis():
         # self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
-        self.conn = mariaDB.connect(user='admin',
-                                    passwd='Einstein195',
-                                    host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                                    database='team195_scouting')
-        self.cursor = self.conn.cursor()
+        # self.conn = mariaDB.connect(user='admin',
+#                                     passwd='Einstein195',
+#                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+#                                     database='team195_scouting')
+#         self.cursor = self.conn.cursor()
 
         self.columns = []
         self._wipeCEA()
@@ -140,62 +141,62 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                # rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
-                # self._insertAnalysis(rsCEA)
-
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = totalUpperBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
+                # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalUpperBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
 
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
@@ -245,7 +246,8 @@ class analysis():
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
     def _rankTeamsAll(self):
-        analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        #analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        analysisTypeList=[2]
         for analysisType in analysisTypeList:
             # print(analysisType)
             self._rankTeamsSingle(analysisType)
