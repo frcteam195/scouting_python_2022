@@ -29,31 +29,25 @@ def autonomous(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
-            autoPenalty = matchResults[analysis.columns.index('AutoPenalty')]
-            if autoPenalty == 1:
-                autoPenaltyString = "*"
-            else:
-                autoPenaltyString = ""
             autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallLow is None:
                 autoBallLow = 0
-            autoBallOuter = matchResults[analysis.columns.index('AutoBallOuter')]
-            if autoBallOuter is None:
-                autoBallOuter = 0
-            autoBallInner = matchResults[analysis.columns.index('AutoBallInner')]
-            if autoBallInner is None:
-                autoBallInner = 0
+            autoBallHigh = matchResults[analysis.columns.index('AutoBallHigh')]
+            if autoBallHigh is None:
+                autoBallHigh = 0
+            autoBallMiss = matchResults[analysis.columns.index('AutoBallMiss')]
+            if autoBallMiss is None:
+                autoBallMiss = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            totalHighBalls = autoBallOuter + autoBallInner
-            totalBalls = totalHighBalls + autoBallLow
-            totalHighBallsList.append(autoBallOuter + autoBallInner)
-            totalBallsList.append(autoBallLow + autoBallOuter + autoBallInner)
+            totalBalls = autoBallLow + autoBallHigh
+            totalHighBallsList.append(autoBallHigh)
+            totalBallsList.append(autoBallLow + autoBallHigh)
 
-            # Create the rsCEA records for Dsiplay, Value, and Format
+            # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str(totalBalls) + "|" + str(totalHighBalls) + autoPenaltyString
+                str(totalBalls) + "|" + str(autoBallHigh)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
             if totalBalls > 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5

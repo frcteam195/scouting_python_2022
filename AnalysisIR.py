@@ -25,6 +25,8 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
+CEA_table = "CurrentEventAnalysisEvent1"
+
 # Define a Class called analysis
 class analysis():
     # Inside the class there are several functions defined _run_query, _setColumns, _wipeCEA, _getTeams,
@@ -85,7 +87,7 @@ class analysis():
 
     # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
     def _wipeCEA(self):
-        self._run_query("DELETE FROM CurrentEventAnalysis")
+        self._run_query("DELETE FROM " + CEA_table + "")
         self.conn.commit()
 
     # Function to get the team list and set it to rsRobots. Uses the _run_query function defined above.
@@ -208,7 +210,7 @@ class analysis():
         # Optional: see if at percentile cutoffs there is any repeated values
         # Update summary 3 value in CEA for each team (rank based on percentile)
         self._run_query("SELECT Team, Summary1Value "
-                        "FROM CurrentEventAnalysis "
+                        "FROM " + CEA_table + " "
                         "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
         team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
         if len(team_sum1) > 0:
@@ -235,11 +237,12 @@ class analysis():
                     team_color = 5
                     team_display = 90
 
-                query = "UPDATE CurrentEventAnalysis SET CurrentEventAnalysis.Summary3Format = " \
-                        + str(team_color) + ", CurrentEventAnalysis.Summary3Display = "\
-                        + str(team_display) + ", CurrentEventAnalysis.Summary3Value = " + str(team_display) \
-                        + " WHERE CurrentEventAnalysis.Team = '" + str(team[0]) \
-                        + "' AND CurrentEventAnalysis.AnalysisTypeID = " + str(analysis_type) + " ;"
+                query = "UPDATE " + CEA_table + " SET " + CEA_table + ".Summary3Format = " \
+                        + str(team_color) + ", " + CEA_table + ".Summary3Display = "\
+                        + str(team_display) + ", " + CEA_table + ".Summary3Value = " + str(team_display) \
+                        + " WHERE " + CEA_table + ".Team = '" + str(team[0]) \
+                        + "' AND " + CEA_table + ".AnalysisTypeID = " + str(analysis_type) + " ;"
+                #print(query);
                 self._run_query(query)
                 self.conn.commit()
         else:
@@ -263,7 +266,7 @@ class analysis():
         values = str(tuple([record[1] for record in rsCEA_records]))
 
         # Insert the records into the DB
-        self._run_query("INSERT INTO CurrentEventAnalysis "
+        self._run_query("INSERT INTO " + CEA_table + " "
                         + columnHeadings + " VALUES "
                         + values + ";")
         # print(columnHeadings + values)
