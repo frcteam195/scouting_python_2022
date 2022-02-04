@@ -26,7 +26,7 @@ from analysisTypes.teleop import teleop
 # from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
-CEA_table = "CurrentEventAnalysisHouston"
+CEA_table = "CurrentEventAnalysisWNE"
 
 # Define a Class called analysis
 class analysis():
