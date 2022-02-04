@@ -22,7 +22,7 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 # from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 # from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
-# from analysisTypes.startingPosition import startingPosition # Works in Database
+from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
 CEA_table = "CurrentEventAnalysisEvent1"
@@ -171,8 +171,8 @@ class analysis():
 #                 rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
 # 
-#                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-#                 self._insertAnalysis(rsCEA)
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 # 
 #                 rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
