@@ -1,7 +1,6 @@
 import statistics
 
-
-def teleop(analysis, rsRobotMatches):
+def teleTotalBalls(analysis, rsRobotMatches):
     # start = time.time()
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
