@@ -14,6 +14,7 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.matchVideos import matchVideos # Works in Database
 # from analysisTypes.playedDefense import playedDefense # Works in Database
 # from analysisTypes.subSBroke import subSBroke # Works in Database
+from analysisTypes.teleop import teleop
 # from analysisTypes.totalBalls import totalBalls # Works in Database
 # from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
 # from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
@@ -25,7 +26,7 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
-CEA_table = "CurrentEventAnalysisEvent1"
+CEA_table = "CurrentEventAnalysisHouston"
 
 # Define a Class called analysis
 class analysis():
@@ -142,6 +143,9 @@ class analysis():
 
             if rsRobotMatches:
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = teleop(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
