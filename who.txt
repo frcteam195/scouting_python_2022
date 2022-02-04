@@ -1,5 +1,5 @@
 Mark - CurrentEventAnalysis
-Haresh - Houston
-Brayden - Hartford
-Aaron - NEC
-Joe - WNE
+Harish - CurrentEventAnalysisHouston
+Brayden - CurrentEventAnalysisHartford
+Aaron - CurrentEventAnalysisNEC
+Joe - CurrentEventAnalysisWNE
