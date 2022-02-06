@@ -8,7 +8,7 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.ballSummary import ballSummary
 from analysisTypes.brokeDown import brokeDown # Works in Database
 # from analysisTypes.climb import climb # Works in Database
-# from analysisTypes.groundPickup import groundPickup # Works in Database
+from analysisTypes.groundPickup import groundPickup # Works in Database
 # from analysisTypes.hopperLoad import hopperLoad # Works in Database
 # from analysisTypes.lostComm import lostComm # Works in Database
 # from analysisTypes.matchVideos import matchVideos # Works in Database
@@ -164,6 +164,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
