@@ -4,7 +4,7 @@ import datetime
 import time
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 # Mark is the Shark
-from analysisTypes.autonomous import autonomous
+from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.ballSummary import ballSummary
 # from analysisTypes.brokeDown import brokeDown # Works in Database
 # from analysisTypes.climb import climb # Works in Database
@@ -14,6 +14,7 @@ from analysisTypes.autonomous import autonomous
 # from analysisTypes.matchVideos import matchVideos # Works in Database
 # from analysisTypes.playedDefense import playedDefense # Works in Database
 # from analysisTypes.subSBroke import subSBroke # Works in Database
+from analysisTypes.teleop import teleop
 # from analysisTypes.totalBalls import totalBalls # Works in Database
 # from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
 # from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
@@ -22,28 +23,10 @@ from analysisTypes.autonomous import autonomous
 # from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 # from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 # from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
-from analysisTypes.startingPosition import startingPosition # Works in Database
-# from analysisTypes.brokeDown import brokeDown
-from analysisTypes.climb import climb
-# from analysisTypes.groundPickup import groundPickup
-# from analysisTypes.hopperLoad import hopperLoad
-# from analysisTypes.lostComm import lostComm
-# from analysisTypes.matchVideos import matchVideos
-# from analysisTypes.playedDefense import playedDefense
-# from analysisTypes.subSBroke import subSBroke
-from analysisTypes.teleTotalBalls import teleTotalBalls
-# from analysisTypes.totalBalls import totalBalls
-# from analysisTypes.totalInnerBalls import totalInnerBalls
-# from analysisTypes.totalLowBalls import totalLowBalls
-# from analysisTypes.totalOuterBalls import totalOuterBalls
-# from analysisTypes.totalScore import totalScore
-# from analysisTypes.totalUpperBalls import totalUpperBalls
-# from analysisTypes.wheelStage2 import wheelStage2
-# from analysisTypes.wheelStage3 import wheelStage3
-# from analysisTypes.startingPosition import startingPosition
+# from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
-CEA_table = "CurrentEventAnalysis"
+CEA_table = "CurrentEventAnalysisWNE"
 
 # Define a Class called analysis
 class analysis():
@@ -162,6 +145,9 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                rsCEA = teleop(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
 # 
@@ -189,8 +175,8 @@ class analysis():
 #                 rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
 # 
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
+#                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
 # 
 #                 rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
@@ -218,11 +204,6 @@ class analysis():
 # 
 #                 rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
-                rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
 
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
