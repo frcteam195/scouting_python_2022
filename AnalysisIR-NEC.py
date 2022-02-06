@@ -6,7 +6,7 @@ import time
 # Mark is the Shark
 from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.ballSummary import ballSummary
-# from analysisTypes.brokeDown import brokeDown # Works in Database
+from analysisTypes.brokeDown import brokeDown # Works in Database
 # from analysisTypes.climb import climb # Works in Database
 # from analysisTypes.groundPickup import groundPickup # Works in Database
 # from analysisTypes.hopperLoad import hopperLoad # Works in Database
@@ -14,7 +14,7 @@ from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.matchVideos import matchVideos # Works in Database
 # from analysisTypes.playedDefense import playedDefense # Works in Database
 # from analysisTypes.subSBroke import subSBroke # Works in Database
-from analysisTypes.teleop import teleop
+from analysisTypes.teleTotalBalls import teleTotalBalls
 # from analysisTypes.totalBalls import totalBalls # Works in Database
 # from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
 # from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
@@ -145,14 +145,14 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                rsCEA = teleop(analysis=self, rsRobotMatches=rsRobotMatches)
+                rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
 # 
-#                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
-#                 self._insertAnalysis(rsCEA)
+                rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 # 
 #                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
 #                 self._insertAnalysis(rsCEA)
