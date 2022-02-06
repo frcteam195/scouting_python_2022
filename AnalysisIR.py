@@ -6,6 +6,23 @@ import time
 # Mark is the Shark
 from analysisTypes.autonomous import autonomous
 # from analysisTypes.ballSummary import ballSummary
+# from analysisTypes.brokeDown import brokeDown # Works in Database
+# from analysisTypes.climb import climb # Works in Database
+# from analysisTypes.groundPickup import groundPickup # Works in Database
+# from analysisTypes.hopperLoad import hopperLoad # Works in Database
+# from analysisTypes.lostComm import lostComm # Works in Database
+# from analysisTypes.matchVideos import matchVideos # Works in Database
+# from analysisTypes.playedDefense import playedDefense # Works in Database
+# from analysisTypes.subSBroke import subSBroke # Works in Database
+# from analysisTypes.totalBalls import totalBalls # Works in Database
+# from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
+# from analysisTypes.totalLowBalls import totalLowBalls # Works in Database
+# from analysisTypes.totalOuterBalls import totalOuterBalls # Works in Database
+# from analysisTypes.totalScore import totalScore # Works in Database
+# from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
+# from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
+# from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
+from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.brokeDown import brokeDown
 from analysisTypes.climb import climb
 # from analysisTypes.groundPickup import groundPickup
@@ -145,6 +162,62 @@ class analysis():
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = hopperLoad(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = lostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = playedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = ranking(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = subSBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalInnerBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalOuterBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = totalUpperBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = wheelStage2(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
+# 
+#                 rsCEA = wheelStage3(analysis=self, rsRobotMatches=rsRobotMatches)
+#                 self._insertAnalysis(rsCEA)
                 rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
