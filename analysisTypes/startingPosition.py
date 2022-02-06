@@ -27,7 +27,7 @@ def startingPosition(analysis, rsRobotMatches):
                 analysis.columns.index('AutoStartPos')]
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = matchResults[
                 analysis.columns.index('AutoStartPos')]
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0]
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
             # An if statement will go here to define Match#Format
 
     return rsCEA
