@@ -6,7 +6,7 @@ import time
 # Mark is the Shark
 from analysisTypes.autonomous import autonomous # Works in Database
 # from analysisTypes.ballSummary import ballSummary
-# from analysisTypes.brokeDown import brokeDown # Works in Database
+from analysisTypes.brokeDown import brokeDown # Works in Database
 # from analysisTypes.climb import climb # Works in Database
 # from analysisTypes.groundPickup import groundPickup # Works in Database
 # from analysisTypes.hopperLoad import hopperLoad # Works in Database
@@ -19,11 +19,11 @@ from analysisTypes.totalBalls import totalBalls # Works in Database
 # from analysisTypes.totalInnerBalls import totalInnerBalls # Works in Database
 from analysisTypes.teleLowBalls import teleLowBalls # Works in Database
 from analysisTypes.teleHighBalls import teleHighBalls # Works in Database
-# from analysisTypes.totalScore import totalScore # Works in Database
+from analysisTypes.totalScore import totalScore # Works in Database
 # from analysisTypes.totalUpperBalls import totalUpperBalls # Works in Database
 # from analysisTypes.wheelStage2 import wheelStage2 # Works in Database
 # from analysisTypes.wheelStage3 import wheelStage3 # Works in Database
-# from analysisTypes.startingPosition import startingPosition # Works in Database hasrish
+from analysisTypes.startingPosition import startingPosition # Works in Database
 # from analysisTypes.ranking import ranking
 
 CEA_table = "CurrentEventAnalysisHouston"
@@ -155,6 +155,15 @@ class analysis():
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = teleHighBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
