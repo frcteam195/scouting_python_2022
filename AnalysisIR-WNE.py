@@ -6,6 +6,7 @@ import time
 # Mark is the Shark
 from analysisTypes.autonomous import autonomous
 from analysisTypes.summLostComm import summLostComm 
+from analysisTypes.summSubSystemBroke import summSubSystemBroke
 
 CEA_table = "CurrentEventAnalysisWNE"
 
@@ -127,6 +128,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = summLostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = summSubSystemBroke(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                
