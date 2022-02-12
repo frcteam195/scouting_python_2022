@@ -11,7 +11,7 @@ from analysisTypes.climb import climb # Works in Database
 # from analysisTypes.groundPickup import groundPickup # Works in Database
 # from analysisTypes.hopperLoad import hopperLoad # Works in Database
 from analysisTypes.summLostComm import summLostComm # Works in Database
-# from analysisTypes.matchVideos import matchVideos # Works in Database
+from analysisTypes.summLaunchPad import summLaunchPad # Works in Database
 # from analysisTypes.playedDefense import playedDefense # Works in Database
 # from analysisTypes.subSBroke import subSBroke # Works in Database
 from analysisTypes.teleTotalBalls import teleTotalBalls
@@ -148,8 +148,8 @@ class analysis():
                 rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                # rsCEA = ballSummary(analysis=self, rsRobotMatches=rsRobotMatches)
-#                 self._insertAnalysis(rsCEA)
+                rsCEA = summLaunchPad(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 # 
                 rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
