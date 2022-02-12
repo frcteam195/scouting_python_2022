@@ -7,6 +7,7 @@ import time
 from analysisTypes.autonomous import autonomous
 from analysisTypes.summLostComm import summLostComm 
 from analysisTypes.summSubSystemBroke import summSubSystemBroke
+from analysisTypes.summDefPlayedAgainst import summDefPlayedAgainst
 
 CEA_table = "CurrentEventAnalysisWNE"
 
@@ -131,6 +132,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = summSubSystemBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = summDefPlayedAgainst(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                

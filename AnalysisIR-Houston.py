@@ -9,6 +9,8 @@ from analysisTypes.startingPosition import startingPosition
 from analysisTypes.climb import climb
 from analysisTypes.totalScore import totalScore
 from analysisTypes.teleTotalBalls import teleTotalBalls
+from analysisTypes.teleHighBalls import teleHighBalls
+from analysisTypes.teleLowBalls import teleLowBalls
 from analysisTypes.totalBalls import totalBalls
 from analysisTypes.groundPickup import groundPickup
 from analysisTypes.brokeDown import brokeDown
@@ -134,6 +136,12 @@ class analysis():
                 self._insertAnalysis(rsCEA)
 
                 rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = teleHighBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = teleLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
