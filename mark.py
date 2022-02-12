@@ -2,19 +2,8 @@ import mysql.connector as mariaDB
 import numpy as np
 import datetime
 import time
-# For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.autonomous import autonomous
-from analysisTypes.teleTotalBalls import teleTotalBalls
-from analysisTypes.startingPosition import startingPosition
-from analysisTypes.climb import climb
-from analysisTypes.totalScore import totalScore
-from analysisTypes.teleTotalBalls import teleTotalBalls
-from analysisTypes.totalBalls import totalBalls
-from analysisTypes.groundPickup import groundPickup
-from analysisTypes.brokeDown import brokeDown
-from analysisTypes.summLostComm import summLostComm
 
-CEA_table = "CurrentEventAnalysisHouston"
+CEA_table = "CurrentEventAnalysisGraphs"
 
 # Define a Class called analysis
 class analysis():
@@ -61,7 +50,6 @@ class analysis():
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
-        self._rankTeamsAll()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -120,97 +108,16 @@ class analysis():
             return rsRobotMatches
         else:
             return None
-
-    #
+            
     def _analyzeTeams(self):
         # Loop over the # of teams and run each of the analysis functions calling _insertAnalysis after each one is run
         for team in self.rsRobots:
-            # print(team)
+            print(team)
             rsRobotMatches = self._getTeamData(team)
-            # print(rsRobotMatches)
+            print(rsRobotMatches)
+            print()
 
-            if rsRobotMatches:
-                rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-                rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = groundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = brokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = summLostComm(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-
-
-    # Helper function to rank a single analysis type, called by _rankTeamsAll
-    def _rankTeamsSingle(self, analysis_type):
-        # Get Summary 1 value for each team from CEA with analysis_type
-        # Sort in descending order by sum 1 value
-        # Determine percentile of each team
-        # Optional: see if at percentile cutoffs there is any repeated values
-        # Update summary 3 value in CEA for each team (rank based on percentile)
-        self._run_query("SELECT Team, Summary1Value "
-                        "FROM " + CEA_table + " "
-                        "WHERE AnalysisTypeID = " + str(analysis_type) + ";")
-        team_sum1 = self.cursor.fetchall() # List of tuples (team, summary1value)
-        if len(team_sum1) > 0:
-            team_sum1 = [team_tup for team_tup in team_sum1 if team_tup[1] is not None]
-            # print(team_sum1)
-            sum1 = [item[1] for item in team_sum1]
-            percentiles = np.percentile(sum1, [25, 50, 75, 90])
-
-            team_coloring = {}
-            for team in team_sum1:
-                if team[1] <= percentiles[0]:
-                    team_color = 1
-                    team_display = 10
-                elif team[1] <= percentiles[1]:
-                    team_color = 2
-                    team_display = 25
-                elif team[1] <= percentiles[2]:
-                    team_color = 3
-                    team_display = 50
-                elif team[1] <= percentiles[3]:
-                    team_color = 4
-                    team_display = 75
-                else:
-                    team_color = 5
-                    team_display = 90
-
-                query = "UPDATE " + CEA_table + " SET " + CEA_table + ".Summary3Format = " \
-                        + str(team_color) + ", " + CEA_table + ".Summary3Display = "\
-                        + str(team_display) + ", " + CEA_table + ".Summary3Value = " + str(team_display) \
-                        + " WHERE " + CEA_table + ".Team = '" + str(team[0]) \
-                        + "' AND " + CEA_table + ".AnalysisTypeID = " + str(analysis_type) + " ;"
-                #print(query);
-                self._run_query(query)
-                self.conn.commit()
-        else:
-            print('Data was not found in the db')
-
-    # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
-    def _rankTeamsAll(self):
-        #analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        analysisTypeList=[2]
-        for analysisType in analysisTypeList:
-            # print(analysisType)
-            self._rankTeamsSingle(analysisType)
+            #if rsRobotMatches:
 
 
     # Function to insert an rsCEA record into the DB.
