@@ -5,7 +5,7 @@ def summSortCargo(analysis, rsRobotMatches):
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 29
+    rsCEA['AnalysisTypeID'] = 43
     numberOfMatchesPlayed = 0
     summSortCargoList = []
 

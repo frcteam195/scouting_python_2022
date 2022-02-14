@@ -1,19 +1,17 @@
+import argparse
+ 
+ 
+# Initialize parser
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+parser.add_argument("-csv", "--csv", help = "Enter csv filename")
+ 
+# Read arguments from command line
+args = parser.parse_args()
 
-from unicodedata import name
-import click
-@click.command()
-@click.option('--count', default=1, help='Number of greetings.')
-@click.option('--name', prompt='The person you Love',
-              help='The person to love.')
+database = args.database
+csvFile = args.csv
 
-def hello(count, name):
-    for x in range(count):
-        if name == "Harish":
-            click.echo("I love Harish!")
-        elif name == "Joe":
-            click.echo("I love Joe but also Harish")
-
-if __name__ == '__main__':
-        hello()
-
-
+print (database + csvFile) 

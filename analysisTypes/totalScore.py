@@ -6,7 +6,7 @@ from analysisTypes.teleTotalBalls import teleTotalBalls
 def totalScore(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 4
+    rsCEA['AnalysisTypeID'] = 61
     numberOfMatchesPlayed = 0
     totalPointsList = []
     climbPoints = 0

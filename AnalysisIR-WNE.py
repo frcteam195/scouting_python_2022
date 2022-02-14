@@ -2,12 +2,70 @@ import mysql.connector as mariaDB
 import numpy as np
 import datetime
 import time
+import argparse
+import sys
+
 # For each analysisType we create add a new import statement. We could import all analysisTypes
-# Mark is the Shark
-from analysisTypes.autonomous import autonomous
-from analysisTypes.summLostComm import summLostComm 
-from analysisTypes.summSubSystemBroke import summSubSystemBroke
-from analysisTypes.summDefPlayedAgainst import summDefPlayedAgainst
+# Pre match 1-9
+from analysisTypes.startingPosition import startingPosition  #1
+# auto 10-19
+from analysisTypes.autonomous import autonomous  #10
+# tele 20-29
+from analysisTypes.teleLowBalls import teleLowBalls   #20
+from analysisTypes.teleHighBalls import teleHighBalls   #21
+from analysisTypes.teleTotalBalls import teleTotalBalls   #22
+# climb 30-39
+from analysisTypes.climb import climb   #30
+# summary data 40-59
+from analysisTypes.summGroundPickup import summGroundPickup   #40
+from analysisTypes.summDefPlayedAgainst import summDefPlayedAgainst   #41
+from analysisTypes.summLaunchPad import summLaunchPad   #42
+from analysisTypes.summSortCargo import summSortCargo    #43
+from analysisTypes.summShootDriving import summShootDriving   #44
+from analysisTypes.summTerminalPickup import summTerminalPickup   #45
+from analysisTypes.summPlayedDefense import summPlayedDefense   #46
+from analysisTypes.summLostComm import summLostComm   #47
+from analysisTypes.summSubSystemBroke import summSubSystemBroke   #48
+from analysisTypes.summBrokeDown import summBrokeDown   #49
+# Totals 60-69
+from analysisTypes.totalBalls import totalBalls   #60
+from analysisTypes.totalScore import totalScore   #61
+
+# *********************** argument parser **********************
+
+# Initialize parser
+database = ''
+csvFilename = ''
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+# parser.add_argument("-cf", "--csv_filename", help = "Enter the filename for CSV file output", required=True)
+ 
+# Read arguments from command line
+args = parser.parse_args()
+
+input_database = args.database
+# input_csvFilename = args.csv_filename
+
+if input_database == "aws-prod":
+    database = "aws-prod"
+elif input_database == "aws-dev":
+    database = "aws-dev"
+elif input_database == "pi-192":
+    database = "pi-192"
+elif input_database == "pi-10":
+    database = "pi-10"
+elif input_database == "localhost":
+    database = "localhost"
+else:
+    print(input_database + " is not a invalid database choice. See --help for choices")
+    sys.exit()
+
+print ("Connecting to " + database)
+
+# **************************************************************
+
 
 CEA_table = "CurrentEventAnalysisWNE"
 
@@ -23,34 +81,43 @@ class analysis():
         now = datetime.datetime.now()
         print(now.strftime("%Y-%m-%d %H:%M:%S"))
         start_time = time.time()
-
+        
         # Connection to AWS Testing database - use when you would destroy tables with proper data
-        self.conn = mariaDB.connect(user='admin',
-                                    passwd='Einstein195',
-                                    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                                    database='team195_scouting')
-        self.cursor = self.conn.cursor()
-
+        if database == "aws-dev":
+            print("Input database " + input_database)
+            self.conn = mariaDB.connect(user='admin',
+                                       passwd='Einstein195',
+                                        host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                       database='team195_scouting')
+            self.cursor = self.conn.cursor()
+        
         # Pi DB with remote access (e.g. from laptop)
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='team195',
-        #                             host='10.0.0.195',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        elif database == "pi-10":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='10.0.0.195',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
 
         # Pi DB with local access (e.g. from the Pi itself)
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='team195',
-        #                             host='localhost',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        elif database == "localhost":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='localhost',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
-        # self.conn = mariaDB.connect(user='admin',
-#                                     passwd='Einstein195',
-#                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                                     database='team195_scouting')
-#         self.cursor = self.conn.cursor()
+        elif database == "aws-prod":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='Einstein195',
+                                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
+
+        else:
+            print ("oops - that should not happen")
+            sys.exit()
 
         self.columns = []
         self._wipeCEA()
@@ -125,19 +192,60 @@ class analysis():
             # print(rsRobotMatches)
 
             if rsRobotMatches:
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                rsCEA = summLostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                rsCEA = teleLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
-                rsCEA = summSubSystemBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+                
+                rsCEA = teleHighBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
+                
+                rsCEA = teleTotalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summGroundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
                 rsCEA = summDefPlayedAgainst(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
-               
+                
+                rsCEA = summLaunchPad(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summSortCargo(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summShootDriving(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summTerminalPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summPlayedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summLostComm(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summSubSystemBroke(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summBrokeDown(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = totalBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
@@ -183,12 +291,11 @@ class analysis():
                 self._run_query(query)
                 self.conn.commit()
         else:
-            print('Data was not found in the db')
+            print('Ranking data was not found in the db')
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
     def _rankTeamsAll(self):
-        #analysisTypeList=[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        analysisTypeList=[2]
+        analysisTypeList=[10, 20, 21, 22, 30, 60, 61]
         for analysisType in analysisTypeList:
             # print(analysisType)
             self._rankTeamsSingle(analysisType)

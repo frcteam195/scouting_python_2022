@@ -4,7 +4,7 @@ import statistics
 def teleHighBalls(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 27
+    rsCEA['AnalysisTypeID'] = 21
     numberOfMatchesPlayed = 0
     totalHighBallsList = []
     totalBallsList = []

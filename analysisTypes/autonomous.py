@@ -6,7 +6,7 @@ def autonomous(analysis, rsRobotMatches):
     # print("autonomous time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 2
+    rsCEA['AnalysisTypeID'] = 10
     numberOfMatchesPlayed = 0
 
     totalHighBallsList = []

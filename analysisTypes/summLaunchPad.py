@@ -5,7 +5,7 @@ def summLaunchPad(analysis, rsRobotMatches):
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 35
+    rsCEA['AnalysisTypeID'] = 42
     numberOfMatchesPlayed = 0
     summLaunchPadList = []
 

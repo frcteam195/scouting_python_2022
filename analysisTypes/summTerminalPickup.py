@@ -1,11 +1,11 @@
 import statistics
 
-def summTerminalPickUp(analysis, rsRobotMatches):
+def summTerminalPickup(analysis, rsRobotMatches):
     # start = time.time()
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 24
+    rsCEA['AnalysisTypeID'] = 45
     numberOfMatchesPlayed = 0
     summTerminalPickUpList = []
 
