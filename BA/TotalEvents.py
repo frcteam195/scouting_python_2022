@@ -7,8 +7,13 @@ import tbapy
 import datetime
 import re
 import sys
+import argparse
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 currentYear = datetime.datetime.today().year
+database = ''
+csvFilename = ''
+parser = argparse.ArgumentParser()
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
 
 def wipeBAE():
         cursor.execute("DELETE FROM BlueAllianceEvents;")
