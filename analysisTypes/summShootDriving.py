@@ -28,7 +28,7 @@ def summShootDriving(analysis, rsRobotMatches):
                 summShootDrivingDisplay = 'N'
                 summShootDrivingFormat = 2
                 summShootDrivingValue = 0
-                summShootDrivingList.append(summShootDrivingList)
+                summShootDrivingList.append(summShootDrivingValue)
             if summShootDriving == 1:
                 summShootDrivingDisplay = 'Y'
                 summShootDrivingFormat = 4

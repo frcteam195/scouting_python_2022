@@ -28,7 +28,7 @@ def summPlayedDefense(analysis, rsRobotMatches):
                 summPlayedDefenseDisplay = 'N'
                 summPlayedDefenseFormat = 2
                 summPlayedDefenseValue = 0
-                summPlayedDefense.append(summPlayedDefenseValue)
+                summPlayedDefenseList.append(summPlayedDefenseValue)
             if summPlayedDefense == 1:
                 summPlayedDefenseDisplay = 'Y'
                 summPlayedDefenseFormat = 4
