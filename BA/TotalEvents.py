@@ -6,9 +6,14 @@ import mysql.connector as mariaDB
 import tbapy
 import datetime
 import re
-
+import sys
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 currentYear = datetime.datetime.today().year
+
+def wipeBAE():
+        cursor.execute("DELETE FROM BlueAllianceEvents;")
+        conn.commit()
+      
 
 def onlyascii(s):
     return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
@@ -18,7 +23,7 @@ conn = mariaDB.connect(user='admin',
                        host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                        database='team195_scouting')
 cursor = conn.cursor()
-
+wipeBAE() 
 # conn = mariaDB.connect(user='admin',
 #                        passwd='Einstein195',
 #                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
@@ -43,16 +48,15 @@ for event in totalEvents:
     print (eventCode + " " + eventLocation)
     
     eventName = onlyascii(eventName)
-    eventCity = onlyascii(eventCity)
-    eventStateProv = onlyascii(eventStateProv)
-    eventCountry = onlyascii(eventCountry)
-    
+    eventLocation = onlyascii(eventLocation)
+
     if len(eventName) > 50:
         eventName = eventName[:40]
     if eventName is None:
     	eventName = "no name"
     eventName = re.sub("[{}]","", eventName)
     eventName = re.sub("[()]","", eventName)
+    eventLocation = eventLocation.replace("'","")
     if len(eventCity) > 50:
     	eventCity = eventCity[:40]
     if len(eventCountry) > 50:
