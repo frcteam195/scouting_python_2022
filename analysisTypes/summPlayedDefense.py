@@ -7,7 +7,7 @@ def summPlayedDefense(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 46
     numberOfMatchesPlayed = 0
-    summSortCargoList = []
+    summPlayedDefenseList = []
 
 
     # Loop through each match the robot played in.
@@ -21,33 +21,33 @@ def summPlayedDefense(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            summSortCargo = matchResults[analysis.columns.index('SummSortCargo')]
-            if summSortCargo is None:
-                summSortCargo = 999
-            if summSortCargo == 0:
-                summSortCargoDisplay = 'N'
-                summSortCargoFormat = 2
-                summSortCargoValue = 0
-                summSortCargoList.append(summSortCargoValue)
-            if summSortCargo == 1:
-                summSortCargoDisplay = 'Y'
-                summSortCargoFormat = 4
-                summSortCargoValue = 1
-                summSortCargoList.append(summSortCargoValue)
+            summPlayedDefense = matchResults[analysis.columns.index('SummPlayedDefense')]
+            if summPlayedDefense is None:
+                summPlayedDefense = 999
+            if summPlayedDefense == 0:
+                summPlayedDefenseDisplay = 'N'
+                summPlayedDefenseFormat = 2
+                summPlayedDefenseValue = 0
+                summPlayedDefense.append(summPlayedDefenseValue)
+            if summPlayedDefense == 1:
+                summPlayedDefenseDisplay = 'Y'
+                summPlayedDefenseFormat = 4
+                summPlayedDefenseValue = 1
+                summPlayedDefenseList.append(summPlayedDefenseValue)
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
 
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(summSortCargoDisplay)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = summSortCargoValue
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = summSortCargoFormat
+                    str(summPlayedDefenseDisplay)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = summPlayedDefenseValue
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = summPlayedDefenseFormat
 
     # Create summary data
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(summSortCargoList), 2)
-        rsCEA['Summary1Value'] = round(statistics.mean(summSortCargoList), 2)
+        rsCEA['Summary1Display'] = round(statistics.mean(summPlayedDefenseList), 2)
+        rsCEA['Summary1Value'] = round(statistics.mean(summPlayedDefenseList), 2)
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))
