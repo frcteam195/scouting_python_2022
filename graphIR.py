@@ -10,8 +10,8 @@ from analysisTypes.climb import climb
 from analysisTypes.totalScore import totalScore
 from analysisTypes.teleTotalBalls import teleTotalBalls
 from analysisTypes.totalBalls import totalBalls
-from analysisTypes.groundPickup import groundPickup
-from analysisTypes.brokeDown import brokeDown
+from analysisTypes.summGroundPickup import summGroundPickup
+from analysisTypes.summBrokeDown import summBrokeDown
 from analysisTypes.summLostComm import summLostComm
 
 CEA_table = "CurrentEventAnalysisGraphs"
