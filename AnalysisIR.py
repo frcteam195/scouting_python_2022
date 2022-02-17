@@ -138,7 +138,7 @@ class analysis():
 
     # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
     def _wipeCEA(self):
-        self._run_query("DELETE FROM " + CEA_table + "")
+        self._run_query("DELETE FROM " + CEA_table + ";")
         self.conn.commit()
 
     # Function to get the team list and set it to rsRobots. Uses the _run_query function defined above.

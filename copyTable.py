@@ -25,13 +25,14 @@ class analysis():
                                     passwd='Einstein195',
                                     host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                     database='team195_scouting')
-
+        self.cursor = self.conn.cursor()
+        
         self.connDes = mariaDB.connect(user='admin',
                                     passwd='Einstein195',
                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                     database='team195_scouting')
 
-        self.cursor = self.conn.cursor()
+        self.cursorDes = self.connDes.cursor()
 
         # Pi DB with remote access (e.g. from laptop)
         # self.conn = mariaDB.connect(user='admin',
@@ -56,7 +57,7 @@ class analysis():
 
         self.columns = []
         self._wipeCEA()
-        self._insert()
+        #self._insert()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -71,14 +72,16 @@ class analysis():
 
     # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
     def _wipeCEA(self):
-        self._run_query("DELETE FROM " + CEA_table + "")
+        print(CEA_table)
+        #self._run_query("DELETE FROM " + CEA_table + ";")
+        self._run_query("SELECT * FROM " + CEA_table + ";")
         self.connDes.commit()
 
     #
     def _insert(self):
         # Insert average data for each team into CurrentEventAnalysisGraphs
         self._run_query("INSERT INTO " + CEA_table + " "
-                        "SELECT * FROM frcteam195testinstance.team195_scouting." + CEA_table + ";")
+                        "SELECT * FROM " + CEA_table + ";")
         self.connDes.commit()
 
 # This initizlzes the analysis Class and thus runs the program.
