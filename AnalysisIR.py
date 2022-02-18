@@ -30,6 +30,7 @@ from analysisTypes.summBrokeDown import summBrokeDown   #49
 # Totals 60-69
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
+from analysisTypes.matchVideos import matchVideos #70
 
 # *********************** argument parser **********************
 
@@ -246,6 +247,8 @@ class analysis():
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
+                rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
@@ -320,3 +323,4 @@ class analysis():
 # This initizlzes the analysis Class and thus runs the program.
 if __name__ == '__main__':
     myAnalysis = analysis()
+    

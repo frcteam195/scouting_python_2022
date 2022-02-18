@@ -31,6 +31,7 @@ from analysisTypes.summBrokeDown import summBrokeDown   #49
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
 from analysisTypes.matchVideos import matchVideos #70
+
 # *********************** argument parser **********************
 
 # Initialize parser
@@ -138,7 +139,7 @@ class analysis():
 
     # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
     def _wipeCEA(self):
-        self._run_query("DELETE FROM " + CEA_table + "")
+        self._run_query("DELETE FROM " + CEA_table + ";")
         self.conn.commit()
 
     # Function to get the team list and set it to rsRobots. Uses the _run_query function defined above.
@@ -245,10 +246,9 @@ class analysis():
                 
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
+                
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-                
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
@@ -323,3 +323,4 @@ class analysis():
 # This initizlzes the analysis Class and thus runs the program.
 if __name__ == '__main__':
     myAnalysis = analysis()
+    
