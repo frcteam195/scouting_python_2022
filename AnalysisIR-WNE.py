@@ -30,7 +30,7 @@ from analysisTypes.summBrokeDown import summBrokeDown   #49
 # Totals 60-69
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
-
+from analysisTypes.matchVideos import matchVideos #70
 # *********************** argument parser **********************
 
 # Initialize parser
@@ -244,6 +244,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
 
