@@ -4,6 +4,8 @@ import datetime
 import time
 import argparse
 import sys
+import functools
+import operator
 
 table_name = "MatchScouting"
 
@@ -13,9 +15,9 @@ start_time = time.time()
 
 # Connection to AWS Testing database - use when you would destroy tables with proper data
 connSrc = mariaDB.connect(user='admin',
-						   passwd='Einstein195',
-							host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-						   database='team195_scouting')
+						    passwd='Einstein195',
+						    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+						    database='team195_scouting')
 cursorSrc = connSrc.cursor()
 
 # Pi DB with remote access (e.g. from laptop)
@@ -39,7 +41,33 @@ connDes = mariaDB.connect(user='admin',
 							database='team195_scouting')
 cursorDes = connDes.cursor()
 
-columns = []
+def wipeTable():
+    cursorDes.execute("DELETE FROM MatchScouting;")
+    cursorDes.execute("ALTER TABLE MatchScouting AUTO_INCREMENT = 1;")
+    connDes.commit()
+
+columnHeadings=[]
+cursorSrc.execute("SELECT * FROM MatchScouting;")
+num_fields = len(cursorSrc.description)
+columnHeadings = str(tuple([i[0] for i in cursorSrc.description])).replace("'", "")
+tableContents = cursorSrc.fetchall()
+#print(columnHeadings)
+#columnHeadings = str(tuple([record[0] for record in tableContents])).replace("'", "")
+
+wipeTable()
+print(tableContents)
+print(num_fields)
+#print(columnHeadings)
+
+#rsTable_records = tableContents.items()
+#values = str(tuple([record[1] for record in rsTable_records]))
+
+for row in tableContents:
+    print(row)
+    row = functools.reduce(operator.add, (row))
+    query = ("INSERT INTO MatchScouting " + columnHeadings + " VALUES (%s, ))
+    print(query)
+
 #wipeTable()
 #rsRobots = getTeams()
 #analyzeTeams()
