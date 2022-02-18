@@ -5,8 +5,7 @@ import time
 import argparse
 import sys
 
-tableName = "MatchScouting"
-
+table_name = "MatchScouting"
 
 now = datetime.datetime.now()
 print(now.strftime("%Y-%m-%d %H:%M:%S"))
@@ -14,47 +13,70 @@ start_time = time.time()
 
 # Connection to AWS Testing database - use when you would destroy tables with proper data
 connSrc = mariaDB.connect(user='admin',
-							passwd='Einstein195',
+						   passwd='Einstein195',
 							host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-							database='team195_scouting')
+						   database='team195_scouting')
 cursorSrc = connSrc.cursor()
 
+# Pi DB with remote access (e.g. from laptop)
+# conn = mariaDB.connect(user='admin',
+							# passwd='team195',
+							# host='10.0.0.195',
+							# database='team195_scouting')
+# cursor = conn.cursor()
+
+# Pi DB with local access (e.g. from the Pi itself)
+# conn = mariaDB.connect(user='admin',
+							# passwd='team195',
+							# host='localhost',
+							# database='team195_scouting')
+# cursor = conn.cursor()
+
+# Connection to AWS database with proper data
 connDes = mariaDB.connect(user='admin',
 							passwd='Einstein195',
 							host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
 							database='team195_scouting')
-
 cursorDes = connDes.cursor()
 
-# Pi DB with remote access (e.g. from laptop)
-# self.conn = mariaDB.connect(user='admin',
-#                             passwd='team195',
-#                             host='10.0.0.195',
-#                             database='team195_scouting')
-# self.cursor = self.conn.cursor()
+columns = []
+wipeCEA()
+rsRobots = self._getTeams()
+analyzeTeams()
 
-# Pi DB with local access (e.g. from the Pi itself)
-# self.conn = mariaDB.connect(user='admin',
-#                             passwd='team195',
-#                             host='localhost',
-#                             database='team195_scouting')
-# self.cursor = self.conn.cursor()
+print("Time: %0.2f seconds" % (time.time() - start_time))
+print()
 
-# Connection to AWS database with proper data
-# self.conn = mariaDB.connect(user='admin',
-#                                     passwd='Einstein195',
-#                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                                     database='team195_scouting')
-#         self.cursor = self.conn.cursor()
+    # Function to run a query - the query string must be passed to the function
+    def _run_query(self, query):
+        self.cursor.execute(query)
 
-querySrc = ("SELECT * FROM " + tableName + ";")
-print (querySrc)
-cursorSrc.execute(querySrc)
-rsTableContents = cursorSrc.fetchall()
-# print (rsTableContents)
+    # Function to determine the DB table column headers
+    def _setColumns(self, columns):
+        self.columns = columns
 
+    # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
+    def _wipeCEA(self):
+        self._run_query("DELETE FROM " + CEA_table + ";")
+        self.conn.commit()
 
-def getTeamData(team):
+    # Function to get the team list and set it to rsRobots. Uses the _run_query function defined above.
+    #   The assert statement will return rsRobots if the record length > 0 and will exit with the
+    #       message "No robots founds" if the record length is 0.
+    def _getTeams(self):
+        self._run_query("SELECT MatchScouting.Team FROM (MatchScouting "
+                       "INNER JOIN Matches ON MatchScouting.MatchID = Matches.MatchID) "
+                       "INNER JOIN Events ON Matches.EventID = Events.EventID "
+                       "WHERE (((Events.CurrentEvent) = 1)) "
+                       "GROUP BY CAST(MatchScouting.Team AS INT), MatchScouting.Team "
+                       "HAVING (((MatchScouting.Team) Is Not Null)); ")
+        rsRobots = self.cursor.fetchall()
+
+        assert len(rsRobots) > 0, "No robots found"
+        return rsRobots
+
+    # Function to retrieve data records for a given team for all their matches and set it to rsRobotMatches
+    def _getTeamData(self, team):
         self._run_query("SELECT MatchScouting.*, Matches.MatchNo, Teams.RobotWeight "
             "FROM (Events INNER JOIN Matches ON Events.EventID = Matches.EventID) "
             "INNER JOIN MatchScouting ON (Matches.EventID = MatchScouting.EventID) "
@@ -73,33 +95,37 @@ def getTeamData(team):
 
         rsRobotMatches = self.cursor.fetchall()
 
+        # If rsRobotMatches is not zero length return rsRobotMatches otherwise return None. This allows the
+        #   function to skip a robot analysis if that robot does not have any match records yet.
+        if rsRobotMatches:
+            return rsRobotMatches
+        else:
+            return None
 
+    #
+    def _analyzeTeams(self):
+        # Loop over the # of teams and run each of the analysis functions calling _insertAnalysis after each one is run
+        for team in self.rsRobots:
+            # print(team)
+            rsRobotMatches = self._getTeamData(team)
+            # print(rsRobotMatches)
 
+            if rsRobotMatches:
+                rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+    # Function to insert an rsCEA record into the DB.
+    def _insertAnalysis(self, rsCEA):
+        rsCEA_records = rsCEA.items()
+        # Get the columnHeadings and values, do some formatting, and then use the _run_query function to run the
+        #   query and the conn.commit to insert into the DB.
+        columnHeadings = str(tuple([record[0] for record in rsCEA_records])).replace("'", "")
+        values = str(tuple([record[1] for record in rsCEA_records]))
 
-wipeTableQuery = ("DELETE FROM " + tableName + ";")
-cursorDes.execute(wipeTableQuery)
-connDes.commit()
+        # Insert the records into the DB
+        self._run_query("INSERT INTO " + CEA_table + " "
+                        + columnHeadings + " VALUES "
+                        + values + ";")
+        # print(columnHeadings + values)
+        self.conn.commit()
 
-num_rows = len(rsTableContents)
-print (num_rows)
-
-setColumns([column[0] for column in list(cursorSrc.description)])
-
-# insertQuery = """INSERT INTO MatchScouting VALUES (%)
-
-# for row in rsTableContents:
-#     #print (row)
-#     values = str(tuple([record[1] for record in rsTableContents]))
-#     print (values)
-#     insertTableQuery = ("INSERT INTO " + tableName + "VALUES(" + values + ");")
-#     
-#     
-# cursor = db.cursor()
-# vals = [(1,2,3), (4,5,6), (7,8,9), (2,5,6)]
-# q = """INSERT INTO first (comments, feed, keyword) VALUES (%s, %s, %s)"""  
-# cursor.executemany(q, vals)
-#     
-# # print (insertTableQuery)
-# 
-# print("Time: %0.2f seconds" % (time.time() - start_time))
-# print()
