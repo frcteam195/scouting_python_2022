@@ -80,17 +80,18 @@ class analysis():
     #
     def _analyzeTeams(self):
         # Insert average data for each team into CurrentEventAnalysisGraphs
-        analysisTypeList = [3, 4, 7, 8, 26, 27]
+        analysisTypeList = [60, 61, 30, 20, 22, 21]
         analysisNameList = ["TotalBalls", "TotalScore", "Climb", "TeleLowBalls", "TeleTotalBalls", "TeleHighBalls"]
         self._run_query("INSERT INTO " + CEA_table + "(Team, EventID, AutonomousScore) "
                             "SELECT Team, EventID, Summary1Value "
-                            "FROM CurrentEventAnalysisHouston "
-                            "WHERE AnalysisTypeID = 2;")
+                            "FROM CurrentEventAnalysis "
+                            "WHERE AnalysisTypeID = 10;")
         for i in range(len(analysisTypeList)):
+            print(i)
             self._run_query("UPDATE " + CEA_table + " "
-                            "INNER JOIN CurrentEventAnalysisHouston ON " + CEA_table + ".Team = CurrentEventAnalysisHouston.Team AND " + CEA_table + ".EventID = CurrentEventAnalysisHouston.EventID "
-                            "SET " + analysisNameList[i] + " = CurrentEventAnalysisHouston.Summary1Value "
-                            "WHERE CurrentEventAnalysisHouston.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
+                            "INNER JOIN CurrentEventAnalysis ON " + CEA_table + ".Team = CurrentEventAnalysis.Team AND " + CEA_table + ".EventID = CurrentEventAnalysis.EventID "
+                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value "
+                            "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
         self.conn.commit()
 
 # This initizlzes the analysis Class and thus runs the program.
