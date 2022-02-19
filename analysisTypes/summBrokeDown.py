@@ -28,9 +28,9 @@ def summBrokeDown(analysis, rsRobotMatches):
             brokeDown = matchResults[analysis.columns.index('SummBrokeDown')]
             if brokeDown is None:
                 brokeDown = 999
-            if brokeDown == 0:
+            elif brokeDown == 0:
                 brokeDownString = 'N'
-            if brokeDown == 999:
+            elif brokeDown == 999:
                 brokeDownString = 'Error'
             else:
                 brokeDownString = 'Y'
