@@ -76,17 +76,7 @@ else:
         sys.exit()
 
 wipeBAE() 
-#conn = mariaDB.connect(user='admin',
-#                       passwd='Einstein195',
-#                       host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                       database='team195_scouting')
-#cursor = conn.cursor()
 
-# conn = mariaDB.connect(user='admin',
-#                        passwd='Einstein195',
-#                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
 
 totalEvents = tba.events(year=currentYear)
 eventList = []

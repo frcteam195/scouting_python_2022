@@ -23,6 +23,8 @@ elif input_database == "pi-10":
     database = "pi-10"
 elif input_database == "localhost":
     database = "localhost"
+elif input_database == "excel":
+    database = "excel"
 else:
     print(input_database + " is not a invalid database choice. See --help for choices")
     sys.exit()
@@ -60,7 +62,8 @@ elif database == "aws-prod":
                                 host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
         cursor = conn.cursor()
-
+elif database == "excel":
+    ""
 else: 
         print ("oops - Harish would not approve of that!")
         sys.exit()
@@ -88,8 +91,8 @@ if len(sys.argv) != 2:
     print('Usage: python3 Schedule.py [db]|[excel]')
     sys.exit(0)
 else:
-    args = getopt.getopt(sys.argv,"")[1][1]
-    if args == 'db':
+    
+    if database == "aws-dev" or database == "aws-prod" or database == "ai-10" or database == "localhost":
         wipeBAT()
 
         eventTeams = tba.event_teams(event)
@@ -109,7 +112,7 @@ else:
             cursor.execute(query)
             conn.commit()
 
-    elif args == 'excel':
+    elif database == 'excel':
         workbook = xlsxwriter.Workbook('TEAM LIST.xlsx')
         worksheet = workbook.add_worksheet()
 

@@ -22,6 +22,8 @@ elif input_database == "pi-10":
     database = "pi-10"
 elif input_database == "localhost":
     database = "localhost"
+elif input_database == "excel":
+    database = "excel"
 else:
     print(input_database + " is not a invalid database choice. See --help for choices")
     sys.exit()
@@ -95,8 +97,8 @@ if len(sys.argv) != 2:
     print('Usage: python3 Schedule.py [db]|[excel]')
     sys.exit(0)
 else:
-    args = getopt.getopt(sys.argv,"")[1][1]
-    if args == 'db':
+    
+    if database == "aws-dev" or database == "aws-prod" or database == "localhost" or database == "ai-10":
         cursor.execute("DELETE FROM BlueAllianceSchedule")
         conn.commit()
 
@@ -136,7 +138,7 @@ else:
             cursor.execute(query)
             conn.commit()
 
-    elif args == 'excel':
+    elif database == 'excel':
         workbook = xlsxwriter.Workbook('SCHEDULE.xlsx')
         worksheet = workbook.add_worksheet()
 
