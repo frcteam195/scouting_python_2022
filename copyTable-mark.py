@@ -4,50 +4,169 @@ import datetime
 import time
 import argparse
 import sys
-import functools
-import operator
 
-table_name = "MatchScouting"
+# *********************** argument parser **********************
+
+# Initialize parser
+destination_database = ''
+source_database = ''
+table_name = ''
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-dbs", "--database_source", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+parser.add_argument("-dbd", "--database_destination", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+parser.add_argument("-table", "--table_name", help = "Enter the table name", required=True)
+
+# Read arguments from command line
+args = parser.parse_args()
+
+input_source_database = args.database_source
+input_destination_database = args.database_destination
+table_name = args.table_name
+
+if input_source_database == input_destination_database:
+    print("The source and the destination databases must be different")
+    sys.exit()
+
+# input_csvFilename = args.csv_filename
+
+if input_source_database == "aws-prod":
+    source_database = "aws-prod"
+elif input_source_database == "aws-dev":
+    source_database = "aws-dev"
+elif input_source_database == "pi-192":
+    source_database = "pi-192"
+elif input_source_database == "pi-10":
+    source_database = "pi-10"
+elif input_source_database == "localhost":
+    source_database = "localhost"
+else:
+    print(input_source_database + " is not a invalid source database choice. See --help for choices")
+    sys.exit()
+
+print ("Connecting to source database " + source_database)
+
+
+if input_destination_database == "aws-prod":
+    destination_database = "aws-prod"
+elif input_destination_database == "aws-dev":
+    destination_database = "aws-dev"
+elif input_destination_database == "pi-192":
+    destination_database = "pi-192"
+elif input_destination_database == "pi-10":
+    destination_database = "pi-10"
+elif input_destination_database == "localhost":
+    destination_database = "localhost"
+else:
+    print(input_destination_database + " is not a invalid destination database choice. See --help for choices")
+    sys.exit()
+
+print ("Connecting to destination database " + destination_database)
+# **************************************************************
+
 
 now = datetime.datetime.now()
 print(now.strftime("%Y-%m-%d %H:%M:%S"))
 start_time = time.time()
 
-# Connection to AWS Testing database - use when you would destroy tables with proper data
-connSrc = mariaDB.connect(user='admin',
-						    passwd='Einstein195',
-						    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-						    database='team195_scouting')
-cursorSrc = connSrc.cursor()
+if source_database == "aws-dev":
+    # Connection to AWS Testing database - use when you would destroy tables with proper data
+    connSrc = mariaDB.connect(user='admin',
+                                passwd='Einstein195',
+                                host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                database='team195_scouting')
+    cursorSrc = connSrc.cursor()
 
-# Pi DB with remote access (e.g. from laptop)
-# conn = mariaDB.connect(user='admin',
-							# passwd='team195',
-							# host='10.0.0.195',
-							# database='team195_scouting')
-# cursor = conn.cursor()
+elif source_database == "aws-prod":
+    connSrc = mariaDB.connect(user='admin',
+                                passwd='Einstein195',
+                                host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                database='team195_scouting')
 
+    cursorSrc = connSrc.cursor()
+
+elif source_database == "pi-10":
+    # Pi DB with remote access (e.g. from laptop)
+    connSrc = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='10.0.0.195',
+                                database='team195_scouting')
+    cursorScr = connSrc.cursor()
+    
+elif source_database == "pi-192":
+    connSrc = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
+                                database='team195_scouting')
+    cursorSrc = connSrc.cursor()
+
+elif source_database == "localhost":
 # Pi DB with local access (e.g. from the Pi itself)
-# conn = mariaDB.connect(user='admin',
-							# passwd='team195',
-							# host='localhost',
-							# database='team195_scouting')
-# cursor = conn.cursor()
+    connSrc = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='localhost',
+                                database='team195_scouting')
+    cursorSrc = connSrc.cursor()
 
-# Connection to AWS database with proper data
-connDes = mariaDB.connect(user='admin',
-							passwd='Einstein195',
-							host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-							database='team195_scouting')
-cursorDes = connDes.cursor()
+else:
+    print("Oops that shouldn't have happened")
+    sys.exit()
+
+# *****************************************************************************************
+
+if destination_database == "aws-dev":
+    # Connection to AWS Testing database - use when you would destroy tables with proper data
+    connDes = mariaDB.connect(user='admin',
+                                passwd='Einstein195',
+                                host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                database='team195_scouting')
+    cursorDes = connDes.cursor()
+
+elif destination_database == "aws-prod":
+    connDes = mariaDB.connect(user='admin',
+                                passwd='Einstein195',
+                                host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                database='team195_scouting')
+
+    cursorDes = connDes.cursor()
+
+elif destination_database == "pi-10":
+    # Pi DB with remote access (e.g. from laptop)
+    connDes = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='10.0.0.195',
+                                database='team195_scouting')
+    cursorDes = connDes.cursor()
+    
+elif destination_database == "pi-192":
+    connDes = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
+                                database='team195_scouting')
+    cursorDes = connDes.cursor()
+
+elif destination_database == "localhost":
+# Pi DB with local access (e.g. from the Pi itself)
+    connDes = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='localhost',
+                                database='team195_scouting')
+    cursorDes = connDes.cursor()
+
+else:
+    print("Oops that shouldn't have happened")
+    sys.exit()
+
 
 def wipeTable():
-    cursorDes.execute("DELETE FROM MatchScouting;")
-    cursorDes.execute("ALTER TABLE MatchScouting AUTO_INCREMENT = 1;")
-    connDes.commit()
+    cursorDes.execute("DELETE FROM " + table_name + ";")
+    cursorDes.execute("ALTER TABLE " + table_name + " AUTO_INCREMENT = 1;")
+    connDes.commit()  
+
 
 columnHeadings=[]
-cursorSrc.execute("SELECT * FROM MatchScouting;")
+cursorSrc.execute("SELECT * FROM " + table_name + ";")
 num_fields = len(cursorSrc.description)
 columnHeadings = str(tuple([i[0] for i in cursorSrc.description])).replace("'", "")
 tableContents = cursorSrc.fetchall()
@@ -70,7 +189,7 @@ for row in tableContents:
     #print(row)
     row = str(tuple(row))
     #print(row)
-    query = ("INSERT INTO MatchScouting " + columnHeadings + " VALUES " + row + ";")
+    query = ("INSERT INTO " + table_name + " " + columnHeadings + " VALUES " + row + ";")
     query = query.replace("None", "NULL")
     print(query)
     cursorDes.execute(query)
