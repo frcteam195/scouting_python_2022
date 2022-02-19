@@ -8,12 +8,7 @@ x = 195
 team = tba.team(x)
 
 
-# Pi DB with remote access (e.g. from laptop)
-# conn = mariaDB.connect(user='admin',
-#                        passwd='team195',
-#                        host='10.0.0.195',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
+
 # Amazon devel DB
 conn = mariaDB.connect(user='admin',
                        passwd='Einstein195',

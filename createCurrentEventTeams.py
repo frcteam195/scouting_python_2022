@@ -1,37 +1,77 @@
 import mysql.connector as mariaDB
+import sys
+import argparse
 
-# Pi DB with remote access (e.g. from laptop)
-# conn = mariaDB.connect(user='admin',
-#                        passwd='team195',
-#                        host='10.0.0.195',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
+database = ''
+csvFilename = ''
+parser = argparse.ArgumentParser()
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+args = parser.parse_args()
+input_database = args.database
 
-# Pi DB with local access (e.g. from the Pi itself)
-# conn = mariaDB.connect(user='admin',
-#                        passwd='team195',
-#                        host='localhost',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
+if input_database == "aws-prod":
+    database = "aws-prod"
+elif input_database == "aws-dev":
+    database = "aws-dev"
+elif input_database == "pi-192":
+    database = "pi-192"
+elif input_database == "pi-10":
+    database = "pi-10"
+elif input_database == "localhost":
+    database = "localhost"
+elif input_database == "excel":
+    database = "excel"
+else:
+    print(input_database + " is not a invalid database choice. See --help for choices")
+    sys.exit()
 
-# Connection to AWS database with proper data
-# conn = mariaDB.connect(user='admin',
-#                        passwd='Einstein195',
-#                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                        database='team195_scouting')
-# cursor = conn.cursor()
+print ("Connecting to " + database)      
 
-conn = mariaDB.connect(user='admin',
-                       passwd='Einstein195',
-                       host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                       database='team195_scouting')
-cursor = conn.cursor()
+def onlyascii(s):
+    return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
 
-cursor.execute("DELETE FROM CurrentEventTeams")
-conn.commit()
+if database == "aws-dev":
+        print("Input database " + input_database)
+        conn = mariaDB.connect(user='admin',
+                                    passwd='Einstein195',
+                                    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                    database='team195_scouting')
+        cursor = conn.cursor()
+        
+elif database == "pi-10":
+        conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='10.0.0.195',
+                                database='team195_scouting')
+        cursor = conn.cursor()
+
+elif database == "localhost":
+        conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='localhost',
+                                database='team195_scouting')
+        cursor = conn.cursor()
+
+elif database == "aws-prod":
+        conn = mariaDB.connect(user='admin',
+                                passwd='Einstein195',
+                                host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                database='team195_scouting')
+        cursor = conn.cursor()
+
+else: 
+        print ("oops - Harish would not approve of that!")
+        sys.exit()
 
 
-cursor.execute("SELECT BlueAllianceTeams.Team FROM BlueAllianceTeams")
+def wipeCET():
+        cursor.execute("DELETE FROM CurrentEventTeams;")
+        cursor.execute("ALTER TABLE CurrentEventTeams AUTO_INCREMENT = 1;")
+        conn.commit()
+
+
+wipeCET()
+
 for team in cursor.fetchall():
     query = "INSERT INTO CurrentEventTeams (Team) VALUES (" + team[0] + ");"
     print(query)
