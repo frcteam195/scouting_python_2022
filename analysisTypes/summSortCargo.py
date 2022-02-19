@@ -23,24 +23,29 @@ def summSortCargo(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             summSortCargo = matchResults[analysis.columns.index('SummSortCargo')]
             if summSortCargo is None:
-                summSortCargo = 999
-            if summSortCargo == 0:
+                summSortCargoDisplay = '999'
+                summSortCargoValue = 999
+                summSortCargoFormat = 1
+            elif summSortCargo == 0:
                 summSortCargoDisplay = 'N'
                 summSortCargoFormat = 2
                 summSortCargoValue = 0
                 summSortCargoList.append(summSortCargoValue)
-            if summSortCargo == 1:
+            elif summSortCargo == 1:
                 summSortCargoDisplay = 'Y'
                 summSortCargoFormat = 4
                 summSortCargoValue = 1
                 summSortCargoList.append(summSortCargoValue)
+            else:
+                summSortCargoDisplay = '888'
+                summSortCargoValue = 888
+                summSortCargoFormat = 1
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
 
             # Create the rsCEA records for Display, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(summSortCargoDisplay)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(summSortCargoDisplay)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = summSortCargoValue
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = summSortCargoFormat
 

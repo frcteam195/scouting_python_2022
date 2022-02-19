@@ -55,18 +55,27 @@ tableContents = cursorSrc.fetchall()
 #columnHeadings = str(tuple([record[0] for record in tableContents])).replace("'", "")
 
 wipeTable()
-print(tableContents)
+#print(tableContents)
 print(num_fields)
 #print(columnHeadings)
 
-#rsTable_records = tableContents.items()
-#values = str(tuple([record[1] for record in rsTable_records]))
-
+#query=("INSERT INTO MatchScouting (MatchScoutingID, EventID, MatchID, ComputerID, ScouterID, ReviewerID, ScoutingStatus, Team, TeamMatchNo, AllianceStationID, AutoStartPos, AutoPreload, AutoDidNotShow, AutoMoveBonus, AutoBallLow, AutoBallHigh, AutoBallMiss, AutoBallPos1, AutoBallPos2, AutoBallPos3, AutoBallPos4, AutoBallPos5, AutoBallPos6, AutoBallPos7, AutoBallPos8, AutoBallPos9, AutoBallPos10, TeleBallLow, TeleBallHigh, TeleBallMiss, ClimbStatusID, ClimbHeight, ClimbPosition, SummLaunchPad, SummSortCargo, SummShootDriving, SummBrokeDown, SummLostComm, SummSubSystemBroke, SummGroundPickup, SummTerminalPickup, SummPlayedDefense, SummDefPlayedAgainst) VALUES (1, 1, 1, 1, 1, None, 1, '1071', 1, 1, 2, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 4, None, None, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1);")
+#query=("INSERT INTO MatchScouting (MatchScoutingID, EventID, MatchID, ComputerID, ScouterID, ReviewerID, ScoutingStatus, Team, TeamMatchNo, AllianceStationID, AutoStartPos, AutoPreload, AutoDidNotShow, AutoMoveBonus, AutoBallLow, AutoBallHigh, AutoBallMiss, AutoBallPos1, AutoBallPos2, AutoBallPos3, AutoBallPos4, AutoBallPos5, AutoBallPos6, AutoBallPos7, AutoBallPos8, AutoBallPos9, AutoBallPos10, TeleBallLow, TeleBallHigh, TeleBallMiss, ClimbStatusID, ClimbHeight, ClimbPosition, SummLaunchPad, SummSortCargo, SummShootDriving, SummBrokeDown, SummLostComm, SummSubSystemBroke, SummGroundPickup, SummTerminalPickup, SummPlayedDefense, SummDefPlayedAgainst) VALUES (1, 1, 1, 1, 1, 9, 1, '1071', 1, 1, 2, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 4, 9, 9, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1);")
+#query = query.replace("None", "NULL")
+#print(query)
+#cursorDes.execute(query)
+#connDes.commit()
+    
 for row in tableContents:
-    print(row)
-    row = functools.reduce(operator.add, (row))
-    query = ("INSERT INTO MatchScouting " + columnHeadings + " VALUES (%s, ))
+    #print(row)
+    row = str(tuple(row))
+    #print(row)
+    query = ("INSERT INTO MatchScouting " + columnHeadings + " VALUES " + row + ";")
+    query = query.replace("None", "NULL")
     print(query)
+    cursorDes.execute(query)
+    connDes.commit()
+    
 
 #wipeTable()
 #rsRobots = getTeams()
