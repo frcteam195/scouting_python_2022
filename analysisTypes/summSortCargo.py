@@ -37,8 +37,7 @@ def summSortCargo(analysis, rsRobotMatches):
                 summSortCargoValue = 1
                 summSortCargoList.append(summSortCargoValue)
             else:
-                summSortCargoDisplay = '888'
-                summSortCargoValue = 888
+                summSortCargoDisplay = 'Err'
                 summSortCargoFormat = 1
 
             # Perform some calculations

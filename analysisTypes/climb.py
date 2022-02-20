@@ -22,15 +22,15 @@ def climb(analysis, rsRobotMatches):
             # ClimbString: B=broke down, D=defense, C=scored cargo
             ClimbStatusID = matchResults[analysis.columns.index('ClimbStatusID')]
             if ClimbStatusID == 1:
-                ClimbStatusString = "B"
+                ClimbStatusString = "BD"
                 ClimbStatusColor = 0
                 ClimbStatusScore = 0
             elif ClimbStatusID == 2:
-                ClimbStatusString = "D"
+                ClimbStatusString = "Def"
                 ClimbStatusColor = 0
                 ClimbStatusScore = 0
             elif ClimbStatusID == 3:
-                ClimbStatusString = "C"
+                ClimbStatusString = "Cgo"
                 ClimbStatusColor = 0
                 ClimbStatusScore = 0
             elif ClimbStatusID == 4:
@@ -40,11 +40,11 @@ def climb(analysis, rsRobotMatches):
             else:
                 ClimbPosition = matchResults[analysis.columns.index('ClimbPosition')]
                 if ClimbPosition == 1:
-                    ClimbPositionString = "L"
+                    ClimbPositionString = "l"
                 elif ClimbPosition == 2:
-                    ClimbPositionString = "M"
+                    ClimbPositionString = "m"
                 elif ClimbPosition == 3:
-                    ClimbPositionString = "R"
+                    ClimbPositionString = "r"
                 else:
                     ClimbPositionString = "?"
                 ClimbHeight = matchResults[analysis.columns.index('ClimbHeight')]

@@ -1,16 +1,16 @@
 import statistics
 
 
-def autonomous(analysis, rsRobotMatches):
+def autonomousScore(analysis, rsRobotMatches):
     # start = time.time()
     # print("autonomous time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 10
+    rsCEA['AnalysisTypeID'] = 11
     numberOfMatchesPlayed = 0
 
-    totalHighBallsList = []
-    totalBallsList = []
+    autoScore = 0
+    autoScoreList = []
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
@@ -29,14 +29,18 @@ def autonomous(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
+            if autoMoveBonus == 1:
+            	autoScore = autoScore + 2
             
             autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallLow is None:
                 autoBallLow = 0
+            autoScore = autoScore + (autoBallLow * 2)
             
             autoBallHigh = matchResults[analysis.columns.index('AutoBallHigh')]
             if autoBallHigh is None:
                 autoBallHigh = 0
+            autoScore = autoScore + (autoBallHigh * 4)
             
             autoBallMiss = matchResults[analysis.columns.index('AutoBallMiss')]
             if autoBallMiss is None:
@@ -44,34 +48,28 @@ def autonomous(analysis, rsRobotMatches):
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            totalBalls = autoBallLow + autoBallHigh
-            totalHighBallsList.append(autoBallHigh)
-            totalBallsList.append(autoBallLow + autoBallHigh)
+            autoScoreList.append(autoScore)
 
             # Create the rsCEA records for Display, Value, and Format
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                str(totalBalls) + "|" + str(autoBallHigh)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
-            if totalBalls > 3:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(autoScore)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = autoScore
+            if autoScore > 14:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
-            elif totalBalls == 3:
+            elif 10 <= autoScore <= 14:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            elif 1 <= totalBalls < 3:
+            elif 6 <= autoScore < 10:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
+            elif 3 <= autoScore < 6:
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
             else:
-                if autoMoveBonus == 1:
-                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
-                else:
-                    rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
+                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     # Create summary data
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(totalBallsList), 1)
-        rsCEA['Summary1Value'] = round(statistics.mean(totalBallsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalBallsList)
-        rsCEA['Summary4Display'] = round(statistics.mean(totalHighBallsList), 1)
-        rsCEA['Summary4Value'] = round(statistics.mean(totalHighBallsList), 1)
+        rsCEA['Summary1Display'] = round(statistics.mean(autoScoreList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(autoScoreList), 1)
+        rsCEA['Summary2Display'] = statistics.median(autoScoreList)
+        rsCEA['Summary2Value'] = statistics.median(autoScoreList)
 
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))

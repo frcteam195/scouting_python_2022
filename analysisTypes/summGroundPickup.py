@@ -24,6 +24,7 @@ def summGroundPickup(analysis, rsRobotMatches):
             summGroundPickup = matchResults[analysis.columns.index('SummGroundPickup')]
             if summGroundPickup is None:
                 summGroundPickup = 999
+                summGroundPickupDisplay = '999'
             if summGroundPickup == 0:
                 summGroundPickupDisplay = 'N'
                 summGroundPickupFormat = 2
@@ -34,6 +35,8 @@ def summGroundPickup(analysis, rsRobotMatches):
                 summGroundPickupFormat = 4
                 summGroundPickupValue = 1   
                 summGroundPickupList.append(summGroundPickupValue)
+            else:
+            	summGroundPickupDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1     

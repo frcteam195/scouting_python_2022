@@ -24,16 +24,19 @@ def summPlayedDefense(analysis, rsRobotMatches):
             summPlayedDefense = matchResults[analysis.columns.index('SummPlayedDefense')]
             if summPlayedDefense is None:
                 summPlayedDefense = 999
-            if summPlayedDefense == 0:
+                summPlayedDefenseDisplay = '999'
+            elif summPlayedDefense == 0:
                 summPlayedDefenseDisplay = 'N'
                 summPlayedDefenseFormat = 2
                 summPlayedDefenseValue = 0
                 summPlayedDefenseList.append(summPlayedDefenseValue)
-            if summPlayedDefense == 1:
+            elif summPlayedDefense == 1:
                 summPlayedDefenseDisplay = 'Y'
                 summPlayedDefenseFormat = 4
                 summPlayedDefenseValue = 1
                 summPlayedDefenseList.append(summPlayedDefenseValue)
+            else:
+            	summPlayedDefenseDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

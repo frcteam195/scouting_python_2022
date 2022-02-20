@@ -10,6 +10,7 @@ import sys
 from analysisTypes.startingPosition import startingPosition  #1
 # auto 10-19
 from analysisTypes.autonomous import autonomous  #10
+from analysisTypes.autonomousScore import autonomousScore  #11
 # tele 20-29
 from analysisTypes.teleLowBalls import teleLowBalls   #20
 from analysisTypes.teleHighBalls import teleHighBalls   #21
@@ -30,6 +31,7 @@ from analysisTypes.summBrokeDown import summBrokeDown   #49
 # Totals 60-69
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
+from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 
 # *********************** argument parser **********************
@@ -97,6 +99,14 @@ class analysis():
             self.conn = mariaDB.connect(user='admin',
                                         passwd='team195',
                                         host='10.0.0.195',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
+            
+        # Pi DB with remote access (e.g. from laptop)
+        elif database == "pi-192":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='192.168.1.195',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
 
@@ -198,6 +208,9 @@ class analysis():
                 
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+                
+                rsCEA = autonomousScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
                 rsCEA = teleLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
@@ -245,6 +258,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = totalScore(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = teleBallScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)

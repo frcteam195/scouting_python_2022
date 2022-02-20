@@ -24,16 +24,19 @@ def summLostComm(analysis, rsRobotMatches):
             summLostComm = matchResults[analysis.columns.index('SummLostComm')]
             if summLostComm is None:
                 summLostComm = 999
-            if summLostComm == 0:
+                summLostCommDisplay = '999'
+            elif summLostComm == 0:
                 summLostCommDisplay = 'N'
                 summLostCommFormat = 4
                 summLostCommValue = 0
                 lostCommList.append(summLostCommValue)
-            if summLostComm == 1:
+            elif summLostComm == 1:
                 summLostCommDisplay = 'Y'
                 summLostCommFormat = 2
                 summLostCommValue = 1
                 lostCommList.append(summLostCommValue)
+            else:
+            	summLostCommDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

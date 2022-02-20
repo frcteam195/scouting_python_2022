@@ -1,12 +1,9 @@
 import statistics
 
-#from analysisTypes.teleTotalBalls import teleTotalBalls
-
-
-def totalScore(analysis, rsRobotMatches):
+def teleBallScore(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 61
+    rsCEA['AnalysisTypeID'] = 62
     numberOfMatchesPlayed = 0
     totalPointsList = []
     climbPoints = 0
@@ -24,20 +21,6 @@ def totalScore(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
         else:
             # Identify the various different types of scoring
-            # Auto move, low ball, and high ball
-            autoMoveStatus = matchResults[analysis.columns.index("AutoMoveBonus")]
-            if autoMoveStatus == 2:
-                autoMovePoints = 2
-            else:
-                autoMovePoints = 0
-            
-            autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
-            if autoBallLow is None:
-                autoBallLow = 0
-            
-            autoBallHigh = matchResults[analysis.columns.index('AutoBallHigh')]
-            if autoBallHigh is None:
-                autoBallHigh = 0
             
             # Tele Low ball, high ball, and climb
             teleBallLow = matchResults[analysis.columns.index('TeleBallLow')]
@@ -47,44 +30,22 @@ def totalScore(analysis, rsRobotMatches):
             teleBallHigh = matchResults[analysis.columns.index('TeleBallHigh')]
             if teleBallHigh is None:
                 teleBallHigh = 0
-            
-            teleBallMiss = matchResults[analysis.columns.index('TeleBallMiss')]
-            if teleBallMiss is None:
-                teleBallMiss = 0
-            
-            climbStatus = matchResults[analysis.columns.index('ClimbStatusID')]
-            if climbStatus != 5:
-                climbPoints = 0
-            if climbStatus == 5:
-                climbHeight = matchResults[analysis.columns.index('ClimbHeight')]
-                if climbHeight == 1:
-                    climbPoints = 4    
-                elif climbHeight == 2:
-                    climbPoints = 6   
-                elif climbHeight == 3:
-                    climbPoints = 10
-                elif climbHeight == 4:
-                    climbPoints = 15
-                else:
-                    climbPoints = 999
-             
 
             # Adding up all the previously identified elements
             numberOfMatchesPlayed += 1
-            totalPoints = autoMovePoints + (autoBallHigh * 4) + (autoBallLow * 2) + \
-                        (teleBallHigh * 2) + teleBallLow + climbPoints
+            totalPoints = (teleBallHigh * 2) + teleBallLow
             totalPointsList.append(totalPoints)
 
             # Set the Display, Value, and Format values
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(totalPoints)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalPoints
-            if totalPoints >= 61:
+            if totalPoints >= 40:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
-            elif totalPoints >= 41:
+            elif totalPoints >= 30:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            elif totalPoints >= 21:
+            elif totalPoints >= 18:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
-            elif totalPoints >= 11:
+            elif totalPoints >= 6:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1

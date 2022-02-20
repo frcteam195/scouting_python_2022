@@ -24,21 +24,27 @@ def totalBalls(analysis, rsRobotMatches):
             autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallLow is None:
                 autoBallLow = 0
+            
             autoBallHigh = matchResults[analysis.columns.index('AutoBallHigh')]
             if autoBallHigh is None:
                 autoBallHigh = 0
+            
             autoBallMiss = matchResults[analysis.columns.index('AutoBallMiss')]
             if autoBallMiss is None:
                 autoBallMiss = 0
+            
             teleBallLow = matchResults[analysis.columns.index('TeleBallLow')]
             if teleBallLow is None:
                 teleBallLow = 0
+            
             teleBallHigh = matchResults[analysis.columns.index('TeleBallHigh')]
             if teleBallHigh is None:
                 teleBallHigh = 0
+            
             teleBallMiss = matchResults[analysis.columns.index('TeleBallMiss')]
             if teleBallMiss is None:
                 teleBallMiss = 0
+            
             defPlayedAgainst = matchResults[analysis.columns.index('SummDefPlayedAgainst')]
             if defPlayedAgainst is None:
                 defPlayedAgainst = 0

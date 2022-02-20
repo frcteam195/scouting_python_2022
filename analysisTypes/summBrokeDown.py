@@ -28,12 +28,13 @@ def summBrokeDown(analysis, rsRobotMatches):
             brokeDown = matchResults[analysis.columns.index('SummBrokeDown')]
             if brokeDown is None:
                 brokeDown = 999
+                brokeDownString = '999'
             elif brokeDown == 0:
                 brokeDownString = 'N'
-            elif brokeDown == 999:
-                brokeDownString = 'Error'
-            else:
+            elif brokeDown == 1:
                 brokeDownString = 'Y'
+            else:
+                brokeDownString = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

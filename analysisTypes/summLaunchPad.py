@@ -24,16 +24,19 @@ def summLaunchPad(analysis, rsRobotMatches):
             summLaunchPad = matchResults[analysis.columns.index('SummLaunchPad')]
             if summLaunchPad is None:
                 summLaunchPad = 999
-            if summLaunchPad == 0:
+                summLaunchPadDisplay = '999'
+            elif summLaunchPad == 0:
                 summLaunchPadDisplay = 'N'
                 summLaunchPadFormat = 2
                 summLaunchPadValue = 0
                 summLaunchPadList.append(summLaunchPadValue)
-            if summLaunchPad == 1:
+            elif summLaunchPad == 1:
                 summLaunchPadDisplay = 'Y'
                 summLaunchPadFormat = 4
                 summLaunchPadValue = 1
                 summLaunchPadList.append(summLaunchPadValue)
+            else:
+            	summLaunchPadDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
