@@ -3,7 +3,7 @@ import sys
 import argparse
 
 database = ''
-csvFilename = ''
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
 args = parser.parse_args()
@@ -24,15 +24,7 @@ else:
     sys.exit()
 
 print ("Connecting to " + database)
-
-def wipeML2():
-        cursor.execute("DELETE FROM MatchScoutingL2;")
-        cursor.execute("ALTER TABLE MatchScoutingL2 AUTO_INCREMENT = 1;")
-        conn.commit()
       
-
-def onlyascii(s):
-    return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
 if database == "aws-dev":
             print("Input database " + input_database)
             conn = mariaDB.connect(user='admin',
@@ -45,6 +37,13 @@ elif database == "pi-10":
             conn = mariaDB.connect(user='admin',
                                 passwd='team195',
                                 host='10.0.0.195',
+                                database='team195_scouting')
+            cursor = conn.cursor()
+
+elif database == "pi-192":
+            conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
                                 database='team195_scouting')
             cursor = conn.cursor()
 
@@ -66,7 +65,11 @@ else:
         print ("oops - Harish would not approve of that!")
         sys.exit()
 
-wipeML2() 
+# def wipeML2():
+#         cursor.execute("DELETE FROM MatchScoutingL2;")
+#         cursor.execute("ALTER TABLE MatchScoutingL2 AUTO_INCREMENT = 1;")
+#         conn.commit()
+# wipeML2() 
 
 
 cursor.execute("SELECT Matches.* FROM Matches LEFT JOIN MatchScoutingL2  "

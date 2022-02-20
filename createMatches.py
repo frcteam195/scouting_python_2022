@@ -19,16 +19,11 @@ elif input_database == "pi-10":
     database = "pi-10"
 elif input_database == "localhost":
     database = "localhost"
-elif input_database == "excel":
-    database = "excel"
 else:
     print(input_database + " is not a invalid database choice. See --help for choices")
     sys.exit()
 
 print ("Connecting to " + database)      
-
-def onlyascii(s):
-    return "".join(i for i in s if ord(i) < 128 and ord(i) != 39)
 
 if database == "aws-dev":
         print("Input database " + input_database)
@@ -42,6 +37,13 @@ elif database == "pi-10":
         conn = mariaDB.connect(user='admin',
                                 passwd='team195',
                                 host='10.0.0.195',
+                                database='team195_scouting')
+        cursor = conn.cursor()
+        
+elif database == "pi-192":
+        conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
                                 database='team195_scouting')
         cursor = conn.cursor()
 
@@ -64,12 +66,11 @@ else:
         sys.exit()
 
 
-def wipeBAS():
-        cursor.execute("DELETE FROM BlueAllianceSchedule;")
-        cursor.execute("ALTER TABLE BlueAllianceSchedule AUTO_INCREMENT = 1;")
-        conn.commit()
-
-wipeBAS()
+# def wipeBAS():
+#         cursor.execute("DELETE FROM BlueAllianceSchedule;")
+#         cursor.execute("ALTER TABLE BlueAllianceSchedule AUTO_INCREMENT = 1;")
+#         conn.commit()
+# wipeBAS()
 
 query = "SELECT Events.EventID, Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1; "
 cursor.execute(query)
