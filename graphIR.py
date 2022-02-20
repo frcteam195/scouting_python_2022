@@ -2,63 +2,99 @@ import mysql.connector as mariaDB
 import numpy as np
 import datetime
 import time
-# For each analysisType we create add a new import statement. We could import all analysisTypes
-from analysisTypes.autonomous import autonomous
-from analysisTypes.teleTotalBalls import teleTotalBalls
-from analysisTypes.startingPosition import startingPosition
-from analysisTypes.climb import climb
-from analysisTypes.totalScore import totalScore
-from analysisTypes.teleTotalBalls import teleTotalBalls
-from analysisTypes.totalBalls import totalBalls
-from analysisTypes.summGroundPickup import summGroundPickup
-from analysisTypes.summBrokeDown import summBrokeDown
-from analysisTypes.summLostComm import summLostComm
+import argparse
 
-CEA_table = "CurrentEventAnalysisGraphs"
+
+# *********************** argument parser **********************
+
+# Initialize parser
+database = ''
+csvFilename = ''
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+ 
+# Read arguments from command line
+args = parser.parse_args()
+
+input_database = args.database
+# input_csvFilename = args.csv_filename
+
+if input_database == "aws-prod":
+    database = "aws-prod"
+elif input_database == "aws-dev":
+    database = "aws-dev"
+elif input_database == "pi-192":
+    database = "pi-192"
+elif input_database == "pi-10":
+    database = "pi-10"
+elif input_database == "localhost":
+    database = "localhost"
+else:
+    print(input_database + " is not a invalid database choice. See --help for choices")
+    sys.exit()
+
+print ("Connecting to " + database)
+
+# **************************************************************
+
+CEAG_table = "CurrentEventAnalysisGraphs"
 
 # Define a Class called analysis
 class analysis():
-    # Inside the class there are several functions defined _run_query, _setColumns, _wipeCEA, _getTeams,
-    #   _getTeamData, _analyzeTeams, and _insertAnalysis. Those functions will not get called automatically
-    #   so in order to get them to run we create a __init__ function which is a special function in Python
-    #   that gets run every time the Class is initialized. Here we build the DB connection cursor from within
-    #   the __init__ function and then call the cursor, columns, wipeCEA, rsRobots, and analyzeTeams functions
-    #   from within the __init__ function, which means they will be run automatically when the Class is initialized
     def __init__(self):
         now = datetime.datetime.now()
         print(now.strftime("%Y-%m-%d %H:%M:%S"))
         start_time = time.time()
 
-        # Connection to AWS Testing database - use when you would destroy tables with proper data
-        self.conn = mariaDB.connect(user='admin',
-                                    passwd='Einstein195',
-                                    host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-                                    database='team195_scouting')
-        self.cursor = self.conn.cursor()
-
+		# Connection to AWS Testing database - use when you would destroy tables with proper data
+        if database == "aws-dev":
+            print("Input database " + input_database)
+            self.conn = mariaDB.connect(user='admin',
+                                       passwd='Einstein195',
+                                        host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                       database='team195_scouting')
+            self.cursor = self.conn.cursor()
+        
         # Pi DB with remote access (e.g. from laptop)
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='team195',
-        #                             host='10.0.0.195',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        elif database == "pi-10":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='10.0.0.195',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
+            
+        # Pi DB with remote access (e.g. from laptop)
+        elif database == "pi-192":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='192.168.1.195',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
 
         # Pi DB with local access (e.g. from the Pi itself)
-        # self.conn = mariaDB.connect(user='admin',
-        #                             passwd='team195',
-        #                             host='localhost',
-        #                             database='team195_scouting')
-        # self.cursor = self.conn.cursor()
+        elif database == "localhost":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='team195',
+                                        host='localhost',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
 
         # Connection to AWS database with proper data
-        # self.conn = mariaDB.connect(user='admin',
-#                                     passwd='Einstein195',
-#                                     host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
-#                                     database='team195_scouting')
-#         self.cursor = self.conn.cursor()
+        elif database == "aws-prod":
+            self.conn = mariaDB.connect(user='admin',
+                                        passwd='Einstein195',
+                                        host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
+                                        database='team195_scouting')
+            self.cursor = self.conn.cursor()
+
+        else:
+            print ("oops - that should not happen")
+            sys.exit()
 
         self.columns = []
-        self._wipeCEA()
+        self._wipeCEAG()
         self._analyzeTeams()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
@@ -72,24 +108,24 @@ class analysis():
     def _setColumns(self, columns):
         self.columns = columns
 
-    # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
-    def _wipeCEA(self):
-        self._run_query("DELETE FROM " + CEA_table + "")
+    # Function to wipe the CEAG table. We may want to make this only remove CurrentEvent records.
+    def _wipeCEAG(self):
+        self._run_query("DELETE FROM " + CEAG_table + "")
         self.conn.commit()
 
     #
     def _analyzeTeams(self):
         # Insert average data for each team into CurrentEventAnalysisGraphs
-        analysisTypeList = [60, 61, 30, 20, 22, 21]
-        analysisNameList = ["TotalBalls", "TotalScore", "Climb", "TeleLowBalls", "TeleTotalBalls", "TeleHighBalls"]
-        self._run_query("INSERT INTO " + CEA_table + "(Team, EventID, AutonomousScore) "
+        analysisTypeList = [60, 61, 30, 20, 22, 21, 11, 62]
+        analysisNameList = ["TotalBalls", "TotalScore", "Climb", "TeleHighBalls", "TeleLowBalls", "TeleTotalBalls", "AutonomousScore", "TeleBallScore"]
+        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, Autonomous) "
                             "SELECT Team, EventID, Summary1Value "
                             "FROM CurrentEventAnalysis "
                             "WHERE AnalysisTypeID = 10;")
         for i in range(len(analysisTypeList)):
-            print(i)
-            self._run_query("UPDATE " + CEA_table + " "
-                            "INNER JOIN CurrentEventAnalysis ON " + CEA_table + ".Team = CurrentEventAnalysis.Team AND " + CEA_table + ".EventID = CurrentEventAnalysis.EventID "
+            #print(i)
+            self._run_query("UPDATE " + CEAG_table + " "
+                            "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
                             "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value "
                             "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
         self.conn.commit()
