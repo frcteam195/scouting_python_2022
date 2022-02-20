@@ -12,7 +12,7 @@ import argparse
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 currentYear = datetime.datetime.today().year
 database = ''
-csvFilename = ''
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
 args = parser.parse_args()
@@ -56,6 +56,13 @@ elif database == "pi-10":
                                 host='10.0.0.195',
                                 database='team195_scouting')
             cursor = conn.cursor()
+            
+elif database == "pi-192":
+            conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
+                                database='team195_scouting')
+            cursor = conn.cursor()
 
 elif database == "localhost":
         conn = mariaDB.connect(user='admin',
@@ -76,7 +83,6 @@ else:
         sys.exit()
 
 wipeBAE() 
-
 
 totalEvents = tba.events(year=currentYear)
 eventList = []

@@ -48,6 +48,13 @@ elif database == "pi-10":
                                 host='10.0.0.195',
                                 database='team195_scouting')
         cursor = conn.cursor()
+        
+elif database == "pi-192":
+        conn = mariaDB.connect(user='admin',
+                                passwd='team195',
+                                host='192.168.1.195',
+                                database='team195_scouting')
+        cursor = conn.cursor()
 
 elif database == "localhost":
         conn = mariaDB.connect(user='admin',
