@@ -176,7 +176,7 @@ print(num_fields)
 for row in tableContents:
     #print(row)
     row = str(tuple(row))
-    #print(row)
+    print(row)
     query = ("INSERT INTO " + table_name + " " + columnHeadings + " VALUES " + row + ";")
     query = query.replace("None", "NULL")
     print(query)

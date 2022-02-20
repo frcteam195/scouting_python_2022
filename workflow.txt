@@ -1,0 +1,55 @@
+Description on the workflow for running the python scripts
+
+*** Run once per season ***
+
+1. BA/TotalEvents
+	This will grab all FRC events for the current year and populate the
+	BlueAllianceEvents table
+	
+2. BA/TotalTeamList
+	This will grab all FRC teams for the current year and populate the
+	Teams table
+	
+*** Setup to scout a competition
+
+1. Manually add an event to the Events table making sure to get the correct BAEventID
+	from the BlueAllianceEvents table. Set the CurrentEvent column to 1 for the 
+	event
+	
+2. BA/CurrentEventTeamList
+	This will lookup the current event from the Events table along with the BAEventID
+	and grab the Teams for the current event and populate the BlueAllianceTeams
+	table
+	
+3. BA/Schedule
+	This will lookup the current event from the Events table along with the BAEventID
+	and grab the match schedule for the current event and populate the
+	BlueAllianceSchedule table
+	
+4. createCurrentEventTeams
+	This will populate the CurrentEventTeams table with information from the 
+	BlueAllianceTeams table
+	
+5. createMatches
+	This will take the BlueAllianceSchedule table and build matches for the current
+	event in the Matches table. Any new matches will be created and any changes
+	to existing records will be updated
+	
+6. createMatchScoutingRecords
+	This will build the match scouting records based on the Matches table. Like the
+	createMatches script, bit will update records that have changed in case the schedule
+	changed during a competition
+	
+7 createMatchScoutingL2Records
+	***** This needs to be tested for rapid react *****
+	
+*** Scripts that run during a competition
+
+1. AnalysisIR
+	This will take match scouting records from the MatchScouting table and create the
+	CurrentEventAnalysis table ready for table builds for visualization
+	
+2. graphIR
+	This will take the CEA table and create a new table, CurrentEventAnalysisGraphs table
+	that lay out the data on a per team basis with selected analysis types in columns
+	that is easily suited for making bar graphs of the data

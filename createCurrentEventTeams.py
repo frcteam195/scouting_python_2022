@@ -67,12 +67,12 @@ else:
         sys.exit()
 
 
-def wipeCET():
-        cursor.execute("DELETE FROM CurrentEventTeams;")
-        cursor.execute("ALTER TABLE CurrentEventTeams AUTO_INCREMENT = 1;")
-        conn.commit()
-wipeCET()
 
+cursor.execute("DELETE FROM CurrentEventTeams;")
+cursor.execute("ALTER TABLE CurrentEventTeams AUTO_INCREMENT = 1;")
+conn.commit()
+
+cursor.execute("SELECT BlueAllianceTeams.Team FROM BlueAllianceTeams")
 for team in cursor.fetchall():
     query = "INSERT INTO CurrentEventTeams (Team) VALUES (" + team[0] + ");"
     print(query)

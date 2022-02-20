@@ -7,10 +7,11 @@ import sys
 import argparse
 
 database = ''
+excel = ''
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True
-parser.add_argument("--excel",choices=('True','False'))
+parser.add_argument("-db", "--database", help = "Choices: aws-prod, aws-dev, pi-192, pi-10, localhost", required=True)
+parser.add_argument("--excel", choices=('True','False'))
 args = parser.parse_args()
 input_database = args.database
 excel = args.excel == 'True'
@@ -29,7 +30,8 @@ else:
     print(input_database + " is not a invalid database choice. See --help for choices")
     sys.exit()
 
-print ("Connecting to " + database)      
+print ("Connecting to " + database)     
+print ("Excel status set to " + str(excel)) 
 
 if database == "aws-dev":
         print("Input database " + input_database)
@@ -74,8 +76,8 @@ else:
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 
-# x = 195
-# team = tba.team(x)
+x = 195
+team = tba.team(x)
 
 def sortbyteam(d):
     return d.get('team_number', None)
@@ -85,7 +87,7 @@ cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 
 event = cursor.fetchone()[0]
 
 
-if excel == "False":
+if excel == False:
 	cursor.execute("DELETE FROM BlueAllianceTeams;")
 	cursor.execute("ALTER TABLE BlueAllianceTeams AUTO_INCREMENT = 1;")
 	conn.commit()
@@ -107,7 +109,7 @@ if excel == "False":
 		cursor.execute(query)
 		conn.commit()
 
-elif excel == "True":
+elif excel == True:
 	workbook = xlsxwriter.Workbook('TEAM_LIST.xlsx')
 	worksheet = workbook.add_worksheet()
 

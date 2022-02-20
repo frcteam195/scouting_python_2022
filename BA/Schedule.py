@@ -72,13 +72,13 @@ else:
         sys.exit()
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
-# x = 195
+#x = 195
 
 def sortbymatch(d):
     return d.get('match_number', None)
 
 
-team = tba.team(x)
+#team = tba.team(x)
 cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 1;")
 event = str(cursor.fetchone()[0])
 print(event)
@@ -89,7 +89,7 @@ matchNumberList = []
 eventMatches = tba.event_matches(event)
 
     
-if excel == "False":
+if excel == False:
 	cursor.execute("DELETE FROM BlueAllianceSchedule")
 	conn.commit()
 
@@ -129,7 +129,7 @@ if excel == "False":
 		cursor.execute(query)
 		conn.commit()
 
-elif excel == "True":
+elif excel == True:
 	workbook = xlsxwriter.Workbook('SCHEDULE.xlsx')
 	worksheet = workbook.add_worksheet()
 

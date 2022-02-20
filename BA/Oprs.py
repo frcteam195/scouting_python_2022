@@ -79,7 +79,7 @@ cursor.execute("SELECT Events.BAEventID FROM Events WHERE Events.CurrentEvent = 
 event = cursor.fetchone()[0]
 
 
-if excel == "False":
+if excel == False:
 	cursor.execute("DELETE FROM BlueAllianceOPR")
 	conn.commit()
 
@@ -95,7 +95,7 @@ if excel == "False":
 		cursor.execute(query)
 		conn.commit()
 
-elif excel == "True":
+elif excel == True:
 	workbook = xlsxwriter.Workbook('OPRS.xlsx')
 	worksheet = workbook.add_worksheet()
 

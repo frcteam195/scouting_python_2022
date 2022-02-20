@@ -88,7 +88,7 @@ teamRanks = tba.event_rankings(event).get('rankings')
 teamRankList = []
 
     
-if excel == "False":
+if excel == False:
 	print("Writing Ranks to database")
 	
 	cursor.execute("DELETE FROM BlueAllianceRankings")
@@ -104,7 +104,7 @@ if excel == "False":
 		cursor.execute(query)
 		conn.commit()
 
-elif excel == "True":
+elif excel == True:
 	workbook = xlsxwriter.Workbook('EVENT RANKINGS.xlsx')
 	worksheet = workbook.add_worksheet()
 
