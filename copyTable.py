@@ -95,6 +95,7 @@ elif source_database == "pi-192":
     connSrc = mariaDB.connect(user='admin',
                                 passwd='Einstein195',
                                 host='192.168.1.195',
+                                port='3306', 
                                 database='team195_scouting')
     cursorSrc = connSrc.cursor()
 
