@@ -1,7 +1,7 @@
 import statistics
 
 def summGroundPickup(analysis, rsRobotMatches):
-   # start = time.time()
+    # start = time.time()
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
@@ -25,18 +25,18 @@ def summGroundPickup(analysis, rsRobotMatches):
             if summGroundPickup is None:
                 summGroundPickup = 999
                 summGroundPickupDisplay = '999'
-            if summGroundPickup == 0:
+            elif summGroundPickup == 0:
                 summGroundPickupDisplay = 'N'
                 summGroundPickupFormat = 2
                 summGroundPickupValue = 0
                 summGroundPickupList.append(summGroundPickupValue)
-            if summGroundPickup == 1:
+            elif summGroundPickup == 1:
                 summGroundPickupDisplay = 'Y'
                 summGroundPickupFormat = 4
                 summGroundPickupValue = 1   
                 summGroundPickupList.append(summGroundPickupValue)
             else:
-            	summGroundPickupDisplay = 'Err'
+                summGroundPickupDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1     
