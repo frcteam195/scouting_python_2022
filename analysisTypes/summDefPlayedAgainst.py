@@ -36,7 +36,7 @@ def summDefPlayedAgainst(analysis, rsRobotMatches):
                 summDefPlayedAgainstValue = 1
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             else:
-            	summDefPlayedAgainstDisplay = "Err"
+                summDefPlayedAgainstDisplay = "Err"
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

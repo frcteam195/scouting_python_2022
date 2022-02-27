@@ -36,7 +36,7 @@ def summPlayedDefense(analysis, rsRobotMatches):
                 summPlayedDefenseValue = 1
                 summPlayedDefenseList.append(summPlayedDefenseValue)
             else:
-            	summPlayedDefenseDisplay = 'Err'
+                summPlayedDefenseDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

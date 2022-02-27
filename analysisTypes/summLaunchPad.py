@@ -36,7 +36,7 @@ def summLaunchPad(analysis, rsRobotMatches):
                 summLaunchPadValue = 1
                 summLaunchPadList.append(summLaunchPadValue)
             else:
-            	summLaunchPadDisplay = 'Err'
+                summLaunchPadDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

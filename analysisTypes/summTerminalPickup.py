@@ -36,7 +36,7 @@ def summTerminalPickup(analysis, rsRobotMatches):
                 summTerminalPickUpValue = 1
                 summTerminalPickUpList.append(summTerminalPickUpValue)
             else:
-            	summTerminalPickUpDisplay = 'Err'
+                summTerminalPickUpDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

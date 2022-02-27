@@ -36,7 +36,7 @@ def summLostComm(analysis, rsRobotMatches):
                 summLostCommValue = 1
                 lostCommList.append(summLostCommValue)
             else:
-            	summLostCommDisplay = 'Err'
+                summLostCommDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

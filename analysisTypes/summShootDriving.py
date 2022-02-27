@@ -36,7 +36,7 @@ def summShootDriving(analysis, rsRobotMatches):
                 summShootDrivingValue = 1
                 summShootDrivingList.append(summShootDrivingValue)
             else:
-            	summShootDrivingDisplay = 'Err'
+                summShootDrivingDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

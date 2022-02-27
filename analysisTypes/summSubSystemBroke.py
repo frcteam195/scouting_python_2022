@@ -36,7 +36,7 @@ def summSubSystemBroke(analysis, rsRobotMatches):
                 summSubSystemBrokeValue = 1
                 summSubSystemBrokeList.append(summSubSystemBrokeValue)
             else:
-            	summSubSystemBrokeDisplay = 'Err'
+                summSubSystemBrokeDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
