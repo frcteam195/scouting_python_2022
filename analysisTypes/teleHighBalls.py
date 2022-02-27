@@ -16,9 +16,9 @@ def teleHighBalls(analysis, rsRobotMatches):
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
         # Skip if DNS or UR
         if autoDidNotShow == 1:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
         elif scoutingStatus == 2:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             teleBallLow = matchResults[analysis.columns.index('TeleBallLow')]

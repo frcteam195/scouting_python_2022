@@ -17,9 +17,9 @@ def startingPosition(analysis, rsRobotMatches):
         autoDidNotShow = matchResults[analysis.columns.index('AutoDidNotShow')]
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
         if autoDidNotShow == 1:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
         elif scoutingStatus == 2:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
             numberOfMatchesPlayed += 1

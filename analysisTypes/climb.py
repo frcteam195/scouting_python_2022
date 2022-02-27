@@ -14,9 +14,9 @@ def climb(analysis, rsRobotMatches):
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
         # Skip if DNS or UR
         if autoDidNotShow == 1:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
         elif scoutingStatus == 2:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Status values: 1=no attempt broke, 2= no attempt played D, 3 = no attempt scored, 4=fail, 5=success
             # ClimbString: B=broke down, D=defense, C=scored cargo
