@@ -16,9 +16,9 @@ def teleBallScore(analysis, rsRobotMatches):
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
         # Skip if DNS or UR
         if autoDidNotShow == 1:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
         elif scoutingStatus == 2:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = ''
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Identify the various different types of scoring
             
