@@ -1,4 +1,4 @@
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import sys
 import argparse
 

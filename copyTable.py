@@ -1,4 +1,4 @@
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import numpy as np
 import datetime
 import time
@@ -139,7 +139,7 @@ elif destination_database == "pi-10":
     
 elif destination_database == "pi-192":
     connDes = mariaDB.connect(user='admin',
-                                passwd='team195',
+                                passwd='Einstein195',
                                 host='192.168.1.195',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
@@ -160,7 +160,8 @@ else:
 def wipeTable():
     cursorDes.execute("DELETE FROM " + table_name + ";")
     cursorDes.execute("ALTER TABLE " + table_name + " AUTO_INCREMENT = 1;")
-    connDes.commit()  
+    connDes.commit()
+    print ("Wiping " + table_name + " table")
 
 
 
@@ -173,25 +174,26 @@ tableContents = cursorSrc.fetchall()
 #columnHeadings = str(tuple([record[0] for record in tableContents])).replace("'", "")
 
 wipeTable()
-print(num_fields)
+# print(num_fields)
     
 for row in tableContents:
-    #print(row)
+    # print(row)
     valList = list(row)
     row = str(tuple(row))
-    print(valList)
+    # print(valList)
     for j in range(len(valList)):
         if len(str(valList[j])) > 8:
             valList[j] = str(valList[j]).replace("datetime.date(", "")
             valList[j] = str(valList[j]).replace(")", "")
-            print(valList)
+            # print(valList)
             row = str(tuple(valList))
     #print(row)
     query = ("INSERT INTO " + table_name + " " + columnHeadings + " VALUES " + row + ";")
     query = query.replace("None", "NULL")
-    print(query)
+    # print(query)
     cursorDes.execute(query)
     connDes.commit()
+print ("Copying " + table_name + " table complete!")
 
 print("Time: %0.2f seconds" % (time.time() - start_time))
 print()

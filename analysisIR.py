@@ -1,4 +1,4 @@
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import numpy as np
 import datetime
 import time

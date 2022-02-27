@@ -1,4 +1,4 @@
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import numpy as np
 import datetime
 import time
@@ -116,9 +116,9 @@ class analysis():
     #
     def _analyzeTeams(self):
         # Insert average data for each team into CurrentEventAnalysisGraphs
-        analysisTypeList = [60, 61, 30, 20, 22, 21, 11, 62]
-        analysisNameList = ["TotalBalls", "TotalScore", "Climb", "TeleHighBalls", "TeleLowBalls", "TeleTotalBalls", "AutonomousScore", "TeleBallScore"]
-        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, Autonomous) "
+        analysisTypeList = [60, 61, 30, 20, 21, 22, 11, 62]
+        analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean"]
+        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, AutonomousMean) "
                             "SELECT Team, EventID, Summary1Value "
                             "FROM CurrentEventAnalysis "
                             "WHERE AnalysisTypeID = 10;")

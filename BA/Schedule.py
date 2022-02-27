@@ -1,4 +1,4 @@
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import tbapy
 import xlsxwriter
 import sys

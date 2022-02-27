@@ -2,7 +2,7 @@
 #	writes the full team list to the Teams table in the Team 195 DB
 # Script is intended to be run once at the beginning of the season
 
-import mysql.connector as mariaDB
+import mariadb as mariaDB
 import tbapy
 import datetime
 import sys

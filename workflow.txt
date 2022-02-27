@@ -45,7 +45,7 @@ Description on the workflow for running the python scripts
 	
 *** Scripts that run during a competition
 
-1. AnalysisIR
+1. analysisIR
 	This will take match scouting records from the MatchScouting table and create the
 	CurrentEventAnalysis table ready for table builds for visualization
 	
