@@ -163,6 +163,7 @@ def wipeTable():
     connDes.commit()  
 
 
+
 columnHeadings=[]
 cursorSrc.execute("SELECT * FROM " + table_name + ";")
 num_fields = len(cursorSrc.description)
@@ -176,8 +177,16 @@ print(num_fields)
     
 for row in tableContents:
     #print(row)
+    valList = list(row)
     row = str(tuple(row))
-    print(row)
+    print(valList)
+    for j in range(len(valList)):
+        if len(str(valList[j])) > 8:
+            valList[j] = str(valList[j]).replace("datetime.date(", "")
+            valList[j] = str(valList[j]).replace(")", "")
+            print(valList)
+            row = str(tuple(valList))
+    #print(row)
     query = ("INSERT INTO " + table_name + " " + columnHeadings + " VALUES " + row + ";")
     query = query.replace("None", "NULL")
     print(query)
