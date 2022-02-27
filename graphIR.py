@@ -95,7 +95,8 @@ class analysis():
 
         self.columns = []
         self._wipeCEAG()
-        self._analyzeTeams()
+        self._analyzeMeans()
+        self._analyzeMedians()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -113,8 +114,8 @@ class analysis():
         self._run_query("DELETE FROM " + CEAG_table + "")
         self.conn.commit()
 
-    #
-    def _analyzeTeams(self):
+	# Function to write means to the CEAGraphs table
+    def _analyzeMeans(self):
         # Insert average data for each team into CurrentEventAnalysisGraphs
         analysisTypeList = [60, 61, 30, 20, 21, 22, 11, 62]
         analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean"]
@@ -127,6 +128,20 @@ class analysis():
             self._run_query("UPDATE " + CEAG_table + " "
                             "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
                             "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value "
+                            "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
+        self.conn.commit()
+        
+    # Function to write medians to the CEAGraphs table
+    def _analyzeMedians(self):
+        # Insert average data for each team into CurrentEventAnalysisGraphs
+        analysisTypeList = [10, 60, 61, 30, 20, 21, 22, 11, 62]
+        analysisNameList = ["AutonomousMedian", "TotalBallsMedian", "TotalScoreMedian", "ClimbMedian", "TeleLowBallsMedian", "TeleHighBallsMedian", "TeleTotalBallsMedian", "AutonomousScoreMedian", "TeleBallScoreMedian"]
+
+        for i in range(len(analysisTypeList)):
+            #print(i)
+            self._run_query("UPDATE " + CEAG_table + " "
+                            "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
+                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary2Value "
                             "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
         self.conn.commit()
 
