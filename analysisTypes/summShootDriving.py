@@ -16,8 +16,11 @@ def summShootDriving(analysis, rsRobotMatches):
         #   to overwite it up to 12 times than to fix at this time.
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
         rsCEA['EventID'] = matchResults[analysis.columns.index('EventID')]
+        autoDidNotShow = matchResults[analysis.columns.index('AutoDidNotShow')]
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
-        if scoutingStatus == 2:
+        if autoDidNotShow == 1:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
+        elif scoutingStatus == 2:
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Retrieve values from the matchResults and set to appropriate variables
@@ -36,7 +39,7 @@ def summShootDriving(analysis, rsRobotMatches):
                 summShootDrivingValue = 1
                 summShootDrivingList.append(summShootDrivingValue)
             else:
-            	summShootDrivingDisplay = 'Err'
+                summShootDrivingDisplay = 'Err'
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
