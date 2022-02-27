@@ -95,8 +95,7 @@ class analysis():
 
         self.columns = []
         self._wipeCEAG()
-        self._analyzeMeans()
-        self._analyzeMedians()
+        self._analyze()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -114,34 +113,19 @@ class analysis():
         self._run_query("DELETE FROM " + CEAG_table + "")
         self.conn.commit()
 
-	# Function to write means to the CEAGraphs table
-    def _analyzeMeans(self):
-        # Insert average data for each team into CurrentEventAnalysisGraphs
+	# Function to write means and medians to the CEAGraphs table
+    def _analyze(self):
         analysisTypeList = [60, 61, 30, 20, 21, 22, 11, 62]
-        analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean"]
-        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, AutonomousMean) "
-                            "SELECT Team, EventID, Summary1Value "
+        analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean", "TotalBallsMedian", "TotalScoreMedian", "ClimbMedian", "TeleLowBallsMedian", "TeleHighBallsMedian", "TeleTotalBallsMedian", "AutonomousScoreMedian", "TeleBallScoreMedian"]
+        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, AutonomousMean, AutonomousMedian) "
+                            "SELECT Team, EventID, Summary1Value, Summary2Value "
                             "FROM CurrentEventAnalysis "
                             "WHERE AnalysisTypeID = 10;")
         for i in range(len(analysisTypeList)):
             #print(i)
             self._run_query("UPDATE " + CEAG_table + " "
                             "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
-                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value "
-                            "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
-        self.conn.commit()
-        
-    # Function to write medians to the CEAGraphs table
-    def _analyzeMedians(self):
-        # Insert average data for each team into CurrentEventAnalysisGraphs
-        analysisTypeList = [10, 60, 61, 30, 20, 21, 22, 11, 62]
-        analysisNameList = ["AutonomousMedian", "TotalBallsMedian", "TotalScoreMedian", "ClimbMedian", "TeleLowBallsMedian", "TeleHighBallsMedian", "TeleTotalBallsMedian", "AutonomousScoreMedian", "TeleBallScoreMedian"]
-
-        for i in range(len(analysisTypeList)):
-            #print(i)
-            self._run_query("UPDATE " + CEAG_table + " "
-                            "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
-                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary2Value "
+                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value, " + analysisNameList[i + 8] + " = CurrentEventAnalysis.Summary2Value "
                             "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
         self.conn.commit()
 
