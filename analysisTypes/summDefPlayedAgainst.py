@@ -30,12 +30,12 @@ def summDefPlayedAgainst(analysis, rsRobotMatches):
                 summDefPlayedAgainstDisplay = "999"
             elif summDefPlayedAgainst == 0:
                 summDefPlayedAgainstDisplay = 'N'
-                summDefPlayedAgainstFormat = 4
+                summDefPlayedAgainstFormat = 2
                 summDefPlayedAgainstValue = 0
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             elif summDefPlayedAgainst == 1:
                 summDefPlayedAgainstDisplay = 'Y'
-                summDefPlayedAgainstFormat = 2
+                summDefPlayedAgainstFormat = 4
                 summDefPlayedAgainstValue = 1
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             else:

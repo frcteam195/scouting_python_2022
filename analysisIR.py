@@ -314,7 +314,7 @@ class analysis():
 
     # run the _rankTeamsSingle for all analysis types in the analysisTypeList defined in this function
     def _rankTeamsAll(self):
-        analysisTypeList=[10, 20, 21, 22, 30, 60, 61]
+        analysisTypeList=[10, 11, 20, 21, 22, 30, 60, 61, 62]
         for analysisType in analysisTypeList:
             # print(analysisType)
             self._rankTeamsSingle(analysisType)
