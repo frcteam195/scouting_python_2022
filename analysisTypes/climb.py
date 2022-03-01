@@ -40,11 +40,11 @@ def climb(analysis, rsRobotMatches):
             else:
                 ClimbPosition = matchResults[analysis.columns.index('ClimbPosition')]
                 if ClimbPosition == 1:
-                    ClimbPositionString = "l"
+                    ClimbPositionString = "L"
                 elif ClimbPosition == 2:
-                    ClimbPositionString = "m"
+                    ClimbPositionString = "M"
                 elif ClimbPosition == 3:
-                    ClimbPositionString = "r"
+                    ClimbPositionString = "R"
                 else:
                     ClimbPositionString = "?"
                 ClimbHeight = matchResults[analysis.columns.index('ClimbHeight')]
