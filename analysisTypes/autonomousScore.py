@@ -29,7 +29,7 @@ def autonomousScore(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
-            if autoMoveBonus == 1:
+            if autoMoveBonus == 2:
                 autoScore = autoScore + 2
             
             autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
