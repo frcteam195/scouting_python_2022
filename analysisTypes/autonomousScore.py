@@ -9,11 +9,11 @@ def autonomousScore(analysis, rsRobotMatches):
     rsCEA['AnalysisTypeID'] = 11
     numberOfMatchesPlayed = 0
 
-    autoScore = 0
     autoScoreList = []
 
     # Loop through each match the robot played in.
     for matchResults in rsRobotMatches:
+        autoScore = 0
         # This is sort of dumb as rsCEA Team and EventID will be overwritten for each match, but easier
         #   to overwite it up to 12 times than to fix at this time.
         rsCEA['Team'] = matchResults[analysis.columns.index('Team')]
@@ -30,7 +30,7 @@ def autonomousScore(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
             if autoMoveBonus == 1:
-            	autoScore = autoScore + 2
+                autoScore = autoScore + 2
             
             autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallLow is None:
