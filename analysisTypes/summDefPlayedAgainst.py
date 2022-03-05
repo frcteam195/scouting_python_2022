@@ -28,6 +28,8 @@ def summDefPlayedAgainst(analysis, rsRobotMatches):
             if summDefPlayedAgainst is None:
                 summDefPlayedAgainst = 999
                 summDefPlayedAgainstDisplay = "999"
+                summDefPlayedAgainstValue = 999
+                summDefPlayedAgainstFormat = 0
             elif summDefPlayedAgainst == 0:
                 summDefPlayedAgainstDisplay = 'N'
                 summDefPlayedAgainstFormat = 2
@@ -40,6 +42,8 @@ def summDefPlayedAgainst(analysis, rsRobotMatches):
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             else:
                 summDefPlayedAgainstDisplay = "Err"
+                summDefPlayedAgainstValue = 999
+                summDefPlayedAgainstFormat = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

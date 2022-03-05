@@ -28,6 +28,8 @@ def summLostComm(analysis, rsRobotMatches):
             if summLostComm is None:
                 summLostComm = 999
                 summLostCommDisplay = '999'
+                summLostCommValue = 999
+                summLostCommFormat = 0
             elif summLostComm == 0:
                 summLostCommDisplay = 'N'
                 summLostCommFormat = 4
@@ -40,6 +42,8 @@ def summLostComm(analysis, rsRobotMatches):
                 lostCommList.append(summLostCommValue)
             else:
                 summLostCommDisplay = 'Err'
+                summLostCommValue = 999
+                summLostCommFormat = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

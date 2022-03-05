@@ -28,6 +28,8 @@ def summLaunchPad(analysis, rsRobotMatches):
             if summLaunchPad is None:
                 summLaunchPad = 999
                 summLaunchPadDisplay = '999'
+                summLaunchPadValue = 999
+                summLaunchPadFormat = 0
             elif summLaunchPad == 0:
                 summLaunchPadDisplay = 'N'
                 summLaunchPadFormat = 0
@@ -41,6 +43,7 @@ def summLaunchPad(analysis, rsRobotMatches):
             else:
                 summLaunchPadDisplay = 'Err'
                 summLaunchPadFormat = 0
+                summLaunchPadValue = 999
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

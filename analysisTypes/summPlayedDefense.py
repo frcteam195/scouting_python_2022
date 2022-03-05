@@ -28,6 +28,8 @@ def summPlayedDefense(analysis, rsRobotMatches):
             if summPlayedDefense is None:
                 summPlayedDefense = 999
                 summPlayedDefenseDisplay = '999'
+                summPlayedDefenseValue = 999
+                summPlayedDefenseFormat = 0
             elif summPlayedDefense == 0:
                 summPlayedDefenseDisplay = 'N'
                 summPlayedDefenseFormat = 2
@@ -40,6 +42,8 @@ def summPlayedDefense(analysis, rsRobotMatches):
                 summPlayedDefenseList.append(summPlayedDefenseValue)
             else:
                 summPlayedDefenseDisplay = 'Err'
+                summPlayedDefenseValue = 999
+                summPlayedDefenseFormat = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

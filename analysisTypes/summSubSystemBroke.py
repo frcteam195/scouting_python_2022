@@ -28,6 +28,8 @@ def summSubSystemBroke(analysis, rsRobotMatches):
             if summSubSystemBroke is None:
                 summSubSystemBroke = 999
                 summSubSystemBrokeDisplay = '999'
+                summSubSystemBrokeValue = 999
+                summSubSystemBrokeFormat = 0
             elif summSubSystemBroke == 0:
                 summSubSystemBrokeDisplay = 'N'
                 summSubSystemBrokeFormat = 4
@@ -40,6 +42,8 @@ def summSubSystemBroke(analysis, rsRobotMatches):
                 summSubSystemBrokeList.append(summSubSystemBrokeValue)
             else:
                 summSubSystemBrokeDisplay = 'Err'
+                summSubSystemBrokeValue = 999
+                summSubSystemBrokeFormat = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

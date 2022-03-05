@@ -29,6 +29,7 @@ def summSortCargo(analysis, rsRobotMatches):
                 summSortCargoDisplay = '999'
                 summSortCargoValue = 999
                 summSortCargoFormat = 1
+                summSortCargoValue = 999
             elif summSortCargo == 0:
                 summSortCargoDisplay = 'N'
                 summSortCargoFormat = 2
@@ -42,6 +43,7 @@ def summSortCargo(analysis, rsRobotMatches):
             else:
                 summSortCargoDisplay = 'Err'
                 summSortCargoFormat = 1
+                summSortCargoValue = 999
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
