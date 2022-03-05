@@ -40,6 +40,7 @@ def summGroundPickup(analysis, rsRobotMatches):
                 summGroundPickupList.append(summGroundPickupValue)
             else:
                 summGroundPickupDisplay = 'Err'
+                summGroundPickupFormat = 0
 
             # Perform some calculations
             numberOfMatchesPlayed += 1     
