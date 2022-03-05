@@ -128,6 +128,7 @@ class analysis():
                             "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value, " + analysisNameList[i + 8] + " = CurrentEventAnalysis.Summary2Value "
                             "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
         self.conn.commit()
+        
 
 # This initizlzes the analysis Class and thus runs the program.
 if __name__ == '__main__':

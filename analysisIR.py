@@ -8,6 +8,7 @@ import sys
 # For each analysisType we create add a new import statement. We could import all analysisTypes
 # Pre match 1-9
 from analysisTypes.startingPosition import startingPosition  #1
+#from analysisTypes.autoPickup import autoPickup  #2
 # auto 10-19
 from analysisTypes.autonomous import autonomous  #10
 from analysisTypes.autonomousScore import autonomousScore  #11
@@ -205,6 +206,9 @@ class analysis():
             if rsRobotMatches:
                 rsCEA = startingPosition(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+
+                #rsCEA = autoPickup(analysis=self, rsRobotMatches=rsRobotMatches)
+                #self._insertAnalysis(rsCEA)
                 
                 rsCEA = autonomous(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)

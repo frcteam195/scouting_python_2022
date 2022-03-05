@@ -89,64 +89,64 @@ teamRankList = []
 
     
 if excel == False:
-	print("Writing Ranks to database")
-	
-	cursor.execute("DELETE FROM BlueAllianceRankings")
+    print("Writing Ranks to database")
+    
+    cursor.execute("DELETE FROM BlueAllianceRankings")
     cursor.execute("ALTER TABLE BlueAllianceRankings AUTO_INCREMENT = 1;")
     conn.commit()
-	
-	for teamRank in teamRanks:
-		teamRankList.append(teamRank['team_key'][3:])
+    
+    for teamRank in teamRanks:
+        teamRankList.append(teamRank['team_key'][3:])
 
-	for team in teamRankList:
-		query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
-				str(teamRankList.index(team) + 1) + "');"
-		cursor.execute(query)
-		conn.commit()
+    for team in teamRankList:
+        query = "INSERT INTO BlueAllianceRankings (Team, TeamRank) VALUES " + "('" + str(team) + "', '" + \
+                str(teamRankList.index(team) + 1) + "');"
+        cursor.execute(query)
+        conn.commit()
 
 elif excel == True:
-	workbook = xlsxwriter.Workbook('EVENT RANKINGS.xlsx')
-	worksheet = workbook.add_worksheet()
+    workbook = xlsxwriter.Workbook('EVENT RANKINGS.xlsx')
+    worksheet = workbook.add_worksheet()
 
-	row = 0
-	col = 0
+    row = 0
+    col = 0
 
-	matchesPlayed = tba.event_rankings(event).get('rankings')
-	matchesPlayedDict = {}
-	for team in matchesPlayed:
-		matchesPlayedDict[team.get("rank")] = team.get("matches_played")
+    matchesPlayed = tba.event_rankings(event).get('rankings')
+    matchesPlayedDict = {}
+    for team in matchesPlayed:
+        matchesPlayedDict[team.get("rank")] = team.get("matches_played")
 
-	row = 1
-	col = 2
-	for key in matchesPlayedDict.keys():
-		worksheet.write(row, col, matchesPlayedDict[key])
-		row += 1
+    row = 1
+    col = 2
+    for key in matchesPlayedDict.keys():
+        worksheet.write(row, col, matchesPlayedDict[key])
+        row += 1
 
-	teamRanks = tba.event_rankings(event).get('rankings')
-	teamRankDict = {}
-	for rank in teamRanks:
-		teamRankDict[rank.get("rank")] = rank.get("team_key")[3:]
+    teamRanks = tba.event_rankings(event).get('rankings')
+    teamRankDict = {}
+    for rank in teamRanks:
+        teamRankDict[rank.get("rank")] = rank.get("team_key")[3:]
 
-	row = 1
-	col = 0
-	for key in teamRankDict.keys():
-		worksheet.write(row, col, key)
-		worksheet.write(row, col + 1, teamRankDict[key])
-		row += 1
+    row = 1
+    col = 0
+    for key in teamRankDict.keys():
+        worksheet.write(row, col, key)
+        worksheet.write(row, col + 1, teamRankDict[key])
+        row += 1
 
-	quals = tba.event_rankings(event).get('rankings')
-	qualAverage = {}
-	for team in quals:
-		qualAverage[team.get("rank")] = team.get("qual_average")
+    quals = tba.event_rankings(event).get('rankings')
+    qualAverage = {}
+    for team in quals:
+        qualAverage[team.get("rank")] = team.get("qual_average")
 
-	row = 1
-	col = 3
-	for key in qualAverage.keys():
-		worksheet.write(row, col, qualAverage[key])
-		row += 1
+    row = 1
+    col = 3
+    for key in qualAverage.keys():
+        worksheet.write(row, col, qualAverage[key])
+        row += 1
 
-	workbook.close()
+    workbook.close()
 
 else:
-	print('Oops, that should not happen')
-	sys.exit()
+    print('Oops, that should not happen')
+    sys.exit()

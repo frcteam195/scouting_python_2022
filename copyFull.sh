@@ -15,8 +15,7 @@ echo "Using $destinationDB as destinatiuon DB"
 echo ''
 echo "Copying tables ..."
 
-# echo "python3 copyTable.py -dbs $sourceDB -dbd $destinationDB  -table AllianceStations >> copyFull.log"
-
+echo "python3 copyTable.py -dbs $sourceDB -dbd $destinationDB  -table AllianceStations >> copyFull.log"
     echo 'AllianceStations'
 python3 copyTable.py -dbs $sourceDB -dbd $destinationDB  -table AllianceStations >> copyFull.log
     echo 'AnalysisTypes'
