@@ -27,14 +27,23 @@ def summBrokeDown(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             brokeDown = matchResults[analysis.columns.index('SummBrokeDown')]
             if brokeDown is None:
-                brokeDown = 999
+                brokeDownValue = 999
                 brokeDownString = '999'
+                brokeDownFormat = 6
             elif brokeDown == 0:
                 brokeDownString = 'N'
+                brokeDownFormat = 4
+                brokeDownValue = 0
+                brokeDownList.append(brokeDownValue)
             elif brokeDown == 1:
                 brokeDownString = 'Y'
+                brokeDownFormat = 2
+                brokeDownValue = 1
+                brokeDownList.append(brokeDownValue)
             else:
                 brokeDownString = 'Err'
+                brokeDownValue = 888
+                brokeDownFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
@@ -42,15 +51,13 @@ def summBrokeDown(analysis, rsRobotMatches):
 
             # Create the rsCEA records for Dsiplay, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = brokeDownString
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = brokeDown
-            if brokeDown == 0:
-                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            else:
-                rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = brokeDownValue
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = brokeDownFormat
 
     # Create summary data
     if numberOfMatchesPlayed > 0:
         # Summary1 is the % of matches where they lost Comm
-        rsCEA['Summary1Display'] = round(np.sum(brokeDownList) / numberOfMatchesPlayed * 100, 1)
+        rsCEA['Summary1Display'] = round(statistics.mean(brokeDownList), 2)
+        rsCEA['Summary1Value'] = round(statistics.mean(brokeDownList), 2)
 
     return rsCEA

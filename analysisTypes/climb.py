@@ -65,9 +65,9 @@ def climb(analysis, rsRobotMatches):
                     ClimbStatusColor = 5
                     ClimbStatusScore = 15
                 else:
-                    ClimbStatusString = "999"
-                    ClimbStatusColor = 1
-                    ClimbStatusScore = 999
+                    ClimbStatusString = "Err"
+                    ClimbStatusColor = 7
+                    ClimbStatusScore = 888
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

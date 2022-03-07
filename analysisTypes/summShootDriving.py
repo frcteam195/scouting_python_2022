@@ -29,10 +29,10 @@ def summShootDriving(analysis, rsRobotMatches):
                 summShootDriving = 999
                 summShootDrivingDisplay = '999'
                 summShootDrivingValue = 999
-                summShootDrivingFormat = 0
+                summShootDrivingFormat = 6
             elif summShootDriving == 0:
                 summShootDrivingDisplay = 'N'
-                summShootDrivingFormat = 2
+                summShootDrivingFormat = 6
                 summShootDrivingValue = 0
                 summShootDrivingList.append(summShootDrivingValue)
             elif summShootDriving == 1:
@@ -42,8 +42,8 @@ def summShootDriving(analysis, rsRobotMatches):
                 summShootDrivingList.append(summShootDrivingValue)
             else:
                 summShootDrivingDisplay = 'Err'
-                summShootDrivingValue = 999
-                summShootDrivingFormat = 0
+                summShootDrivingValue = 888
+                summShootDrivingFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

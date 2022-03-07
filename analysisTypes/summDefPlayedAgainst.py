@@ -26,24 +26,23 @@ def summDefPlayedAgainst(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             summDefPlayedAgainst = matchResults[analysis.columns.index('SummDefPlayedAgainst')]
             if summDefPlayedAgainst is None:
-                summDefPlayedAgainst = 999
                 summDefPlayedAgainstDisplay = "999"
                 summDefPlayedAgainstValue = 999
-                summDefPlayedAgainstFormat = 0
+                summDefPlayedAgainstFormat = 6
             elif summDefPlayedAgainst == 0:
                 summDefPlayedAgainstDisplay = 'N'
-                summDefPlayedAgainstFormat = 2
+                summDefPlayedAgainstFormat = 6
                 summDefPlayedAgainstValue = 0
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             elif summDefPlayedAgainst == 1:
                 summDefPlayedAgainstDisplay = 'Y'
-                summDefPlayedAgainstFormat = 4
+                summDefPlayedAgainstFormat = 7
                 summDefPlayedAgainstValue = 1
                 summDefPlayedAgainstList.append(summDefPlayedAgainstValue)
             else:
                 summDefPlayedAgainstDisplay = "Err"
-                summDefPlayedAgainstValue = 999
-                summDefPlayedAgainstFormat = 0
+                summDefPlayedAgainstValue = 888
+                summDefPlayedAgainstFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

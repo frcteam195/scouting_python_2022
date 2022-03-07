@@ -28,11 +28,10 @@ def summSortCargo(analysis, rsRobotMatches):
             if summSortCargo is None:
                 summSortCargoDisplay = '999'
                 summSortCargoValue = 999
-                summSortCargoFormat = 1
-                summSortCargoValue = 999
+                summSortCargoFormat = 6
             elif summSortCargo == 0:
                 summSortCargoDisplay = 'N'
-                summSortCargoFormat = 2
+                summSortCargoFormat = 6
                 summSortCargoValue = 0
                 summSortCargoList.append(summSortCargoValue)
             elif summSortCargo == 1:
@@ -42,8 +41,8 @@ def summSortCargo(analysis, rsRobotMatches):
                 summSortCargoList.append(summSortCargoValue)
             else:
                 summSortCargoDisplay = 'Err'
-                summSortCargoFormat = 1
-                summSortCargoValue = 999
+                summSortCargoFormat = 7
+                summSortCargoValue = 888
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

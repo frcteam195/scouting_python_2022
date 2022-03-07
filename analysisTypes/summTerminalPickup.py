@@ -26,24 +26,23 @@ def summTerminalPickup(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             summTerminalPickUp = matchResults[analysis.columns.index('SummTerminalPickup')]
             if summTerminalPickUp is None:
-                summTerminalPickUp = 999
                 summTerminalPickUpDisplay = '999'
                 summTerminalPickUpValue = 999
-                summTerminalPickUpFormat = 0
+                summTerminalPickUpFormat = 6
             elif summTerminalPickUp == 0:
                 summTerminalPickUpDisplay = 'N'
-                summTerminalPickUpFormat = 2
+                summTerminalPickUpFormat = 6
                 summTerminalPickUpValue = 0
                 summTerminalPickUpList.append(summTerminalPickUpValue)
             elif summTerminalPickUp == 1:
                 summTerminalPickUpDisplay = 'Y'
-                summTerminalPickUpFormat = 4
+                summTerminalPickUpFormat = 7
                 summTerminalPickUpValue = 1
                 summTerminalPickUpList.append(summTerminalPickUpValue)
             else:
                 summTerminalPickUpDisplay = 'Err'
-                summTerminalPickUpValue = 999
-                summTerminalPickUpFormat = 0
+                summTerminalPickUpValue = 888
+                summTerminalPickUpFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1

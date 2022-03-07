@@ -1,13 +1,13 @@
 import statistics
 
-def summPlayedDefense(analysis, rsRobotMatches):
+def summShootHub(analysis, rsRobotMatches):
     # start = time.time()
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 46
+    rsCEA['AnalysisTypeID'] = 50
     numberOfMatchesPlayed = 0
-    summPlayedDefenseList = []
+    summShootHubList = []
 
 
     # Loop through each match the robot played in.
@@ -24,40 +24,40 @@ def summPlayedDefense(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            summPlayedDefense = matchResults[analysis.columns.index('SummPlayedDefense')]
-            if summPlayedDefense is None:
-                summPlayedDefense = 999
-                summPlayedDefenseDisplay = '999'
-                summPlayedDefenseValue = 999
-                summPlayedDefenseFormat = 6
-            elif summPlayedDefense == 0:
-                summPlayedDefenseDisplay = 'N'
-                summPlayedDefenseFormat = 6
-                summPlayedDefenseValue = 0
-                summPlayedDefenseList.append(summPlayedDefenseValue)
-            elif summPlayedDefense == 1:
-                summPlayedDefenseDisplay = 'Y'
-                summPlayedDefenseFormat = 7
-                summPlayedDefenseValue = 1
-                summPlayedDefenseList.append(summPlayedDefenseValue)
+            summShootHub = matchResults[analysis.columns.index('SummShootHub')]
+            if summShootHub is None:
+                summShootHub = 999
+                summShootHubDisplay = '999'
+                summShootHubValue = 999
+                summShootHubFormat = 6
+            elif summShootHub == 0:
+                summShootHubDisplay = 'N'
+                summShootHubFormat = 6
+                summShootHubValue = 0
+                summShootHubList.append(summShootHubValue)
+            elif summShootHub == 1:
+                summShootHubDisplay = 'Y'
+                summShootHubFormat = 2
+                summShootHubValue = 1
+                summShootHubList.append(summShootHubValue)
             else:
-                summPlayedDefenseDisplay = 'Err'
-                summPlayedDefenseValue = 888
-                summPlayedDefenseFormat = 7
+                summShootHubDisplay = 'Err'
+                summShootHubValue = 888
+                summShootHubFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
 
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(summPlayedDefenseDisplay)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = summPlayedDefenseValue
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = summPlayedDefenseFormat
+                    str(summShootHubDisplay)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = summShootHubValue
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = summShootHubFormat
 
     # Create summary data
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(summPlayedDefenseList), 2)
-        rsCEA['Summary1Value'] = round(statistics.mean(summPlayedDefenseList), 2)
+        rsCEA['Summary1Display'] = round(statistics.mean(summShootHubList), 2)
+        rsCEA['Summary1Value'] = round(statistics.mean(summShootHubList), 2)
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))

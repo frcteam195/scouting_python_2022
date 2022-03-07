@@ -26,10 +26,9 @@ def summSubSystemBroke(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             summSubSystemBroke = matchResults[analysis.columns.index('SummSubSystemBroke')]
             if summSubSystemBroke is None:
-                summSubSystemBroke = 999
                 summSubSystemBrokeDisplay = '999'
                 summSubSystemBrokeValue = 999
-                summSubSystemBrokeFormat = 0
+                summSubSystemBrokeFormat = 6
             elif summSubSystemBroke == 0:
                 summSubSystemBrokeDisplay = 'N'
                 summSubSystemBrokeFormat = 4
@@ -42,8 +41,8 @@ def summSubSystemBroke(analysis, rsRobotMatches):
                 summSubSystemBrokeList.append(summSubSystemBrokeValue)
             else:
                 summSubSystemBrokeDisplay = 'Err'
-                summSubSystemBrokeValue = 999
-                summSubSystemBrokeFormat = 0
+                summSubSystemBrokeValue = 888
+                summSubSystemBrokeFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
