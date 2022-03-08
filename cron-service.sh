@@ -18,19 +18,19 @@ if [ "$1" != "start" ] && [ "$1" != "stop" ]; then
 fi
 
 if [ "$1" == start ]; then
-  if grep -q analysisIR /var/spool/cron/crontabs/pi
+  if grep -q analysis.sh /var/spool/cron/crontabs/mmaciejewski
   then
-    echo 'It appears that analysisIR.py is already running as a cron job!'
+    echo 'It appears that analysis.sh is already running as a cron job!'
     echo 'Aborting!'
     exit 1
   else
-    echo 'Creating clean log file analysisIR.log'
-    echo 'Adding analysisIR.py to cron'
-    rm -f /tmp/analysisIR.log
-    touch /tmp/analysisIR.log
-    chmod a+rw /tmp/analysisIR.log
+    echo 'Creating clean log file analysis.log'
+    echo 'Adding analysis.sh to cron'
+    rm -f /tmp/analysis.log
+    touch /tmp/analysis.log
+    chmod a+rw /tmp/analysis.log
     # NOTE: The cd /home/pi is critical to get the script to run as a cron job even with the explicit paths defined.
-    echo '* * * * * cd /home/pi && /usr/bin/python3 /home/pi/scouting_python/analysisIR.py >> /tmp/analysisIR.log 2>&1' >> /var/spool/cron/crontabs/pi
+    echo '* * * * * cd /home/nmrbox/mmaciejewski && /usr/bin/python3 /home/nmrbox//scouting_python/analysisIR.py >> /tmp/analysisIR.log 2>&1' >> /var/spool/cron/crontabs/pi
   fi
 fi
 
