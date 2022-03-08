@@ -70,8 +70,7 @@ print ("Connecting to " + database)
 
 # **************************************************************
 
-
-CEA_table = "CurrentEventAnalysis"
+CEA_table = "CurrentEventAnalysisTmp"
 
 # Define a Class called analysis
 class analysis():
@@ -131,11 +130,13 @@ class analysis():
             print ("oops - that should not happen")
             sys.exit()
 
+        self._createTemp()
         self.columns = []
         self._wipeCEA()
         self.rsRobots = self._getTeams()
         self._analyzeTeams()
         self._rankTeamsAll()
+        self._renameTable()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
@@ -151,6 +152,85 @@ class analysis():
     # Function to wipe the CEA table. We may want to make this only remove CurrentEvent records.
     def _wipeCEA(self):
         self._run_query("DELETE FROM " + CEA_table + ";")
+        self.conn.commit()
+
+    def _wipeCEA(self):
+        self._run_query("DELETE FROM " + CEA_table + ";")
+        self.conn.commit()
+
+    def _copyTable(self):
+        self._wipeCEA
+#        columnHeadings=[]
+        self.cursor.execute("SELECT * FROM " + CEA_table + ";")
+#        columnHeadings = str(tuple([i[0] for i in self.cursor.description])).replace("'", "")
+#        tableContents = self.cursor.fetchall()
+#        for row in tableContents:
+#            row = str(tuple(row))
+#            query = ("INSERT INTO " + CEA_table + " " + columnHeadings + " VALUES " + row + ";")
+#            query = query.replace("None", "NULL")
+#            self.cursor.execute(query)
+#            self.conn.commit()
+
+    def _createTemp(self):
+        self._run_query("CREATE TABLE CurrentEventAnalysisTmp ("
+        "Team VARCHAR(10) NULL, "
+        "AnalysisTypeID INT NULL, "
+        "EventID INT NULL, "
+        "Match1Display VARCHAR(10) NULL, "
+        "Match1Format INT NULL, "
+        "Match1Value FLOAT NULL, "
+        "Match2Display VARCHAR(10) NULL, "
+        "Match2Format INT NULL, "
+        "Match2Value FLOAT NULL, "
+        "Match3Display VARCHAR(10) NULL, " 
+        "Match3Format INT NULL, "
+        "Match3Value FLOAT NULL, "
+        "Match4Display VARCHAR(10) NULL, " 
+        "Match4Format INT NULL, "
+        "Match4Value FLOAT NULL, "
+        "Match5Display VARCHAR(10) NULL, " 
+        "Match5Format INT NULL, "
+        "Match5Value FLOAT NULL, "
+        "Match6Display VARCHAR(10) NULL, " 
+        "Match6Format INT NULL, "
+        "Match6Value FLOAT NULL, "
+        "Match7Display VARCHAR(10) NULL, " 
+        "Match7Format INT NULL, "
+        "Match7Value FLOAT NULL, "
+        "Match8Display VARCHAR(10) NULL, " 
+        "Match8Format INT NULL, "
+        "Match8Value FLOAT NULL, "
+        "Match9Display VARCHAR(10) NULL, " 
+        "Match9Format INT NULL, "
+        "Match9Value FLOAT NULL, "
+        "Match10Display VARCHAR(10) NULL, " 
+        "Match10Format INT NULL, "
+        "Match10Value FLOAT NULL, "
+        "Match11Display VARCHAR(10) NULL, " 
+        "Match11Format INT NULL, "
+        "Match11Value FLOAT NULL, "
+        "Match12Display VARCHAR(10) NULL, " 
+        "Match12Format INT NULL, "
+        "Match12Value FLOAT NULL, "
+        "Summary1Display VARCHAR(10) NULL, " 
+        "Summary1Format INT NULL, "
+        "Summary1Value FLOAT NULL, "
+        "Summary2Display VARCHAR(10) NULL, " 
+        "Summary2Format INT NULL, "
+        "Summary2Value FLOAT NULL, "
+        "Summary3Display VARCHAR(10) NULL, " 
+        "Summary3Format INT NULL, "
+        "Summary3Value FLOAT NULL, "
+        "Summary4Display VARCHAR(10) NULL, " 
+        "Summary4Format INT NULL, "
+        "Summary4Value FLOAT NULL, "
+        "Minimum FLOAT NULL, "
+        "Maximum FLOAT NULL, "
+        "Percent FLOAT NULL)")
+
+    def _renameTable(self):
+        self._run_query("DROP TABLE CurrentEventAnalysis;")
+        self._run_query("ALTER TABLE " + CEA_table + " RENAME CurrentEventAnalysis;")
         self.conn.commit()
 
     # Function to get the team list and set it to rsRobots. Uses the _run_query function defined above.
@@ -269,6 +349,9 @@ class analysis():
                 
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
+
+        
+
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
