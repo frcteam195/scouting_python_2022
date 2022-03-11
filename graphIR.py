@@ -61,7 +61,7 @@ class analysis():
         elif database == "pi-10":
             self.conn = mariaDB.connect(user='admin',
                                         passwd='team195',
-                                        host='10.0.0.195',
+                                        host='10.0.20.195',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
             

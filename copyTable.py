@@ -87,7 +87,7 @@ elif source_database == "pi-10":
     # Pi DB with remote access (e.g. from laptop)
     connSrc = mariaDB.connect(user='admin',
                                 passwd='team195',
-                                host='10.0.0.195',
+                                host='10.0.20.195',
                                 database='team195_scouting')
     cursorScr = connSrc.cursor()
     
@@ -133,7 +133,7 @@ elif destination_database == "pi-10":
     # Pi DB with remote access (e.g. from laptop)
     connDes = mariaDB.connect(user='admin',
                                 passwd='team195',
-                                host='10.0.0.195',
+                                host='10.0.20.195',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
     
