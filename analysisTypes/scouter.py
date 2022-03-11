@@ -1,9 +1,9 @@
 
 
-def startingPosition(analysis, rsRobotMatches):
+def scouter(analysis, rsRobotMatches):
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 1
+    rsCEA['AnalysisTypeID'] = 71
     numberOfMatchesPlayed = 0
 
     # Loop through each match the robot played in.
@@ -24,9 +24,9 @@ def startingPosition(analysis, rsRobotMatches):
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
             numberOfMatchesPlayed += 1
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = matchResults[
-                analysis.columns.index('AutoStartPos')]
+                analysis.columns.index('ScouterID')]
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = matchResults[
-                analysis.columns.index('AutoStartPos')]
+                analysis.columns.index('ScouterID')]
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
             # An if statement will go here to define Match#Format
 
