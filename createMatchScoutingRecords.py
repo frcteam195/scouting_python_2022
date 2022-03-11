@@ -35,7 +35,7 @@ if database == "aws-dev":
 elif database == "pi-10":
             conn = mariaDB.connect(user='admin',
                                 passwd='team195',
-                                host='10.0.0.195',
+                                host='10.0.20.195',
                                 database='team195_scouting')
             cursor = conn.cursor()
 
