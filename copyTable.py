@@ -169,6 +169,7 @@ columnHeadings=[]
 cursorSrc.execute("SELECT * FROM " + table_name + ";")
 num_fields = len(cursorSrc.description)
 #print(cursorSrc.description)
+cursorDes.execute("DROP TABLE IF EXISTS Tmp;")
 cursorDes.execute("CREATE TABLE Tmp AS SELECT * FROM " + table_name + ";")
 wipeTable()
 columnHeadings = str(tuple([i[0] for i in cursorSrc.description])).replace("'", "")
