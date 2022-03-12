@@ -1,5 +1,6 @@
 #! /bin/bash
 
+echo '**********************************************************'
 date
 
 echo 'Running analysisIR'
@@ -8,7 +9,7 @@ echo 'Running analysisIR'
 echo 'Running graphIR'
 /usr/bin/python3 /home/pi/scouting_python_2022/graphIR.py -db localhost
 
-echo 'Copying CurrentEventAnalysisGraphs'
+echo 'Copying CurrentEventAnalysis'
 /usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table CurrentEventAnalysis
 
 echo 'Copying CurrentEventAnalysisGraphs'
@@ -21,9 +22,9 @@ echo 'Copying WordCloud'
 /usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table WordCloud
 
 echo 'Copying WordCloudID'
-/usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table WordCloudID
+/usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table WordID
 
-echo 'Copying Teams'
-/usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table Teams
+#echo 'Copying Teams'
+#/usr/bin/python3 /home/pi/scouting_python_2022/copyTable.py -dbs localhost -dbd aws-dev -table Teams
 
 date
