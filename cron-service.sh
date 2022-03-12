@@ -34,7 +34,7 @@ if [ "$1" == start ]; then
     touch /home/pi/analysis.log
     chmod a+rw /home/pi/analysis.log
     # NOTE: The cd /home/pi is critical to get the script to run as a cron job even with the explicit paths defined.
-    crontab -l -u pi | echo '*/3 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis.sh >> /home/pi/analysis.log 2>&1' | crontab -u pi -
+    crontab -l -u pi | echo '*/5 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis.sh >> /home/pi/analysis.log 2>&1' | crontab -u pi -
   fi
 fi
 
