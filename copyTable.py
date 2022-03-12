@@ -158,22 +158,24 @@ else:
 
 
 def wipeTable():
-    cursorDes.execute("DELETE FROM " + table_name + ";")
-    cursorDes.execute("ALTER TABLE " + table_name + " AUTO_INCREMENT = 1;")
+    cursorDes.execute("DELETE FROM Tmp;")
+    cursorDes.execute("ALTER TABLE Tmp AUTO_INCREMENT = 1;")
     connDes.commit()
-    print ("Wiping " + table_name + " table")
+    print ("Wiping temp table")
 
 
 
 columnHeadings=[]
 cursorSrc.execute("SELECT * FROM " + table_name + ";")
 num_fields = len(cursorSrc.description)
+#print(cursorSrc.description)
+cursorDes.execute("DROP TABLE IF EXISTS Tmp;")
+cursorDes.execute("CREATE TABLE Tmp AS SELECT * FROM " + table_name + ";")
+wipeTable()
 columnHeadings = str(tuple([i[0] for i in cursorSrc.description])).replace("'", "")
 tableContents = cursorSrc.fetchall()
 #print(columnHeadings)
 #columnHeadings = str(tuple([record[0] for record in tableContents])).replace("'", "")
-
-wipeTable()
 # print(num_fields)
     
 for row in tableContents:
@@ -188,11 +190,14 @@ for row in tableContents:
             # print(valList)
             row = str(tuple(valList))
     #print(row)
-    query = ("INSERT INTO " + table_name + " " + columnHeadings + " VALUES " + row + ";")
+    query = ("INSERT INTO Tmp " + columnHeadings + " VALUES " + row + ";")
     query = query.replace("None", "NULL")
     # print(query)
     cursorDes.execute(query)
     connDes.commit()
+cursorDes.execute("DROP TABLE " + table_name + ";")
+cursorDes.execute("ALTER TABLE Tmp RENAME " + table_name + ";")
+connDes.commit()
 print ("Copying " + table_name + " table complete!")
 
 print("Time: %0.2f seconds" % (time.time() - start_time))
