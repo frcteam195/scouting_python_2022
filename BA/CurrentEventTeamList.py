@@ -44,7 +44,7 @@ if database == "aws-dev":
 elif database == "pi-10":
         conn = mariaDB.connect(user='admin',
                                 passwd='team195',
-                                host='10.0.0.195',
+                                host='10.0.20.195',
                                 database='team195_scouting')
         cursor = conn.cursor()
         
@@ -104,7 +104,7 @@ if excel == False:
 		values = "(" + str(team.team_number) + "," + team.nickname + "," + cityState + ")"
 		query = "INSERT INTO BlueAllianceTeams (Team, TeamName, TeamLocation) VALUES " + "('" + str(team.team_number) + \
 				 "','" + tempNick + "','" + str(cityState) + "');"
-		# print(query)
+		print(query)
 
 		cursor.execute(query)
 		conn.commit()
