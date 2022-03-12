@@ -71,6 +71,9 @@ print ("Connecting to " + database)
 # **************************************************************
 
 CEA_table = "CurrentEventAnalysisTmp"
+BAO_table = "BlueAllianceOPR"
+BAR_table = "BlueAllianceRankings"
+MS_table = "MatchScouting"
 
 # Define a Class called analysis
 class analysis():
@@ -157,19 +160,6 @@ class analysis():
     def _wipeCEA(self):
         self._run_query("DELETE FROM " + CEA_table + ";")
         self.conn.commit()
-
-    def _copyTable(self):
-        self._wipeCEA
-#        columnHeadings=[]
-        self.cursor.execute("SELECT * FROM " + CEA_table + ";")
-#        columnHeadings = str(tuple([i[0] for i in self.cursor.description])).replace("'", "")
-#        tableContents = self.cursor.fetchall()
-#        for row in tableContents:
-#            row = str(tuple(row))
-#            query = ("INSERT INTO " + CEA_table + " " + columnHeadings + " VALUES " + row + ";")
-#            query = query.replace("None", "NULL")
-#            self.cursor.execute(query)
-#            self.conn.commit()
 
     def _createTemp(self):
         self._run_query("DROP TABLE IF EXISTS CurrentEventAnalysisTmp;")
@@ -282,6 +272,9 @@ class analysis():
         for team in self.rsRobots:
             # print(team)
             rsRobotMatches = self._getTeamData(team)
+            teamName = str(team)
+            teamName = teamName.replace("('", "")
+            teamName = teamName.replace("',)", "")
             # print(rsRobotMatches)
 
             if rsRobotMatches:
@@ -351,8 +344,18 @@ class analysis():
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-        
+                self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary2Value, AnalysisTypeID) "
+                                "SELECT " + BAR_table + ".Team, OPR, TeamRank, 80 "
+                                "FROM " + BAR_table + " "
+                                "INNER JOIN " + BAO_table + " ON " + BAR_table + ".Team = " + BAO_table + ".Team "
+                                "WHERE " + BAR_table + ".Team = " + teamName + ";")
 
+                self._run_query("UPDATE " + CEA_table + " "
+                                "INNER JOIN " + MS_table + " ON " + CEA_table + ".Team = " + MS_table + ".Team "
+                                "SET " + CEA_table + ".EventID = " + MS_table + ".EventID "
+                                "WHERE " + MS_table + ".Team = " + teamName + " AND AnalysisTypeID = 80;")
+
+                self.conn.commit()
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
