@@ -1,3 +1,4 @@
+from analysisTypes.autoHighBalls import autoHighBalls
 import mariadb as mariaDB
 import numpy as np
 import datetime
@@ -12,6 +13,8 @@ from analysisTypes.autoPickup import autoPickup  #2
 # auto 10-19
 from analysisTypes.autonomous import autonomous  #10
 from analysisTypes.autonomousScore import autonomousScore  #11
+from analysisTypes.autoLowBalls import autoLowBalls #12
+from analysisTypes.autoHighBalls import autoHighBalls #13
 # tele 20-29
 from analysisTypes.teleLowBalls import teleLowBalls   #20
 from analysisTypes.teleHighBalls import teleHighBalls   #21
@@ -290,6 +293,12 @@ class analysis():
                 rsCEA = autonomousScore(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
+                rsCEA = autoLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
+                rsCEA = autoHighBalls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+
                 rsCEA = teleLowBalls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
@@ -344,8 +353,9 @@ class analysis():
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
-                self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary2Value, AnalysisTypeID) "
-                                "SELECT " + BAR_table + ".Team, OPR, TeamRank, 80 "
+
+                self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary1Display, Summary2Value, Summary2Display, AnalysisTypeID) "
+                                "SELECT " + BAR_table + ".Team, OPR, OPR, TeamRank, TeamRank, 80 "
                                 "FROM " + BAR_table + " "
                                 "INNER JOIN " + BAO_table + " ON " + BAR_table + ".Team = " + BAO_table + ".Team "
                                 "WHERE " + BAR_table + ".Team = " + teamName + ";")
