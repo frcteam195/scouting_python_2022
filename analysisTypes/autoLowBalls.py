@@ -22,11 +22,11 @@ def autoLowBalls(analysis, rsRobotMatches):
         else:
             autoMoveBonus = matchResults[analysis.columns.index('AutoMoveBonus')]
             # Retrieve values from the matchResults and set to appropriate variables
-            autoBallLow = matchResults[analysis.columns.index('autoBallLow')]
+            autoBallLow = matchResults[analysis.columns.index('AutoBallLow')]
             if autoBallLow is None:
                 autoBallLow = 0
             
-            autoBallHigh = matchResults[analysis.columns.index('autoBallHigh')]
+            autoBallHigh = matchResults[analysis.columns.index('AutoBallHigh')]
             if autoBallHigh is None:
                 autoBallHigh = 0
             
