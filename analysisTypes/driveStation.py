@@ -23,7 +23,7 @@ def driveStation(analysis, rsRobotMatches):
         else:
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
             numberOfMatchesPlayed += 1
-            driveStation = matchResults[analysis.columns.index('TeamMatchNo')]
+            driveStation = matchResults[analysis.columns.index('AllianceStationID')]
             if driveStation == 1:
                 driveStationDisplay = 'R1'
             elif driveStation == 2:
