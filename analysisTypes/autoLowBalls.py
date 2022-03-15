@@ -44,7 +44,7 @@ def autoLowBalls(analysis, rsRobotMatches):
             totalLowBallsList.append(autoBallLow)
             totalBallsList.append(totalAutoBalls)
 
-            if defPlayedAgainst == 0:
+            if autoMoveBonus == 0:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(autoBallLow)
             else:
