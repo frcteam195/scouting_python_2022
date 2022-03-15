@@ -37,6 +37,7 @@ from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
 from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
+from analysisTypes.scouter import scouter #71
 
 # *********************** argument parser **********************
 
@@ -351,6 +352,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = matchVideos(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = scouter(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 
