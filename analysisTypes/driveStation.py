@@ -24,17 +24,17 @@ def driveStation(analysis, rsRobotMatches):
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
             numberOfMatchesPlayed += 1
             driveStation = matchResults[analysis.columns.index('TeamMatchNo')]
-            if driveState == 1:
+            if driveStation == 1:
                 driveStationDisplay = 'R1'
-            elif driveState == 2:
+            elif driveStation == 2:
                 driveStationDisplay = 'R2'
-            elif driveState == 3:
+            elif driveStation == 3:
                 driveStationDisplay = 'R3'
-            elif driveState == 4:
+            elif driveStation == 4:
                 driveStationDisplay = 'B1'
-            elif driveState == 5:
+            elif driveStation == 5:
                 driveStationDisplay = 'B2'
-            elif driveState == 6:
+            elif driveStation == 6:
                 driveStationDisplay = 'B3'
                 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(driveStationDisplay)
