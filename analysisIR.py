@@ -10,6 +10,7 @@ import sys
 # Pre match 1-9
 from analysisTypes.startingPosition import startingPosition  #1
 from analysisTypes.autoPickup import autoPickup  #2
+from analysisTypes.driveStation import driveStation  #2
 # auto 10-19
 from analysisTypes.autonomous import autonomous  #10
 from analysisTypes.autonomousScore import autonomousScore  #11
@@ -355,6 +356,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = scouter(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = driveStation(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
 
