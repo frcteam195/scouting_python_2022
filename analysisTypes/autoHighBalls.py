@@ -44,7 +44,7 @@ def autoHighBalls(analysis, rsRobotMatches):
             totalHighBallsList.append(autoBallHigh)
             totalBallsList.append(totalAutoBalls)
 
-            if defPlayedAgainst == 0:
+            if autoMoveBonus == 0:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(autoBallHigh)
             else:
