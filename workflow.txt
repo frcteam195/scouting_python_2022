@@ -43,7 +43,10 @@ Description on the workflow for running the python scripts
 7 createMatchScoutingL2Records
 	***** This needs to be tested for rapid react *****
 	
-*** Scripts that run during a competition
+*** Scripts that run during a competition - these are not run individually but rather as
+    a cron job
+    
+See cron-readme for instructions on the cron job
 
 1. analysisIR
 	This will take match scouting records from the MatchScouting table and create the
@@ -53,3 +56,11 @@ Description on the workflow for running the python scripts
 	This will take the CEA table and create a new table, CurrentEventAnalysisGraphs table
 	that lay out the data on a per team basis with selected analysis types in columns
 	that is easily suited for making bar graphs of the data
+	
+3. BA/Oprs.py
+	This will pull the OPRs from the BlueAlliance API and populate the BlueAllianceOPR
+	table
+	
+4. BA/Ranks.py
+	This will pull the current event ranks from the BlueAlliance API and populate the
+	BlueAllianceRanks table.
