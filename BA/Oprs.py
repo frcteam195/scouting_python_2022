@@ -94,6 +94,7 @@ if excel == False:
 		# print(query)
 		cursor.execute(query)
 		conn.commit()
+	print('Writing OPRs to database')
 
 elif excel == True:
 	workbook = xlsxwriter.Workbook('OPRS.xlsx')
