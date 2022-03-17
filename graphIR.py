@@ -116,17 +116,18 @@ class analysis():
 	# Function to write means and medians to the CEAGraphs table
     def _analyze(self):
         analysisTypeList = [60, 61, 30, 20, 21, 22, 11, 62]
-        analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean", "TotalBallsMedian", "TotalScoreMedian", "ClimbMedian", "TeleLowBallsMedian", "TeleHighBallsMedian", "TeleTotalBallsMedian", "AutonomousScoreMedian", "TeleBallScoreMedian"]
-        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, AutonomousMean, AutonomousMedian) "
-                            "SELECT Team, EventID, Summary1Value, Summary2Value "
+        analysisNameList = ["TotalBallsMean", "TotalScoreMean", "ClimbMean", "TeleLowBallsMean", "TeleHighBallsMean", "TeleTotalBallsMean", "AutonomousScoreMean", "TeleBallScoreMean", "TotalBallsMedian", "TotalScoreMedian", "ClimbMedian", "TeleLowBallsMedian", "TeleHighBallsMedian", "TeleTotalBallsMedian", "AutonomousScoreMedian", "TeleBallScoreMedian", "TotalBallsFormat", "TotalScoreFormat", "ClimbFormat", "TeleLowBallsFormat", "TeleHighBallsFormat", "TeleTotalBallsFormat", "AutonomousScoreFormat", "TeleBallScoreFormat"]
+        self._run_query("INSERT INTO " + CEAG_table + "(Team, EventID, AutonomousMean, AutonomousMedian, AutonomousFormat) "
+                            "SELECT Team, EventID, Summary1Value, Summary2Value, Summary3Format "
                             "FROM CurrentEventAnalysis "
                             "WHERE AnalysisTypeID = 10;")
         for i in range(len(analysisTypeList)):
             #print(i)
             self._run_query("UPDATE " + CEAG_table + " "
                             "INNER JOIN CurrentEventAnalysis ON " + CEAG_table + ".Team = CurrentEventAnalysis.Team AND " + CEAG_table + ".EventID = CurrentEventAnalysis.EventID "
-                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value, " + analysisNameList[i + 8] + " = CurrentEventAnalysis.Summary2Value "
+                            "SET " + analysisNameList[i] + " = CurrentEventAnalysis.Summary1Value, " + analysisNameList[i + 8] + " = CurrentEventAnalysis.Summary2Value, " + analysisNameList[i + 16] + " = CurrentEventAnalysis.Summary3Format "
                             "WHERE CurrentEventAnalysis.AnalysisTypeID = " + str(analysisTypeList[i]) + ";")
+
         self.conn.commit()
         
 
