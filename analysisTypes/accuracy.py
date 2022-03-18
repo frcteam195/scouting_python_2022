@@ -63,16 +63,15 @@ def accuracy(analysis, rsRobotMatches):
                 
             averageAccuracy = round((teleAccuracy + autoAccuracy)/2,1)
            
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(teleAccuracy) + "|" + str(autoAccuracy)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = averageAccuracy
-            if averageAccuracy >= 0.9:
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(teleAccuracy)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = teleAccuracy
+            if teleAccuracy >= 0.9:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
-            elif averageAccuracy >= 0.75:
+            elif teleAccuracy >= 0.75:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            elif averageAccuracy >= 0.50:
+            elif teleAccuracy >= 0.50:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
-            elif averageAccuracy >= 0.25:
+            elif teleAccuracy >= 0.25:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
