@@ -85,13 +85,14 @@ if excel == False:
 
 	eventTeams = tba.event_teams(event)
 	eventOpr = tba.event_oprs(event).get("oprs")
+	
 	eventOPRSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
 	# print(eventOPRSorted)
 
 	for team in eventOPRSorted:
 		query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
-				str(team[1]) + "');"
-		# print(query)
+				str(round(team[1],1)) + "');"
+		print(query)
 		cursor.execute(query)
 		conn.commit()
 	print('Writing OPRs to database')
