@@ -39,6 +39,7 @@ from analysisTypes.totalScore import totalScore   #61
 from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 from analysisTypes.scouter import scouter #71
+from analysisTypes.accuracy import accuracy #71
 
 # *********************** argument parser **********************
 
@@ -360,7 +361,9 @@ class analysis():
                 
                 rsCEA = driveStation(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
-
+                
+                rsCEA = accuracy(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
 
                 self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary1Display, Summary2Value, Summary2Display, AnalysisTypeID) "
                                 "SELECT " + BAR_table + ".Team, OPR, OPR, TeamRank, TeamRank, 80 "
