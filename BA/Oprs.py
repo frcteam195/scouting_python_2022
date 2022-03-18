@@ -91,8 +91,8 @@ if excel == False:
 
 	for team in eventOPRSorted:
 		query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
-				str(round(team[1],1)) + "');"
-		#print(query)
+				str(team[1]) + "');"
+		print(query)
 		cursor.execute(query)
 		conn.commit()
 	print('Writing OPRs to database')
