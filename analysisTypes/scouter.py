@@ -16,18 +16,18 @@ def scouter(analysis, rsRobotMatches):
         #   likely be displayed on team picker pages.
         autoDidNotShow = matchResults[analysis.columns.index('AutoDidNotShow')]
         scoutingStatus = matchResults[analysis.columns.index('ScoutingStatus')]
-        if autoDidNotShow == 1:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
-        elif scoutingStatus == 2:
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
-        else:
+        # if autoDidNotShow == 1:
+#             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'DNS'
+#         elif scoutingStatus == 2:
+#             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
+#         else:
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
-            numberOfMatchesPlayed += 1
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = matchResults[
-                analysis.columns.index('ScouterID')]
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = matchResults[
-                analysis.columns.index('ScouterID')]
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
+        numberOfMatchesPlayed += 1
+    	rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = matchResults[
+            analysis.columns.index('ScouterID')]
+        rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = matchResults[
+            analysis.columns.index('ScouterID')]
+        rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 0
             # An if statement will go here to define Match#Format
 
     return rsCEA
