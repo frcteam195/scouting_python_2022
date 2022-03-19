@@ -23,7 +23,7 @@ def scouter(analysis, rsRobotMatches):
 #         else:
             # Increment the number of matches played and write Match#Display, Match#Value and Match#Format
         numberOfMatchesPlayed += 1
-    	rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = matchResults[
+        rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = matchResults[
             analysis.columns.index('ScouterID')]
         rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = matchResults[
             analysis.columns.index('ScouterID')]
