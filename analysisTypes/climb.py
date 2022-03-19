@@ -84,8 +84,8 @@ def climb(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(ClimbPointsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(ClimbPointsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(ClimbPointsList)
-        rsCEA['Summary2Value'] = statistics.median(ClimbPointsList)
+        rsCEA['Summary2Display'] = round(statistics.median(ClimbPointsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(ClimbPointsList), 1)
         # 3 is rank
 
     return rsCEA

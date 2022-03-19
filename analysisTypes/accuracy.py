@@ -79,8 +79,8 @@ def accuracy(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(teleAccuracyList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(teleAccuracyList), 1)
-        rsCEA['Summary2Display'] = statistics.median(teleAccuracyList)
-        rsCEA['Summary2Value'] = statistics.median(teleAccuracyList)
+        rsCEA['Summary2Display'] = round(statistics.median(teleAccuracyList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(teleAccuracyList), 1)
         # 3 is for rank
         rsCEA['Summary4Display'] = round(statistics.mean(autoAccuracyList), 1)
         rsCEA['Summary4Value'] = round(statistics.mean(autoAccuracyList), 1)

@@ -66,8 +66,8 @@ def autoHighBalls(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(totalHighBallsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(totalHighBallsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalHighBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalHighBallsList)
+        rsCEA['Summary2Display'] = round(statistics.median(totalHighBallsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(totalHighBallsList), 1)
         # summary 3 will be used for rank
         rsCEA['Summary4Display'] = round(statistics.mean(totalBallsList), 1)
         rsCEA['Summary4Value'] = round(statistics.mean(totalBallsList), 1)

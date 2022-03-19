@@ -64,8 +64,8 @@ def teleLowBalls(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(totalLowBallsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(totalLowBallsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalLowBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalLowBallsList)
+        rsCEA['Summary2Display'] = round(statistics.median(totalLowBallsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(totalLowBallsList), 1)
         # summary 3 will be used for rank
         rsCEA['Summary4Display'] = round(statistics.mean(totalBallsList), 1)
         rsCEA['Summary4Value'] = round(statistics.mean(totalBallsList), 1)

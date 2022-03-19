@@ -68,8 +68,8 @@ def autonomousScore(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(autoScoreList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(autoScoreList), 1)
-        rsCEA['Summary2Display'] = statistics.median(autoScoreList)
-        rsCEA['Summary2Value'] = statistics.median(autoScoreList)
+        rsCEA['Summary2Display'] = round(statistics.median(autoScoreList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(autoScoreList), 1)
 
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))

@@ -53,26 +53,27 @@ def totalScore(analysis, rsRobotMatches):
                 teleBallMiss = 0
             
             climbStatus = matchResults[analysis.columns.index('ClimbStatusID')]
-            if climbStatus != 5:
+            if climbStatus != 4:
                 climbPoints = 0
-            if climbStatus == 5:
+            if climbStatus == 4:
                 climbHeight = matchResults[analysis.columns.index('ClimbHeight')]
-                if climbHeight == 1:
+                if climbHeight == 0:
                     climbPoints = 4    
-                elif climbHeight == 2:
+                elif climbHeight == 1:
                     climbPoints = 6   
-                elif climbHeight == 3:
+                elif climbHeight == 2:
                     climbPoints = 10
-                elif climbHeight == 4:
+                elif climbHeight == 3:
                     climbPoints = 15
                 else:
                     climbPoints = 999
-             
+
 
             # Adding up all the previously identified elements
             numberOfMatchesPlayed += 1
             totalPoints = autoMovePoints + (autoBallHigh * 4) + (autoBallLow * 2) + \
                         (teleBallHigh * 2) + teleBallLow + climbPoints
+           # print (str(totalPoints))
             totalPointsList.append(totalPoints)
 
             # Set the Display, Value, and Format values
@@ -93,7 +94,7 @@ def totalScore(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(totalPointsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(totalPointsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalPointsList)
-        rsCEA['Summary2Value'] = statistics.median(totalPointsList)
+        rsCEA['Summary2Display'] = round(statistics.median(totalPointsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(totalPointsList), 1)
 
     return rsCEA

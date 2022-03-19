@@ -54,7 +54,7 @@ def teleBallScore(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(totalPointsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(totalPointsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalPointsList)
-        rsCEA['Summary2Value'] = statistics.median(totalPointsList)
+        rsCEA['Summary2Display'] = round(statistics.median(totalPointsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(totalPointsList), 1)
 
     return rsCEA

@@ -68,8 +68,8 @@ def autonomous(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(totalBallsList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(totalBallsList), 1)
-        rsCEA['Summary2Display'] = statistics.median(totalBallsList)
-        rsCEA['Summary2Value'] = statistics.median(totalBallsList)
+        rsCEA['Summary2Display'] = round(statistics.median(totalBallsList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(totalBallsList), 1)
         rsCEA['Summary4Display'] = round(statistics.mean(totalHighBallsList), 1)
         rsCEA['Summary4Value'] = round(statistics.mean(totalHighBallsList), 1)
 

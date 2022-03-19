@@ -76,8 +76,8 @@ def autoPickup(analysis, rsRobotMatches):
     if numberOfMatchesPlayed > 0:
         rsCEA['Summary1Display'] = round(statistics.mean(numBallList), 1)
         rsCEA['Summary1Value'] = round(statistics.mean(numBallList), 1)
-        rsCEA['Summary2Display'] = statistics.median(numBallList)
-        rsCEA['Summary2Value'] = statistics.median(numBallList)
+        rsCEA['Summary2Display'] = round(statistics.median(numBallList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(numBallList), 1)
 
 
     # end = time.time()
