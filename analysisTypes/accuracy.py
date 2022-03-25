@@ -50,18 +50,18 @@ def accuracy(analysis, rsRobotMatches):
             numberOfMatchesPlayed += 1
             #print (str(teleBallHigh) + ", " + str(teleBallLow) + ", " + str(teleBallMiss))
             if (teleBallHigh != 0 or teleBallLow != 0 or teleBallMiss !=0):
-                teleAccuracy = round((teleBallHigh + teleBallLow)/(teleBallHigh + teleBallLow + teleBallMiss),1)
+                teleAccuracy = round((teleBallHigh + teleBallLow)/(teleBallHigh + teleBallLow + teleBallMiss),3)
             else:
-            	teleAccuracy = 0
+                teleAccuracy = 0
             teleAccuracyList.append(teleAccuracy)
             	
             if (autoBallHigh != 0 or autoBallLow != 0 or autoBallMiss !=0):
-                autoAccuracy = round((autoBallHigh + autoBallLow)/(autoBallHigh + autoBallLow + autoBallMiss),1)
+                autoAccuracy = round((autoBallHigh + autoBallLow)/(autoBallHigh + autoBallLow + autoBallMiss),3)
             else:
                 autoAccuracy = 0
             autoAccuracyList.append(autoAccuracy)
                 
-            averageAccuracy = round((teleAccuracy + autoAccuracy)/2,1)
+            averageAccuracy = round((teleAccuracy + autoAccuracy)/2,4)
            
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(teleAccuracy)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = teleAccuracy
@@ -77,12 +77,12 @@ def accuracy(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(teleAccuracyList), 1)
-        rsCEA['Summary1Value'] = round(statistics.mean(teleAccuracyList), 1)
-        rsCEA['Summary2Display'] = round(statistics.median(teleAccuracyList), 1)
-        rsCEA['Summary2Value'] = round(statistics.median(teleAccuracyList), 1)
+        rsCEA['Summary1Display'] = round(statistics.mean(teleAccuracyList), 3)
+        rsCEA['Summary1Value'] = round(statistics.mean(teleAccuracyList), 3)
+        rsCEA['Summary2Display'] = round(statistics.median(teleAccuracyList), 3)
+        rsCEA['Summary2Value'] = round(statistics.median(teleAccuracyList), 3)
         # 3 is for rank
-        rsCEA['Summary4Display'] = round(statistics.mean(autoAccuracyList), 1)
-        rsCEA['Summary4Value'] = round(statistics.mean(autoAccuracyList), 1)
+        rsCEA['Summary4Display'] = round(statistics.mean(autoAccuracyList), 3)
+        rsCEA['Summary4Value'] = round(statistics.mean(autoAccuracyList), 3)
 
     return rsCEA
