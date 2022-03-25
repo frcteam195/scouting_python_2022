@@ -50,10 +50,10 @@ def teleTotalBalls(analysis, rsRobotMatches):
             # Create the rsCEA records for Display, Value, and Format
             if defPlayedAgainst == 0:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(totalBalls) + "|" + str(teleBallHigh)
+                    str(totalBalls)
             else:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(totalBalls) + "|" + str(teleBallHigh) + "*"
+                    str(totalBalls) + "*"
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = totalBalls
             if totalBalls >= 16:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5

@@ -55,7 +55,7 @@ def autoHighBalls(analysis, rsRobotMatches):
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 5
             elif autoBallHigh == 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 4
-            elif autoBallHigh < 3:
+            elif 1 <= autoBallHigh < 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
             else:
                 if autoMoveBonus == 1:
