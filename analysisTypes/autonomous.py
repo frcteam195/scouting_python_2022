@@ -59,7 +59,7 @@ def autonomous(analysis, rsRobotMatches):
             elif 1 <= totalBalls < 3:
                 rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 3
             else:
-                if autoMoveBonus == 1:
+                if autoMoveBonus == 2:
                     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 2
                 else:
                     rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = 1
