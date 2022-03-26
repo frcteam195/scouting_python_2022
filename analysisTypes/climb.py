@@ -37,7 +37,7 @@ def climb(analysis, rsRobotMatches):
                 ClimbStatusString = "0"
                 ClimbStatusColor = 1
                 ClimbStatusScore = 0
-            elif ClimbStatusID == 5:
+            elif ClimbStatusID == 4:
                 ClimbStatusString = "-"
                 ClimbStatusColor = 1
                 ClimbStatusScore = 0

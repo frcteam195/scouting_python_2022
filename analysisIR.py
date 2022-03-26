@@ -23,12 +23,8 @@ from analysisTypes.teleTotalBalls import teleTotalBalls   #22
 # climb 30-39
 from analysisTypes.climb import climb   #30
 # summary data 40-59
-from analysisTypes.summGroundPickup import summGroundPickup   #40
 from analysisTypes.summDefPlayedAgainst import summDefPlayedAgainst   #41
 from analysisTypes.summLaunchPad import summLaunchPad   #42
-from analysisTypes.summSortCargo import summSortCargo    #43
-from analysisTypes.summShootDriving import summShootDriving   #44
-from analysisTypes.summTerminalPickup import summTerminalPickup   #45
 from analysisTypes.summPlayedDefense import summPlayedDefense   #46
 from analysisTypes.summLostComm import summLostComm   #47
 from analysisTypes.summSubSystemBroke import summSubSystemBroke   #48
@@ -314,22 +310,10 @@ class analysis():
                 rsCEA = climb(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
-                rsCEA = summGroundPickup(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
                 rsCEA = summDefPlayedAgainst(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = summLaunchPad(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = summSortCargo(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = summShootDriving(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = summTerminalPickup(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = summPlayedDefense(analysis=self, rsRobotMatches=rsRobotMatches)
