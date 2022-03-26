@@ -84,22 +84,48 @@ event = cursor.fetchone()[0]
 
 
 if excel == False:
-	cursor.execute("DELETE FROM BlueAllianceOPR")
-	conn.commit()
+    cursor.execute("DELETE FROM BlueAllianceMatchData")
+    conn.commit()
 
-	eventTeams = tba.event_teams(event)
-	eventOpr = tba.event_oprs(event).get("oprs")
+    qNum = 0
+    efNum = 0
+    qfNum = 0
+    sfNum = 0
+    fNum = 0
+
+    eventInfo = tba.event_matches(event)
+    
+    for match in eventInfo:
+        if match.comp_level == "qm":
+            qNum += 1
+            query = "INSERT INTO BlueAllianceMatchData(Match) VALUES (" + str(qNum) + ");"
+            print(query)
+            #cursor.execute(query)
+            #conn.commit()
+        elif match.comp_level == "ef":
+            efNum += 1
+        elif match.comp_level == "qf":
+            qfNum += 1
+        elif match.comp_level == "sf":
+            sfNum += 1
+        elif match.comp_level == "f":
+            fNum += 1
+
+    
+
+
 	
-	eventOPRSorted = [(k[3:], eventOpr[k]) for k in sorted(eventOpr, key=eventOpr.get, reverse=True)]
+	#eventInfoSorted = [(k[3:], eventInfo[k]) for k in sorted(eventInfo, key=eventInfo.get, reverse=True)]
 	# print(eventOPRSorted)
 
-	for team in eventOPRSorted:
-		query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
-				str(team[1]) + "');"
-		# print(query)
-		cursor.execute(query)
-		conn.commit()
-	print('Writing OPRs to database')
+    #for team in eventInfo:
+        #query = "INSERT INTO BlueAllianceOPR (Team, OPR) VALUES " + "('" + str(team[0]) + "', '" + \
+                #str(team[1]) + "');"
+        # print(query)
+        #cursor.execute(query)
+        #conn.commit()
+        #print(team)
+    #print('Writing OPRs to database')
 
 elif excel == True:
 	workbook = xlsxwriter.Workbook('OPRS.xlsx')
