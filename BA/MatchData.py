@@ -2,6 +2,7 @@
 # Checkout the BlueAlliance API website which will itemize all the possible
 #	items that can be pulled and what they are called.
 
+from asyncio.windows_events import NULL
 import mariadb as mariaDB
 import tbapy
 import xlsxwriter
@@ -88,31 +89,59 @@ if excel == False:
     conn.commit()
 
     qNum = 0
-    efNum = 0
-    qfNum = 0
-    sfNum = 0
-    fNum = 0
-
     eventInfo = tba.event_matches(event)
     
     for match in eventInfo:
+        matchInfo = tba.match(match.key)
+
+        matchAlliances = matchInfo.alliances
+        matchRed = matchAlliances["red"]
+        matchBlue = matchAlliances["blue"]
+
+        matchRedTeams = matchRed["team_keys"]
+        matchBlueTeams = matchBlue["team_keys"]
+
+        matchRedScore = matchRed["score"]
+        matchBlueScore = matchBlue["score"]
+
+        matchBreakdown = match["score_breakdown"]
+        matchRedBreakdown = matchBreakdown["red"]
+        matchBlueBreakdown = matchBreakdown["blue"]
+
+        matchRedFouls = matchRedBreakdown["foulCount"]
+        matchBlueFouls = matchBlueBreakdown["foulCount"]
+
+        matchRedTechFouls = matchRedBreakdown["techFoulCount"]
+        matchBlueTechFouls = matchBlueBreakdown["techFoulCount"]
+
+        matchRedAutoPoints = matchRedBreakdown["autoPoints"]
+        matchBlueAutoPoints = matchBlueBreakdown["autoPoints"]
+
+        matchRedTelePoints = matchRedBreakdown["teleopPoints"]
+        matchBlueTelePoints = matchBlueBreakdown["teleopPoints"]
+
+        matchRedHangarPoints = matchRedBreakdown["endgamePoints"]
+        matchBlueHangarPoints = matchBlueBreakdown["endgamePoints"]
+
+        matchRedRankingPoints = matchRedBreakdown["rp"]
+        matchBlueRankingPoints = matchBlueBreakdown["rp"]
+
+        matchRedHangarRP = matchRedBreakdown["hangarBonusRankingPoint"]
+        matchBlueHangarRP = matchBlueBreakdown["hangarBonusRankingPoint"]
+
+        #print(str(matchRedBreakdown) + "\n")
+
         if match.comp_level == "qm":
             qNum += 1
-            query = "INSERT INTO BlueAllianceMatchData(Match) VALUES (" + str(qNum) + ");"
-            print(query)
-            #cursor.execute(query)
-            #conn.commit()
-        elif match.comp_level == "ef":
-            efNum += 1
-        elif match.comp_level == "qf":
-            qfNum += 1
-        elif match.comp_level == "sf":
-            sfNum += 1
-        elif match.comp_level == "f":
-            fNum += 1
-
-    
-
+            cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
+                            "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
+                            "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
+                            (qNum, int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
+                            int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
+                            int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
+                            int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
+            conn.commit()
 
 	
 	#eventInfoSorted = [(k[3:], eventInfo[k]) for k in sorted(eventInfo, key=eventInfo.get, reverse=True)]
