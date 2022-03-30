@@ -37,35 +37,36 @@ def climb(analysis, rsRobotMatches):
                 ClimbStatusString = "0"
                 ClimbStatusColor = 1
                 ClimbStatusScore = 0
-            elif ClimbStatusID == 4:
+            elif ClimbStatusID == 5:
                 ClimbStatusString = "-"
                 ClimbStatusColor = 1
                 ClimbStatusScore = 0
             else:
-                ClimbPosition = matchResults[analysis.columns.index('ClimbPosition')]
-                if ClimbPosition == 0:
-                    ClimbPositionString = "L"
-                elif ClimbPosition == 1:
-                    ClimbPositionString = "M"
-                elif ClimbPosition == 2:
-                    ClimbPositionString = "R"
-                else:
-                    ClimbPositionString = "?"
+                #ClimbPosition = matchResults[analysis.columns.index('ClimbPosition')]
+                #if ClimbPosition == 0:
+                #    ClimbPositionString = "L"
+                #elif ClimbPosition == 1:
+                #    ClimbPositionString = "M"
+                #elif ClimbPosition == 2:
+                #    ClimbPositionString = "R"
+                #else:
+                #    ClimbPositionString = "?"
                 ClimbHeight = matchResults[analysis.columns.index('ClimbHeight')]
                 if ClimbHeight == 0:
-                    ClimbStatusString = "4|{}".format(ClimbPositionString)
+                    ClimbStatusString = "4"
                     ClimbStatusColor = 2
                     ClimbStatusScore = 4
                 elif ClimbHeight == 1:
-                    ClimbStatusString = "6|{}".format(ClimbPositionString)
+                    ClimbStatusString = "6"
                     ClimbStatusColor = 3
                     ClimbStatusScore = 6
                 elif ClimbHeight == 2:
-                    ClimbStatusString = "10|{}".format(ClimbPositionString)
+                    ClimbStatusString = "10"
                     ClimbStatusColor = 4
                     ClimbStatusScore = 10
                 elif ClimbHeight == 3:
-                    ClimbStatusString = "15|{}".format(ClimbPositionString)
+                    ClimbStatusString = "15"
+                    #ClimbStatusString = "15|{}".format(ClimbPositionString)
                     ClimbStatusColor = 5
                     ClimbStatusScore = 15
                 else:
