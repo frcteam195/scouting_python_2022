@@ -9,6 +9,7 @@ import xlsxwriter
 import sys
 import getopt
 import argparse
+import datetime as dt
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 # x = 195
@@ -94,6 +95,10 @@ if excel == False:
     for match in eventInfo:
         matchInfo = tba.match(match.key)
         matchNum = matchInfo.match_number
+        matchTimeRaw = matchInfo.time
+        matchActTimeRaw = matchInfo.actual_time
+        matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
+        matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw)
 
         matchAlliances = matchInfo.alliances
         matchRed = matchAlliances["red"]
@@ -130,14 +135,14 @@ if excel == False:
         matchRedHangarRP = matchRedBreakdown["hangarBonusRankingPoint"]
         matchBlueHangarRP = matchBlueBreakdown["hangarBonusRankingPoint"]
 
-        #print(str(matchInfo) + "\n")
+        #print(str(matchTime) + "\n")
 
         if match.comp_level == "qm":
-            cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
+            cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, MatchTime, ActualTime, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
                             "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
                             "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
-                            (matchNum, int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
+                            (matchNum, str(matchTime)[11:16], str(matchActTime)[11:16], int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
                             int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
                             int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
                             int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
