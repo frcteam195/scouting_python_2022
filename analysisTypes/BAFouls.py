@@ -70,9 +70,9 @@ def BAFouls(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = BAFoulsFormat
 
     # Create BAary data
-    if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(foulsList), 2)
-        rsCEA['Summary1Value'] = round(statistics.mean(foulsList), 2)
+    #if numberOfMatchesPlayed > 0:
+    #    rsCEA['Summary1Display'] = round(statistics.mean(foulsList), 2)
+    #    rsCEA['Summary1Value'] = round(statistics.mean(foulsList), 2)
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))
