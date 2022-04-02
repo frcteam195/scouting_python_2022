@@ -29,13 +29,16 @@ from analysisTypes.summPlayedDefense import summPlayedDefense   #46
 from analysisTypes.summLostComm import summLostComm   #47
 from analysisTypes.summSubSystemBroke import summSubSystemBroke   #48
 from analysisTypes.summBrokeDown import summBrokeDown   #49
+
+
 # Totals 60-69
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
 from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 from analysisTypes.scouter import scouter #71
-from analysisTypes.accuracy import accuracy #71
+from analysisTypes.accuracy import accuracy #72
+from analysisTypes.fouls import fouls #73
 
 # *********************** argument parser **********************
 
@@ -347,6 +350,9 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = accuracy(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = fouls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary1Display, Summary2Value, Summary2Display, AnalysisTypeID) "
