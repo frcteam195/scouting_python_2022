@@ -1,3 +1,4 @@
+from os import system
 import mariadb as mariaDB
 import numpy as np
 import datetime
@@ -113,12 +114,19 @@ class analysis():
         self._run_query("SELECT * FROM Events "
                         "WHERE CurrentEvent = 1;")
         eventInfo = self.cursor.fetchone()
-        eventID = eventInfo[0]
+        ID = eventInfo[0]
 
         self._run_query("UPDATE " + M_table + " "
-                        "INNER JOIN %s ON %s")
-
-        #self.conn.commit()
+                        "INNER JOIN " + BAMD_table + " ON " + M_table + ".MatchNo = " + BAMD_table + ".MatchNumber "
+                        "SET Matches.RedScore = BlueAllianceMatchData.RedScore, Matches.BlueScore = BlueAllianceMatchData.BlueScore, "
+                        "Matches.RedFouls = BlueAllianceMatchData.RedFouls, Matches.BlueFouls = BlueAllianceMatchData.BlueFouls, "
+                        "Matches.RedTechFouls = BlueAllianceMatchData.RedTechFouls, Matches.BlueTechFouls = BlueAllianceMatchData.BlueTechFouls, "
+                        "Matches.RedTelePoints = BlueAllianceMatchData.RedTelePoints, Matches.BlueTelePoints = BlueAllianceMatchData.BlueTelePoints, "
+                        "Matches.RedHangarPoints = BlueAllianceMatchData.RedHangerPoints, Matches.BlueHangarPoints = BlueAllianceMatchData.BlueHangerPoints, "
+                        "Matches.RedCargoRanking = BlueAllianceMatchData.RedCargoRanking, Matches.BlueCargoRanking = BlueAllianceMatchData.BlueCargoRanking, "
+                        "Matches.RedHangarRanking = BlueAllianceMatchData.RedHangarRanking, Matches.BlueHangarRanking = BlueAllianceMatchData.BlueHangarRanking "
+                        "WHERE Matches.EventID = " + str(ID) + ";")
+        self.conn.commit()
         
 
 # This initizlzes the analysis Class and thus runs the program.
