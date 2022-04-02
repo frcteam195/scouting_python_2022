@@ -38,7 +38,7 @@ from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 from analysisTypes.scouter import scouter #71
 from analysisTypes.accuracy import accuracy #72
-from analysisTypes.fouls import fouls #73
+from analysisTypes.BAFouls import BAFouls #73
 
 # *********************** argument parser **********************
 
@@ -352,7 +352,7 @@ class analysis():
                 rsCEA = accuracy(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
-                rsCEA = fouls(analysis=self, rsRobotMatches=rsRobotMatches)
+                rsCEA = BAFouls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary1Display, Summary2Value, Summary2Display, AnalysisTypeID) "
