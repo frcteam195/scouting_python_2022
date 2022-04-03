@@ -1,3 +1,6 @@
+# use pip3 to install:
+# pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
 from __future__ import print_function
 import os.path
 from tokenize import String
@@ -140,7 +143,7 @@ class analysis():
                             "VALUES ('" + values[r][0] +"', "+ values[r][1] +", " + values[r][2] +", '" + values[r][3]+"', '" + values[r][4]+"', '" + values[r][5]+"', '" + values[r][6]+"', '" + values[r][7]+ "')")
 
             self.conn.commit()
-        print(values)
+        #print(values)
 
 if __name__ == '__main__':
     myAnalysis = analysis()
