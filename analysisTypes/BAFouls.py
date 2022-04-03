@@ -26,39 +26,28 @@ def BAFouls(analysis, rsRobotMatches):
             # Retrieve values from the matchResults and set to appropriate variables
             BAFouls = matchResults[analysis.columns.index('BAFouls')]
             if BAFouls is None:
-                BAFouls = 999
                 BAFoulsDisplay = '-'
-                BAFoulsValue = 999
                 BAFoulsFormat = 6
-            elif BAFouls >= 0:
-                BAFoulsDisplay = 'BAFouls'
-                BAFoulsFormat = 1
-                BAFoulsValue = 0
-                foulsList.append(BAFoulsValue)
-            elif BAFouls >= 1:
-                BAFoulsDisplay = 'BAFouls'
-                BAFoulsFormat = 2
-                BAFoulsValue = 1
-                foulsList.append(BAFoulsValue)
-            elif BAFouls >= 5:
-                BAFoulsDisplay = 'BAFouls'
-                BAFoulsFormat = 3
-                BAFoulsValue = 2
-                foulsList.append(BAFoulsValue)
-            elif BAFouls >= 9:
-                BAFoulsDisplay = 'BAFouls'
-                BAFoulsFormat = 4
-                BAFoulsValue = 3
-                foulsList.append(BAFoulsValue)
-            elif BAFouls >= 13:
-                BAFoulsDisplay = 'BAFouls'
+                BAFouls = 0
+            elif BAFouls == 0:
+                BAFoulsDisplay = BAFouls
                 BAFoulsFormat = 5
-                BAFoulsValue = 4
-                foulsList.append(BAFoulsValue)
+            elif BAFouls == 1:
+                BAFoulsDisplay = BAFouls
+                BAFoulsFormat = 4
+            elif BAFouls == 2:
+                BAFoulsDisplay = BAFouls
+                BAFoulsFormat = 3
+            elif BAFouls == 3:
+                BAFoulsDisplay = BAFouls
+                BAFoulsFormat = 2
+            elif BAFouls > 3:
+                BAFoulsDisplay = BAFouls
+                BAFoulsFormat = 1 
             else:
                 BAFoulsDisplay = 'Err'
-                BAFoulsValue = 888
-                BAFoulsFormat = 7
+                BAFouls = 888
+                BAFoulsFormat = 6
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
@@ -66,7 +55,7 @@ def BAFouls(analysis, rsRobotMatches):
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
                     str(BAFoulsDisplay)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BAFoulsValue
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BAFouls
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = BAFoulsFormat
 
     # Create BAary data
