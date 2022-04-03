@@ -10,6 +10,11 @@ import sys
 import getopt
 import argparse
 import datetime as dt
+import time
+
+now = dt.datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+start_time = time.time()
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 # x = 195
@@ -147,6 +152,9 @@ if excel == False:
                             int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
                             int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
             conn.commit()
+
+    print("Time: %0.2f seconds" % (time.time() - start_time))
+    print()
 
 	
 	#eventInfoSorted = [(k[3:], eventInfo[k]) for k in sorted(eventInfo, key=eventInfo.get, reverse=True)]

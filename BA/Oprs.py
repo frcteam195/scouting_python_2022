@@ -4,6 +4,12 @@ import xlsxwriter
 import sys
 import getopt
 import argparse
+import time
+import datetime as dt
+
+now = dt.datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+start_time = time.time()
 
 tba = tbapy.TBA('Tfr7kbOvWrw0kpnVp5OjeY780ANkzVMyQBZ23xiITUkFo9hWqzOuZVlL3Uy6mLrz')
 # x = 195
@@ -96,6 +102,9 @@ if excel == False:
 		cursor.execute(query)
 		conn.commit()
 	print('Writing OPRs to database')
+	
+	print("Time: %0.2f seconds" % (time.time() - start_time))
+	print()
 
 elif excel == True:
 	workbook = xlsxwriter.Workbook('OPRS.xlsx')

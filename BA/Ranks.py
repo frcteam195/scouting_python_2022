@@ -4,6 +4,12 @@ import xlsxwriter
 import sys
 import getopt
 import argparse
+import time
+import datetime as dt
+
+now = dt.datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+start_time = time.time()
 
 database = ''
 
@@ -103,6 +109,10 @@ if excel == False:
                 str(teamRankList.index(team) + 1) + "');"
         cursor.execute(query)
         conn.commit()
+        
+    print("Time: %0.2f seconds" % (time.time() - start_time))
+    print()
+
 
 elif excel == True:
     workbook = xlsxwriter.Workbook('EVENT RANKINGS.xlsx')
