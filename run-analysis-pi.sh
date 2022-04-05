@@ -14,6 +14,9 @@ echo 'Running BA MatchData'
 echo 'Running copyBAMatchData'
 /usr/bin/python3 /home/pi/scouting_python_2022/copyBAMatchData.py -db localhost
 
+echo 'Running insertFouls to add fouls and Ranking point data'
+/usr/bin/python3 /home/pi/scouting_python_2022/insertFouls.py -db localhost
+
 echo 'Running SheetsLvl2Scouting'
 /usr/bin/python3 /home/pi/scouting_python_2022/SheetsLvl2Scouting.py -db localhost
 
