@@ -53,13 +53,13 @@ def accuracy(analysis, rsRobotMatches):
                 teleAccuracy = round((teleBallHigh + teleBallLow)/(teleBallHigh + teleBallLow + teleBallMiss),3)
             else:
                 teleAccuracy = 0
-            teleAccuracyList.append(teleAccuracy)
+            teleAccuracyList.append(teleAccuracy * 100)
             	
             if (autoBallHigh != 0 or autoBallLow != 0 or autoBallMiss !=0):
                 autoAccuracy = round((autoBallHigh + autoBallLow)/(autoBallHigh + autoBallLow + autoBallMiss),3)
             else:
                 autoAccuracy = 0
-            autoAccuracyList.append(autoAccuracy)
+            autoAccuracyList.append(autoAccuracy * 100)
                 
             averageAccuracy = round((teleAccuracy + autoAccuracy)/2,4)
            
