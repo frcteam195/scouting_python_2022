@@ -1,6 +1,3 @@
-# use pip3 to install:
-# pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-
 from __future__ import print_function
 import os.path
 from tokenize import String
@@ -23,14 +20,14 @@ creds = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1Ce7rPab_uBGgwpxbHOT7bSSCrKYMOKGwqdQMrmrBp7I'
+SAMPLE_SPREADSHEET_ID = '1SH7NlobgqiIjvHOCERUgiqPln3WHcVLv_9MEQGRcTTo'
 
 service = build('sheets', 'v4', credentials=creds)
 
 # Call the Sheets API
 sheet = service.spreadsheets()
 result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                            range="B2:I999").execute()
+                            range="C2:D999").execute()
 values = result.get('values', [])
 
 database = ''
@@ -64,7 +61,7 @@ print ("Connecting to " + database)
 
 # **************************************************************
 
-CEAG_table = "SheetsL2Scouting"
+CEAG_table = "Teams"
 
 # Define a Class called analysis
 class analysis():
@@ -117,7 +114,6 @@ class analysis():
             print ("oops - that should not happen")
             sys.exit()
         self.columns = []
-        self._wipeCEAG()
         self._analyze()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
@@ -128,22 +124,20 @@ class analysis():
     # Function to determine the DB table column headers
     def _setColumns(self, columns):
         self.columns = columns
-
-    # Function to wipe the CEAG table. We may want to make this only remove CurrentEvent records.
-    def _wipeCEAG(self):
-        self._run_query("DELETE FROM " + CEAG_table + "")
-        self.conn.commit()
+   
 
 
 
         
     def _analyze(self):
         for r in range(len(values)):
-            self._run_query("INSERT INTO " + CEAG_table + "(Name , MatchNo , TeamNo , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) "
-                            "VALUES ('" + values[r][0] +"', "+ values[r][1] +", " + values[r][2] +", '" + values[r][3]+"', '" + values[r][4]+"', '" + values[r][5]+"', '" + values[r][6]+"', '" + values[r][7]+ "')")
+
+            self._run_query("Update " + CEAG_table + " " 
+                            "SET Image = '" + values[r][1] + "' "
+                            "WHERE Team = " + str(values[r][0]) +";")
 
             self.conn.commit()
-        #print(values)
+            #print(values)
 
 if __name__ == '__main__':
     myAnalysis = analysis()
