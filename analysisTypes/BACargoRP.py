@@ -1,14 +1,13 @@
 import statistics
 
-def BAFouls(analysis, rsRobotMatches):
+def BACargoRP(analysis, rsRobotMatches):
     # start = time.time()
     # print("teleop time:")
     # Initialize the rsCEA record set and define variables specific to this function which lie outside the for loop
     rsCEA = {}
-    rsCEA['AnalysisTypeID'] = 73
+    rsCEA['AnalysisTypeID'] = 74
     numberOfMatchesPlayed = 0
-    BAFoulsList = []
-    BATechFoulsList = []
+    BACargoRPList = []
 
 
     # Loop through each match the robot played in.
@@ -25,50 +24,36 @@ def BAFouls(analysis, rsRobotMatches):
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = 'UR'
         else:
             # Retrieve values from the matchResults and set to appropriate variables
-            BAFouls = matchResults[analysis.columns.index('BAFouls')]
-            BATechFouls = matchResults[analysis.columns.index('BATechFouls')]
-            if BAFouls is None:
-                BAFouls = 0
-                BAFoulsDisplay = "-"
-                BAFoulsFormat = 6
+            BACargoRP = matchResults[analysis.columns.index('BACargoRP')]
+            if BACargoRP is None:
+                BACargoRPDisplay = "-"
+                BACargoRPFormat = 6
+                BACargoRP = 0
+            elif BACargoRP == 0:
+                BACargoRPFormat = 2
+                BACargoRPDisplay = BACargoRP
+            else:
+                BACargoRPDisplay = BACargoRP
+                BACargoRPFormat = 4
 
-            if BATechFouls is None:
-                BATechFouls = 0
-                BATechFoulsDisplay = "-"
+            BACargoRPList.append(BACargoRP)
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            BAFoulsList.append(BAFouls)
-            BATechFoulsList.append(BATechFouls)
-            BAFoulsPoints = BAFouls * 4
-            BATechFoulsPoints = BATechFouls * 8
-            BATotalPoints = BAFoulsPoints + BATechFoulsPoints
-
-            # Set values for formats
-            if 4 > BATotalPoints >= 0:
-                BAFoulsFormat = 5
-            elif 8 > BATotalPoints >= 4:
-                BAFoulsFormat = 4
-            elif 12 > BATotalPoints >=8:
-                BAFoulsFormat = 3
-            elif 16 > BATotalPoints >= 12:
-                BAFoulsFormat = 2
-            elif BATotalPoints >= 16:
-                BAFoulsFormat = 1
 
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(BAFoulsDisplay) + "|" + str(BATechFoulsDisplay)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BAFouls
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = BAFoulsFormat
+                    str(BACargoRPDisplay)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BACargoRP
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = BACargoRPFormat
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary1Value'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary2Display'] = round(statistics.median(BAFoulsList), 1)
-        rsCEA['Summary2Value'] = round(statistics.median(BAFoulsList), 1)
-        rsCEA['Summary4Display'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary4Value'] = round(statistics.mean(BAFoulsList), 1)
+        rsCEA['Summary1Display'] = round(statistics.mean(BACargoRPList), 1)
+        rsCEA['Summary1Value'] = round(statistics.mean(BACargoRPList), 1)
+        rsCEA['Summary2Display'] = round(statistics.median(BACargoRPList), 1)
+        rsCEA['Summary2Value'] = round(statistics.median(BACargoRPList), 1)
+        rsCEA['Summary4Display'] = round(statistics.mean(BACargoRPList), 1)
+        rsCEA['Summary4Value'] = round(statistics.mean(BACargoRPList), 1)
 
     # Create BAary data
     #if numberOfMatchesPlayed > 0:
