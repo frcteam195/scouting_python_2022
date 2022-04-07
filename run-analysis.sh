@@ -1,5 +1,15 @@
 #! /usr/bin/bash
 
+# Use this script as a cron job when utilizing AWS-dev as the primary database
+#   for data collection. Script runs all the BA and Google scripts as well
+#   as the standard analysis and graph scripts. In addition, it creates backups
+#   of the database with mysqldump
+
+# As the regular pi user, use crontab -e to edit the crontab file for pi
+# */2 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis.sh >> /home/pi/analysis.log 2>&1
+# NOTE: Run the ./cron-service.sh script first to create the /home/pi/analysis.log file
+#       and view directions for how to start the cron job
+
 echo '**********************************************************'
 
 echo 'Running BA OPRs'
@@ -25,6 +35,9 @@ echo 'Running analysisIR'
 
 echo 'Running graphIR'
 /usr/bin/python3 /home/pi/scouting_python_2022/graphIR.py -db aws-dev
+
+echo 'Creating DB dump for entire DB as a backup with mysqldump'
+/home/pi/scouting_python_2022/dbdump.sh event
 
 # echo 'Running mysqldump to dump local DB to dbdump.sql'
 # start_time=$(date +%s)

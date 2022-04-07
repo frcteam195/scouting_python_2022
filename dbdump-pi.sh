@@ -33,6 +33,8 @@ echo "$now"
 echo "mysqldump backing up "$database"  - saving to "$basename"_"$now".sql"
 
 /usr/bin/mysqldump -h "$db" team195_scouting > /home/pi/DB-backups/"$basename"_"$now".sql
+/bin/tar -czf /home/pi/DB-backups/"$basename"_"$now".tgz /home/pi/DB-backups/"$basename"_"$now".sql
+/bin/rm /home/pi/DB-backups/"$basename"_"$now".sql
 
 echo 'mysqldump compelte'
 echo ''

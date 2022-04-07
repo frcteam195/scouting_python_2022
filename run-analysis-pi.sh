@@ -1,5 +1,15 @@
 #! /bin/bash
 
+# Use this script as a cron job when utilizing Raspberry Pi with good Internet
+#   bandwidth as the primary database for data collection. Script runs all the 
+#   BA and Google scripts as well as the standard analysis and graph scripts. 
+#   In addition, it pushes appropriate tables to AWS-dev for the public website
+
+# As the regular pi user, use crontab -e to edit the crontab file for pi
+# */2 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis-pi.sh >> /home/pi/analysis.log 2>&1
+# NOTE: Run the ./cron-service.sh script first to create the /home/pi/analysis.log file
+#       and view directions for how to start the cron job
+
 echo '**********************************************************'
 
 echo 'Running BA OPRs'
@@ -26,9 +36,13 @@ echo 'Running analysisIR'
 echo 'Running graphIR'
 /usr/bin/python3 /home/pi/scouting_python_2022/graphIR.py -db localhost
 
-echo 'Running mysqldump to dump local DB to dbdump.sql'
+echo 'Creating DB dump for entire DB as a backup with mysqldump'
+/home/pi/scouting_python_2022/dbdump.sh event
+
+echo 'Running mysqldump to push select tables to AWS-dev'
 start_time=$(date +%s)
-/usr/bin/mysqldump -u admin -pteam195 team195_scouting > /home/pi/DB-backups/dbdump.sql
+tables='CurrentEventAnalysis CurrentEventAnalysisGraphs Teams Matches WordCloud SheetsL2Scouting'
+/usr/bin/mysqldump -u admin -pteam195 team195_scouting -t $tables > /home/pi/DB-backups/dbdump.sql
 /bin/sleep 1
 end_time=$(date +%s)
 elapsed=$(( end_time - start_time ))
