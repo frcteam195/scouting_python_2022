@@ -1,14 +1,15 @@
-from os import system
+# use pip3 to install:
+# pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+from __future__ import print_function
+import os.path
+from tokenize import String
 import mariadb as mariaDB
 import numpy as np
-import datetime
 import time
 import argparse
+import datetime
 
-
-# *********************** argument parser **********************
-
-# Initialize parser
 database = ''
 csvFilename = ''
 parser = argparse.ArgumentParser()
@@ -40,8 +41,6 @@ print ("Connecting to " + database)
 
 # **************************************************************
 
-M_table = "Matches"
-BAMD_table = "BlueAllianceMatchData"
 
 # Define a Class called analysis
 class analysis():
@@ -49,8 +48,7 @@ class analysis():
         now = datetime.datetime.now()
         print(now.strftime("%Y-%m-%d %H:%M:%S"))
         start_time = time.time()
-
-		# Connection to AWS Testing database - use when you would destroy tables with proper data
+        # Connection to AWS Testing database - use when you would destroy tables with proper data
         if database == "aws-dev":
             print("Input database " + input_database)
             self.conn = mariaDB.connect(user='admin',
@@ -94,43 +92,54 @@ class analysis():
         else:
             print ("oops - that should not happen")
             sys.exit()
-
         self.columns = []
         self._analyze()
 
         print("Time: %0.2f seconds" % (time.time() - start_time))
         print()
-
-    # Function to run a query - the query string must be passed to the function
     def _run_query(self, query):
         self.cursor.execute(query)
 
     # Function to determine the DB table column headers
     def _setColumns(self, columns):
         self.columns = columns
-
-	# Function to write means and medians to the CEAGraphs table
-    def _analyze(self):
-        self._run_query("SELECT * FROM Events "
-                        "WHERE CurrentEvent = 1;")
-        eventInfo = self.cursor.fetchone()
-        ID = eventInfo[0]
-
-        self._run_query("UPDATE " + M_table + " "
-                        "INNER JOIN " + BAMD_table + " ON " + M_table + ".MatchNo = " + BAMD_table + ".MatchNumber "
-                        "SET Matches.RedScore = BlueAllianceMatchData.RedScore, Matches.BlueScore = BlueAllianceMatchData.BlueScore, "
-                        "Matches.RedFouls = BlueAllianceMatchData.RedFouls, Matches.BlueFouls = BlueAllianceMatchData.BlueFouls, "
-                        "Matches.RedTechFouls = BlueAllianceMatchData.RedTechFouls, Matches.BlueTechFouls = BlueAllianceMatchData.BlueTechFouls, "
-                        "Matches.RedAutoPoints = BlueAllianceMatchData.RedAutoPoints, Matches.BlueAutoPoints = BlueAllianceMatchData.BlueAutoPoints, "
-                        "Matches.RedTelePoints = BlueAllianceMatchData.RedTelePoints, Matches.BlueTelePoints = BlueAllianceMatchData.BlueTelePoints, "
-                        "Matches.RedHangarPoints = BlueAllianceMatchData.RedHangerPoints, Matches.BlueHangarPoints = BlueAllianceMatchData.BlueHangerPoints, "
-                        "Matches.RedCargoRanking = BlueAllianceMatchData.RedCargoRanking, Matches.BlueCargoRanking = BlueAllianceMatchData.BlueCargoRanking, "
-                        "Matches.RedHangarRanking = BlueAllianceMatchData.RedHangarRanking, Matches.BlueHangarRanking = BlueAllianceMatchData.BlueHangarRanking, "
-                        "Matches.MatchTime = BlueAllianceMatchData.MatchTime, Matches.ActualTime = BlueAllianceMatchData.ActualTime "
-                        "WHERE Matches.EventID = " + str(ID) + ";")
-        self.conn.commit()
         
+    def _analyze(self):
+        self._run_query("SELECT * FROM CurrentEventAnalysis "
+                        "WHERE AnalysisTypeID = 1;")
+        ceaInfo = self.cursor.fetchall()
 
-# This initizlzes the analysis Class and thus runs the program.
+        for i in range(len(ceaInfo)):
+            team = ceaInfo[i][0]
+            startPos = [0, 0, 0, 0, 0, 0]
+            startPosID = [1, 2, 3, 4, 5, 6]
+
+            for j in range(12):
+                self._run_query(f"SELECT Match{j + 1}Value FROM CurrentEventAnalysis "
+                                f"WHERE Team = {team};")
+                startInfo = self.cursor.fetchone()
+
+                for k in startInfo:
+                    if startInfo[0] != None:
+                        startPos[int(k) - 1] += 1
+                startPosSort2 = []
+                startPosSort2 = sorted(startPos, reverse=True)
+                startPosSort = [startPosID for _,startPosID in sorted(zip(startPos,startPosID), reverse=True)]
+                #print(f"{startPosSort2}\n{startPosSort}\n")
+                curFormat = 16
+                for l in range(6):
+                    if startPosSort2[l] != 0:
+                        self._run_query(f"UPDATE CurrentEventAnalysis "
+                                        f"SET Match{startPosSort[l]}Format = {curFormat} "
+                                        f"WHERE Team = {team};")
+                        self.conn.commit()
+                        curFormat -= 1
+                    else:
+                        self._run_query(f"UPDATE CurrentEventAnalysis "
+                                        f"SET Match{startPosSort[l]}Format = 0 "
+                                        f"WHERE Team = {team};")
+                        self.conn.commit()
+
+
 if __name__ == '__main__':
     myAnalysis = analysis()

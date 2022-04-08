@@ -28,17 +28,17 @@ def BAFouls(analysis, rsRobotMatches):
             BAFouls = matchResults[analysis.columns.index('BAFouls')]
             BATechFouls = matchResults[analysis.columns.index('BATechFouls')]
             if BAFouls is None:
-                BAFouls = 0
+                BAFouls = -1
                 BAFoulsDisplay = "-"
                 BAFoulsFormat = 6
             else:
-            	BAFoulsDisplay = BAFouls
+                BAFoulsDisplay = BAFouls
 
             if BATechFouls is None:
-                BATechFouls = 0
+                BATechFouls = -1
                 BATechFoulsDisplay = "-"
             else:
-            	BATechFoulsDisplay = BATechFouls
+                BATechFoulsDisplay = BATechFouls
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
