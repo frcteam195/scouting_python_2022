@@ -31,10 +31,14 @@ def BAFouls(analysis, rsRobotMatches):
                 BAFouls = 0
                 BAFoulsDisplay = "-"
                 BAFoulsFormat = 6
+            else:
+            	BAFoulsDisplay = BAFouls
 
             if BATechFouls is None:
                 BATechFouls = 0
                 BATechFoulsDisplay = "-"
+            else:
+            	BATechFoulsDisplay = BATechFouls
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
