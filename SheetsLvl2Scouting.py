@@ -23,14 +23,14 @@ creds = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1_X4YiUqmJCcburZ3smlQqxN1KuXH_DR8Zemk1qIwCpc'
+SAMPLE_SPREADSHEET_ID = '18uWMO1DOl5beLhWIPXjA5-IwwZdYD_5bGOJ-YLYGiks'
 
 service = build('sheets', 'v4', credentials=creds)
 
 # Call the Sheets API
 sheet = service.spreadsheets()
 result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                            range="B2:I999").execute()
+                            range="B2:J999").execute()
 values = result.get('values', [])
 
 database = ''
@@ -139,8 +139,8 @@ class analysis():
         
     def _analyze(self):
         for r in range(len(values)):
-            self._run_query("INSERT INTO " + CEAG_table + "(Name , MatchNo , TeamNo , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) "
-                            "VALUES ('" + values[r][0] +"', "+ values[r][1] +", " + values[r][2] +", '" + values[r][3]+"', '" + values[r][4]+"', '" + values[r][5]+"', '" + values[r][6]+"', '" + values[r][7]+ "')")
+            self._run_query("INSERT INTO " + CEAG_table + "(Name , MatchNo , TeamNo, ClimbStart , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) "
+                            "VALUES ('" + values[r][0] +"', "+ values[r][1] +", " + values[r][2] +", '" + values[r][3]+"', '" + values[r][4]+"', '" + values[r][5]+"', '" + values[r][6]+"', '" + values[r][7]+ "', '" + values[r][8] + "')")
 
             self.conn.commit()
         #print(values)
