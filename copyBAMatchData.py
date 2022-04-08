@@ -114,17 +114,20 @@ class analysis():
         self._run_query("SELECT * FROM Events "
                         "WHERE CurrentEvent = 1;")
         eventInfo = self.cursor.fetchone()
-        ID = eventInfo[0]
+        #ID = eventInfo[0]
+        ID = 3
 
         self._run_query("UPDATE " + M_table + " "
                         "INNER JOIN " + BAMD_table + " ON " + M_table + ".MatchNo = " + BAMD_table + ".MatchNumber "
                         "SET Matches.RedScore = BlueAllianceMatchData.RedScore, Matches.BlueScore = BlueAllianceMatchData.BlueScore, "
                         "Matches.RedFouls = BlueAllianceMatchData.RedFouls, Matches.BlueFouls = BlueAllianceMatchData.BlueFouls, "
                         "Matches.RedTechFouls = BlueAllianceMatchData.RedTechFouls, Matches.BlueTechFouls = BlueAllianceMatchData.BlueTechFouls, "
+                        "Matches.RedAutoPoints = BlueAllianceMatchData.RedAutoPoints, Matches.BlueAutoPoints = BlueAllianceMatchData.BlueAutoPoints, "
                         "Matches.RedTelePoints = BlueAllianceMatchData.RedTelePoints, Matches.BlueTelePoints = BlueAllianceMatchData.BlueTelePoints, "
                         "Matches.RedHangarPoints = BlueAllianceMatchData.RedHangerPoints, Matches.BlueHangarPoints = BlueAllianceMatchData.BlueHangerPoints, "
                         "Matches.RedCargoRanking = BlueAllianceMatchData.RedCargoRanking, Matches.BlueCargoRanking = BlueAllianceMatchData.BlueCargoRanking, "
-                        "Matches.RedHangarRanking = BlueAllianceMatchData.RedHangarRanking, Matches.BlueHangarRanking = BlueAllianceMatchData.BlueHangarRanking "
+                        "Matches.RedHangarRanking = BlueAllianceMatchData.RedHangarRanking, Matches.BlueHangarRanking = BlueAllianceMatchData.BlueHangarRanking, "
+                        "Matches.MatchTime = BlueAllianceMatchData.MatchTime, Matches.ActualTime = BlueAllianceMatchData.ActualTime "
                         "WHERE Matches.EventID = " + str(ID) + ";")
         self.conn.commit()
         
