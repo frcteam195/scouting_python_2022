@@ -6,7 +6,7 @@
 #   In addition, it pushes appropriate tables to AWS-dev for the public website
 
 # As the regular pi user, use crontab -e to edit the crontab file for pi
-# */2 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis-pi.sh >> /home/pi/analysis.log 2>&1
+# */4 * * * * cd /home/pi && /home/pi/scouting_python_2022/run-analysis-pi.sh >> /home/pi/analysis.log 2>&1
 # NOTE: Run the ./cron-service.sh script first to create the /home/pi/analysis.log file
 #       and view directions for how to start the cron job
 
@@ -41,8 +41,28 @@ echo 'Creating DB dump for entire DB as a backup with mysqldump'
 
 echo 'Running mysqldump to push select tables to AWS-dev'
 start_time=$(date +%s)
-tables='CurrentEventAnalysis CurrentEventAnalysisGraphs Teams Matches WordCloud SheetsL2Scouting'
-/usr/bin/mysqldump -u admin -pteam195 team195_scouting -t $tables > /home/pi/DB-backups/dbdump.sql
+/usr/bin/mysqldump -u admin -pteam195 team195_scouting \
+--ignore-table=team195_scouting.Final24 \
+--ignore-table=team195_scouting.DnpList \
+--ignore-table=team195_scouting.PickList1 \
+--ignore-table=team195_scouting.Watch1 \
+--ignore-table=team195_scouting.Watch2 \
+--ignore-table=team195_scouting.Teams \
+--ignore-table=team195_scouting.AnalysisTypes \
+--ignore-table=team195_scouting.WheelTypes \
+--ignore-table=team195_scouting.DriveTypes \
+--ignore-table=team195_scouting.MotorTypes \
+--ignore-table=team195_scouting.LanguageTypes \
+--ignore-table=team195_scouting.WordID \
+--ignore-table=team195_scouting.Users \
+--ignore-table=team195_scouting.AdHocMatchReport \
+--ignore-table=team195_scouting.AllianceStations \
+--ignore-table=team195_scouting.BlueAllianceEvents \
+--ignore-table=team195_scouting.ClimbStatus \
+--ignore-table=team195_scouting.ColorTypes \
+--ignore-table=team195_scouting.MatchScoutingL2 \
+--ignore-table=team195_scouting.ScorePredictor \
+--ignore-table=team195_scouting.ScorePredictorData > /home/pi/DB-backups/dbdump.sql
 /bin/sleep 1
 end_time=$(date +%s)
 elapsed=$(( end_time - start_time ))
