@@ -114,8 +114,7 @@ class analysis():
         self._run_query("SELECT * FROM Events "
                         "WHERE CurrentEvent = 1;")
         eventInfo = self.cursor.fetchone()
-        #ID = eventInfo[0]
-        ID = 3
+        ID = eventInfo[0]
 
         self._run_query("UPDATE " + M_table + " "
                         "INNER JOIN " + BAMD_table + " ON " + M_table + ".MatchNo = " + BAMD_table + ".MatchNumber "
