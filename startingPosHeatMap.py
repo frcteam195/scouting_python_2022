@@ -125,7 +125,7 @@ class analysis():
                 startPosSort2 = []
                 startPosSort2 = sorted(startPos, reverse=True)
                 startPosSort = [startPosID for _,startPosID in sorted(zip(startPos,startPosID), reverse=True)]
-                print(f"{startPosSort2}\n{startPosSort}\n")
+                #print(f"{startPosSort2}\n{startPosSort}\n")
                 curFormat = 16
                 for l in range(6):
                     if startPosSort2[l] != 0:
