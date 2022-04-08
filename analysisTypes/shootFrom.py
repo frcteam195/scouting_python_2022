@@ -34,19 +34,19 @@ def shootFrom(analysis, rsRobotMatches):
                 shootFromFormat = 1
                 shootFromValue = 0
             elif shootFrom == 1:
-                shootFromDisplay = 'Hub'
+                shootFromDisplay = 'hub'
                 shootFromFormat = 2
                 shootFromValue = 1
             elif shootFrom == 2:
-                shootFromDisplay = 'Rad'
+                shootFromDisplay = 'rad'
                 shootFromFormat = 3
                 shootFromValue = 2
             elif shootFrom == 3:
-                shootFromDisplay = 'Str'
+                shootFromDisplay = 'aim'
                 shootFromFormat = 4
                 shootFromValue = 3
             elif shootFrom == 4:
-                shootFromDisplay = 'Any'
+                shootFromDisplay = 'any'
                 shootFromFormat = 5
                 shootFromValue = 4
             else:

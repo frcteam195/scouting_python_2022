@@ -37,7 +37,6 @@ from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 from analysisTypes.scouter import scouter #71
 from analysisTypes.accuracy import accuracy #72
-from analysisTypes.BAFouls import BAFouls #73
 
 from analysisTypes.BACargoRP import BACargoRP
 from analysisTypes.BAClimbRP import BAClimbRP
@@ -356,9 +355,6 @@ class analysis():
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = accuracy(analysis=self, rsRobotMatches=rsRobotMatches)
-                self._insertAnalysis(rsCEA)
-                
-                rsCEA = BAFouls(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
                 rsCEA = BACargoRP(analysis=self, rsRobotMatches=rsRobotMatches)
