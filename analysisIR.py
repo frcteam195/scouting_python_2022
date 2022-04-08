@@ -30,7 +30,6 @@ from analysisTypes.summLostComm import summLostComm   #47
 from analysisTypes.summSubSystemBroke import summSubSystemBroke   #48
 from analysisTypes.summBrokeDown import summBrokeDown   #49
 
-
 # Totals 60-69
 from analysisTypes.totalBalls import totalBalls   #60
 from analysisTypes.totalScore import totalScore   #61
@@ -38,7 +37,13 @@ from analysisTypes.teleBallScore import teleBallScore   #62
 from analysisTypes.matchVideos import matchVideos #70
 from analysisTypes.scouter import scouter #71
 from analysisTypes.accuracy import accuracy #72
-from analysisTypes.BAFouls import BAFouls #73
+
+from analysisTypes.BACargoRP import BACargoRP
+from analysisTypes.BAClimbRP import BAClimbRP
+from analysisTypes.BAFouls import BAFouls
+from analysisTypes.shootFrom import shootFrom
+from analysisTypes.summManuverability import summManuverability
+from analysisTypes.summSpeed import summSpeed
 
 # *********************** argument parser **********************
 
@@ -352,7 +357,22 @@ class analysis():
                 rsCEA = accuracy(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
                 
+                rsCEA = BACargoRP(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = BAClimbRP(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
                 rsCEA = BAFouls(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = shootFrom(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summManuverability(analysis=self, rsRobotMatches=rsRobotMatches)
+                self._insertAnalysis(rsCEA)
+                
+                rsCEA = summSpeed(analysis=self, rsRobotMatches=rsRobotMatches)
                 self._insertAnalysis(rsCEA)
 
                 self._run_query("INSERT INTO " + CEA_table + "(Team, Summary1Value, Summary1Display, Summary2Value, Summary2Display, AnalysisTypeID) "

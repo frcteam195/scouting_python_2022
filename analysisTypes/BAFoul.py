@@ -7,8 +7,7 @@ def BAFouls(analysis, rsRobotMatches):
     rsCEA = {}
     rsCEA['AnalysisTypeID'] = 73
     numberOfMatchesPlayed = 0
-    BAFoulsList = []
-    BATechFoulsList = []
+    foulsList = []
 
 
     # Loop through each match the robot played in.
@@ -26,58 +25,54 @@ def BAFouls(analysis, rsRobotMatches):
         else:
             # Retrieve values from the matchResults and set to appropriate variables
             BAFouls = matchResults[analysis.columns.index('BAFouls')]
-            BATechFouls = matchResults[analysis.columns.index('BATechFouls')]
             if BAFouls is None:
-                BAFouls = 0
-                BAFoulsDisplay = "-"
+                BAFouls = 999
+                BAFoulsDisplay = '-'
+                BAFoulsValue = 999
                 BAFoulsFormat = 6
+            elif BAFouls >= 0:
+                BAFoulsDisplay = 'BAFouls'
+                BAFoulsFormat = 1
+                BAFoulsValue = 0
+                foulsList.append(BAFoulsValue)
+            elif BAFouls >= 1:
+                BAFoulsDisplay = 'BAFouls'
+                BAFoulsFormat = 2
+                BAFoulsValue = 1
+                foulsList.append(BAFoulsValue)
+            elif BAFouls >= 5:
+                BAFoulsDisplay = 'BAFouls'
+                BAFoulsFormat = 3
+                BAFoulsValue = 2
+                foulsList.append(BAFoulsValue)
+            elif BAFouls >= 9:
+                BAFoulsDisplay = 'BAFouls'
+                BAFoulsFormat = 4
+                BAFoulsValue = 3
+                foulsList.append(BAFoulsValue)
+            elif BAFouls >= 13:
+                BAFoulsDisplay = 'BAFouls'
+                BAFoulsFormat = 5
+                BAFoulsValue = 4
+                foulsList.append(BAFoulsValue)
             else:
-            	BAFoulsDisplay = BAFouls
-
-            if BATechFouls is None:
-                BATechFouls = 0
-                BATechFoulsDisplay = "-"
-            else:
-            	BATechFoulsDisplay = BATechFouls
+                BAFoulsDisplay = 'Err'
+                BAFoulsValue = 888
+                BAFoulsFormat = 7
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            BAFoulsList.append(BAFouls)
-            BATechFoulsList.append(BATechFouls)
-            BAFoulsPoints = BAFouls * 4
-            BATechFoulsPoints = BATechFouls * 8
-            BATotalPoints = BAFoulsPoints + BATechFoulsPoints
-
-            # Set values for formats
-            if 4 > BATotalPoints >= 0:
-                BAFoulsFormat = 5
-            elif 8 > BATotalPoints >= 4:
-                BAFoulsFormat = 4
-            elif 12 > BATotalPoints >=8:
-                BAFoulsFormat = 3
-            elif 16 > BATotalPoints >= 12:
-                BAFoulsFormat = 2
-            elif BATotalPoints >= 16:
-                BAFoulsFormat = 1
 
             # Create the rsCEA records for Display, Value, and Format
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = \
-                    str(BAFoulsDisplay) + "|" + str(BATechFoulsDisplay)
-            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BAFouls
+                    str(BAFoulsDisplay)
+            rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = BAFoulsValue
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = BAFoulsFormat
 
-    if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary1Value'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary2Display'] = round(statistics.median(BAFoulsList), 1)
-        rsCEA['Summary2Value'] = round(statistics.median(BAFoulsList), 1)
-        rsCEA['Summary4Display'] = round(statistics.mean(BAFoulsList), 1)
-        rsCEA['Summary4Value'] = round(statistics.mean(BAFoulsList), 1)
-
     # Create BAary data
-    #if numberOfMatchesPlayed > 0:
-    #    rsCEA['Summary1Display'] = round(statistics.mean(foulsList), 2)
-    #    rsCEA['Summary1Value'] = round(statistics.mean(foulsList), 2)
+    if numberOfMatchesPlayed > 0:
+        rsCEA['Summary1Display'] = round(statistics.mean(foulsList), 2)
+        rsCEA['Summary1Value'] = round(statistics.mean(foulsList), 2)
         # Some test code for calculating min, max, quantiles
         #print(min(totalBallsList))
         #print(max(totalBallsList))
