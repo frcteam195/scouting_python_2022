@@ -3,37 +3,21 @@
 # Script relies on ~/.my.cnf file existing with username and password
 
 basename=$1
-database=$2
 
 if [ -z "$1" ]; then
-  echo "You must enter a basename and database"
-  echo "Usage: dbdump.sh nightly aws-dev"
-  exit 1
-fi
-
-if [ -z "$2" ]; then
-  echo "You must enter a basename and database"
-  echo "Usage: dbdump.sh backup localhost"
+  echo "You must enter a basename"
+  echo "Usage: dbdump.sh nightly"
   exit 1
 fi
 
 now=$(date +%Y-%m-%d_%H-%M)
 
-if [ $database = 'aws-dev' ]; then
-  # db=frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com
-  db=frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com
-elif [ $database = 'localhost' ]; then
-  db=localhost
-else
-  echo 'You must select aws-dev or localhost'
-  exit 1
-fi
-
 echo "$now"
-echo "mysqldump backing up "$database"  - saving to "$basename"_"$now".sql"
+echo "mysqldump backing up localhost  - saving to "$basename"_"$now".sql"
 
-/usr/bin/mysqldump -h "$db" team195_scouting > /home/pi/DB-backups/"$basename"_"$now".sql
-/bin/tar -czf /home/pi/DB-backups/"$basename"_"$now".tgz /home/pi/DB-backups/"$basename"_"$now".sql
+/usr/bin/mysqldump -u admin -pteam195 team195_scouting > /home/pi/DB-backups/"$basename"_"$now".sql
+cd /home/pi/DB-backups
+/bin/tar -czf "$basename"_"$now".tgz "$basename"_"$now".sql
 /bin/rm /home/pi/DB-backups/"$basename"_"$now".sql
 
 echo 'mysqldump compelte'

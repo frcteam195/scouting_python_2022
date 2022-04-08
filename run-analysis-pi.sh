@@ -37,7 +37,7 @@ echo 'Running graphIR'
 /usr/bin/python3 /home/pi/scouting_python_2022/graphIR.py -db localhost
 
 echo 'Creating DB dump for entire DB as a backup with mysqldump'
-/home/pi/scouting_python_2022/dbdump.sh event
+/home/pi/scouting_python_2022/dbdump-pi.sh event
 
 echo 'Running mysqldump to push select tables to AWS-dev'
 start_time=$(date +%s)
