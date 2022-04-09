@@ -102,56 +102,57 @@ if excel == False:
         matchNum = matchInfo.match_number
         matchTimeRaw = matchInfo.time
         matchActTimeRaw = matchInfo.actual_time
-        matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
-        matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw)
+        if matchInfo.actual_time is not None:
+            matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
+            matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw)
 
-        matchAlliances = matchInfo.alliances
-        matchRed = matchAlliances["red"]
-        matchBlue = matchAlliances["blue"]
+            matchAlliances = matchInfo.alliances
+            matchRed = matchAlliances["red"]
+            matchBlue = matchAlliances["blue"]
 
-        matchRedTeams = matchRed["team_keys"]
-        matchBlueTeams = matchBlue["team_keys"]
+            matchRedTeams = matchRed["team_keys"]
+            matchBlueTeams = matchBlue["team_keys"]
 
-        matchRedScore = matchRed["score"]
-        matchBlueScore = matchBlue["score"]
+            matchRedScore = matchRed["score"]
+            matchBlueScore = matchBlue["score"]
 
-        matchBreakdown = match["score_breakdown"]
-        matchRedBreakdown = matchBreakdown["red"]
-        matchBlueBreakdown = matchBreakdown["blue"]
+            matchBreakdown = match["score_breakdown"]
+            matchRedBreakdown = matchBreakdown["red"]
+            matchBlueBreakdown = matchBreakdown["blue"]
 
-        matchRedFouls = matchRedBreakdown["foulCount"]
-        matchBlueFouls = matchBlueBreakdown["foulCount"]
+            matchRedFouls = matchRedBreakdown["foulCount"]
+            matchBlueFouls = matchBlueBreakdown["foulCount"]
 
-        matchRedTechFouls = matchRedBreakdown["techFoulCount"]
-        matchBlueTechFouls = matchBlueBreakdown["techFoulCount"]
+            matchRedTechFouls = matchRedBreakdown["techFoulCount"]
+            matchBlueTechFouls = matchBlueBreakdown["techFoulCount"]
 
-        matchRedAutoPoints = matchRedBreakdown["autoPoints"]
-        matchBlueAutoPoints = matchBlueBreakdown["autoPoints"]
+            matchRedAutoPoints = matchRedBreakdown["autoPoints"]
+            matchBlueAutoPoints = matchBlueBreakdown["autoPoints"]
 
-        matchRedTelePoints = matchRedBreakdown["teleopPoints"]
-        matchBlueTelePoints = matchBlueBreakdown["teleopPoints"]
+            matchRedTelePoints = matchRedBreakdown["teleopPoints"]
+            matchBlueTelePoints = matchBlueBreakdown["teleopPoints"]
 
-        matchRedHangarPoints = matchRedBreakdown["endgamePoints"]
-        matchBlueHangarPoints = matchBlueBreakdown["endgamePoints"]
+            matchRedHangarPoints = matchRedBreakdown["endgamePoints"]
+            matchBlueHangarPoints = matchBlueBreakdown["endgamePoints"]
 
-        matchRedRankingPoints = matchRedBreakdown["cargoBonusRankingPoint"]
-        matchBlueRankingPoints = matchBlueBreakdown["cargoBonusRankingPoint"]
+            matchRedRankingPoints = matchRedBreakdown["cargoBonusRankingPoint"]
+            matchBlueRankingPoints = matchBlueBreakdown["cargoBonusRankingPoint"]
 
-        matchRedHangarRP = matchRedBreakdown["hangarBonusRankingPoint"]
-        matchBlueHangarRP = matchBlueBreakdown["hangarBonusRankingPoint"]
+            matchRedHangarRP = matchRedBreakdown["hangarBonusRankingPoint"]
+            matchBlueHangarRP = matchBlueBreakdown["hangarBonusRankingPoint"]
 
-        #print(str(matchTime) + "\n")
+            #print(str(matchTime) + "\n")
 
-        if match.comp_level == "qm":
-            cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, MatchTime, ActualTime, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
-                            "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
-                            "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
-                            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
-                            (matchNum, str(matchTime)[11:16], str(matchActTime)[11:16], int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
-                            int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
-                            int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
-                            int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
-            conn.commit()
+            if match.comp_level == "qm":
+                cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, MatchTime, ActualTime, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
+                                "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
+                                "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
+                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
+                                (matchNum, str(matchTime)[11:16], str(matchActTime)[11:16], int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
+                                int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
+                                int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
+                                int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
+                conn.commit()
 
     print("Time: %0.2f seconds" % (time.time() - start_time))
     print()
