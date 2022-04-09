@@ -388,40 +388,40 @@ class analysis():
 
                 self.conn.commit()
 
-                self._run_query("SELECT * FROM CurrentEventAnalysis "
-                        "WHERE AnalysisTypeID = 1;")
-                ceaInfo = self.cursor.fetchall()
-
-                for i in range(len(ceaInfo)):
-                    team = ceaInfo[i][0]
-                    startPos = [0, 0, 0, 0, 0, 0]
-                    startPosID = [1, 2, 3, 4, 5, 6]
-
-                    for j in range(12):
-                        self._run_query(f"SELECT Match{j + 1}Value FROM CurrentEventAnalysis "
-                                        f"WHERE Team = {team};")
-                        startInfo = self.cursor.fetchone()
-
-                        for k in startInfo:
-                            if startInfo[0] != None:
-                                startPos[int(k) - 1] += 1
-                        startPosSort2 = []
-                        startPosSort2 = sorted(startPos, reverse=True)
-                        startPosSort = [startPosID for _,startPosID in sorted(zip(startPos,startPosID), reverse=True)]
-                        #print(f"{startPosSort2}\n{startPosSort}\n")
-                        curFormat = 16
-                        for l in range(6):
-                            if startPosSort2[l] != 0:
-                                self._run_query(f"UPDATE CurrentEventAnalysis "
-                                                f"SET Match{startPosSort[l]}Format = {curFormat} "
-                                                f"WHERE Team = {team};")
-                                self.conn.commit()
-                                curFormat -= 1
-                            else:
-                                self._run_query(f"UPDATE CurrentEventAnalysis "
-                                                f"SET Match{startPosSort[l]}Format = 0 "
-                                                f"WHERE Team = {team};")
-                                self.conn.commit()
+		# self._run_query("SELECT * FROM CurrentEventAnalysis "
+# 				"WHERE AnalysisTypeID = 1;")
+# 		ceaInfo = self.cursor.fetchall()
+# 
+# 		for i in range(len(ceaInfo)):
+# 			team = ceaInfo[i][0]
+# 			startPos = [0, 0, 0, 0, 0, 0]
+# 			startPosID = [1, 2, 3, 4, 5, 6]
+# 
+# 			for j in range(12):
+# 				self._run_query(f"SELECT Match{j + 1}Value FROM CurrentEventAnalysis "
+# 								f"WHERE Team = {team};")
+# 				startInfo = self.cursor.fetchone()
+# 
+# 				for k in startInfo:
+# 					if startInfo[0] != None:
+# 						startPos[int(k) - 1] += 1
+# 				startPosSort2 = []
+# 				startPosSort2 = sorted(startPos, reverse=True)
+# 				startPosSort = [startPosID for _,startPosID in sorted(zip(startPos,startPosID), reverse=True)]
+# 				#print(f"{startPosSort2}\n{startPosSort}\n")
+# 				curFormat = 16
+# 				for l in range(6):
+# 					if startPosSort2[l] != 0:
+# 						self._run_query(f"UPDATE CurrentEventAnalysis "
+# 										f"SET Match{startPosSort[l]}Format = {curFormat} "
+# 										f"WHERE Team = {team};")
+# 						self.conn.commit()
+# 						curFormat -= 1
+# 					else:
+# 						self._run_query(f"UPDATE CurrentEventAnalysis "
+# 										f"SET Match{startPosSort[l]}Format = 0 "
+# 										f"WHERE Team = {team};")
+# 						self.conn.commit()
 
     # Helper function to rank a single analysis type, called by _rankTeamsAll
     def _rankTeamsSingle(self, analysis_type):
