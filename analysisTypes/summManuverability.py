@@ -45,12 +45,12 @@ def summManuverability(analysis, rsRobotMatches):
                 summManuverabilityFormat = 3
                 summManuverabilityValue = 2
                 manuverabilityList.append(summManuverabilityValue)
-            elif summManuverability == 1:
+            elif summManuverability == 3:
                 summManuverabilityDisplay = '3'
                 summManuverabilityFormat = 4
                 summManuverabilityValue = 3
                 manuverabilityList.append(summManuverabilityValue)
-            elif summManuverability == 1:
+            elif summManuverability == 4:
                 summManuverabilityDisplay = '4'
                 summManuverabilityFormat = 5
                 summManuverabilityValue = 4
