@@ -50,18 +50,18 @@ def accuracy(analysis, rsRobotMatches):
             numberOfMatchesPlayed += 1
             #print (str(teleBallHigh) + ", " + str(teleBallLow) + ", " + str(teleBallMiss))
             if (teleBallHigh != 0 or teleBallLow != 0 or teleBallMiss !=0):
-                teleAccuracy = round((teleBallHigh + teleBallLow)/(teleBallHigh + teleBallLow + teleBallMiss),3)
+                teleAccuracy = round((teleBallHigh + teleBallLow)/(teleBallHigh + teleBallLow + teleBallMiss),2)
             else:
                 teleAccuracy = 0
             teleAccuracyList.append(teleAccuracy * 100)
             	
             if (autoBallHigh != 0 or autoBallLow != 0 or autoBallMiss !=0):
-                autoAccuracy = round((autoBallHigh + autoBallLow)/(autoBallHigh + autoBallLow + autoBallMiss),3)
+                autoAccuracy = round((autoBallHigh + autoBallLow)/(autoBallHigh + autoBallLow + autoBallMiss),2)
             else:
                 autoAccuracy = 0
             autoAccuracyList.append(autoAccuracy * 100)
                 
-            averageAccuracy = round((teleAccuracy + autoAccuracy)/2,4)
+            averageAccuracy = round((teleAccuracy + autoAccuracy)/2,2)
            
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(teleAccuracy)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = teleAccuracy
