@@ -140,10 +140,10 @@ class analysis():
     def _analyze(self):
         for r in range(len(values)):
             self._run_query("INSERT INTO " + CEAG_table + "(Name , MatchNo , TeamNo, ClimbStart , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) "
-                            "VALUES ('" + values[r][0] +"', "+ values[r][1] +", " + values[r][2] +", '" + values[r][4]+"', '" + values[r][5]+"', '" + values[r][3]+"', '" + values[r][6]+"', '" + values[r][7]+ "', '" + values[r][8] + "')")
+                            "VALUES ('" + str(values[r][0]).replace("'", "") +"', "+ str(values[r][1]).replace("'", "") +", " + str(values[r][2]).replace("'", "") + ", " + str(values[r][3]).replace("'", "") + ", '" + str(values[r][4]).replace("'", "") + "', '" + str(values[r][5]).replace("'", "") + "', '" + str(values[r][6]).replace("'", "") + "', '" + str(values[r][7]).replace("'", "") + "', '" + str(values[r][8]).replace("'", "") + "')")
 
             self.conn.commit()
-        #print(values)
+            #print(values[r][3])
 
 if __name__ == '__main__':
     myAnalysis = analysis()
