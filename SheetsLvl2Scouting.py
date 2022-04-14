@@ -139,9 +139,9 @@ class analysis():
         
     def _analyze(self):
         for r in range(len(values)):
+            #print("INSERT INTO " + CEAG_table + "(Name, MatchNo , TeamNo, ClimbStart , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) VALUES ('" + str(values[r][0]).replace("'", "") +"', "+ str(values[r][1]).replace("'", "") +", " + str(values[r][2]).replace("'", "") + ", '" + str(values[r][5]).replace("'", "") + "', '" + str(values[r][3]).replace("'", "") + "', '" + str(values[r][4]).replace("'", "") + "', '" + str(values[r][6]).replace("'", "") + "', '" + str(values[r][7]).replace("'", "") + "', '" + str(values[r][8]).replace("'", "") + "')")
             self._run_query("INSERT INTO " + CEAG_table + "(Name , MatchNo , TeamNo, ClimbStart , OffensiveQualities , DefenseQualities , LabelBot , GeneralThoughts, HarishLove) "
-                            "VALUES ('" + str(values[r][0]).replace("'", "") +"', "+ str(values[r][1]).replace("'", "") +", " + str(values[r][2]).replace("'", "") + ", " + str(values[r][3]).replace("'", "") + ", '" + str(values[r][4]).replace("'", "") + "', '" + str(values[r][5]).replace("'", "") + "', '" + str(values[r][6]).replace("'", "") + "', '" + str(values[r][7]).replace("'", "") + "', '" + str(values[r][8]).replace("'", "") + "')")
-
+                            "VALUES ('" + str(values[r][0]).replace("'", "") +"', "+ str(values[r][1]).replace("'", "") +", " + str(values[r][2]).replace("'", "") + ", '" + str(values[r][5]).replace("'", "") + "', '" + str(values[r][3]).replace("'", "") + "', '" + str(values[r][4]).replace("'", "") + "', '" + str(values[r][6]).replace("'", "") + "', '" + str(values[r][7]).replace("'", "") + "', '" + str(values[r][8]).replace("'", "") + "')")
             self.conn.commit()
             #print(values[r][3])
 
