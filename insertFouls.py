@@ -125,13 +125,12 @@ class analysis():
 
         for i in range(len(BAMatchInfo)):
             for j in range(3):
-                self._run_query("UPDATE MatchScouting "
-                                f"SET BAFouls = {str(matchInfo[i][11])}, BATechFouls = {str(matchInfo[i][13])}, BACargoRP = {str(matchInfo[i][19])}, BAClimbRP = {str(matchInfo[i][21])} "
-                                f"WHERE Team = {str(matchInfo[i][3 + j])} AND MatchID = {str(matchInfo[i][0])};")
-                self._run_query("UPDATE MatchScouting "
-                                f"SET BAFouls = {str(matchInfo[i][12])}, BATechFouls = {str(matchInfo[i][14])}, BACargoRP = {str(matchInfo[i][20])}, BAClimbRP = {str(matchInfo[i][22])} "
-                                f"WHERE Team = {str(matchInfo[i][6 + j])} AND MatchID = {str(matchInfo[i][0])};")
-                self.conn.commit()
+                if matchInfo[i][12] is not None:
+                    query = f"UPDATE MatchScouting SET BAFouls = {str(matchInfo[i][11])}, BATechFouls = {str(matchInfo[i][13])}, BACargoRP = {str(matchInfo[i][19])}, BAClimbRP = {str(matchInfo[i][21])} WHERE Team = {str(matchInfo[i][3 + j])} AND MatchID = {str(matchInfo[i][0])};"
+                    self._run_query(query)
+                    query2 = f"UPDATE MatchScouting SET BAFouls = {str(matchInfo[i][12])}, BATechFouls = {str(matchInfo[i][14])}, BACargoRP = {str(matchInfo[i][20])}, BAClimbRP = {str(matchInfo[i][22])} WHERE Team = {str(matchInfo[i][6 + j])} AND MatchID = {str(matchInfo[i][0])};"
+                    self._run_query(query2)
+                    self.conn.commit()
         
 
 # This initizlzes the analysis Class and thus runs the program.
