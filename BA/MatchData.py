@@ -102,16 +102,22 @@ if excel == False:
         matchNum = matchInfo.match_number
         matchTimeRaw = matchInfo.time
         matchActTimeRaw = matchInfo.actual_time
+        matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
+
+        matchAlliances = matchInfo.alliances
+        matchRed = matchAlliances["red"]
+        matchBlue = matchAlliances["blue"]
+
+        matchRedTeams = matchRed["team_keys"]
+        matchBlueTeams = matchBlue["team_keys"]
+
+        if match.comp_level == "qm":
+            cursor.execute("INSERT INTO BlueAllianceMatchData (MatchNumber, MatchTime, Red1, Red2, Red3, Blue1, Blue2, Blue3) "
+                            f"VALUES ({matchNum}, '{str(matchTime)[11:16]}', {int(str(matchRedTeams[0])[3:])}, {int(str(matchRedTeams[1])[3:])}, {int(str(matchRedTeams[2])[3:])}, {int(str(matchBlueTeams[0])[3:])}, {int(str(matchBlueTeams[1])[3:])}, {int(str(matchBlueTeams[2])[3:])})")
+            conn.commit()
+
         if matchInfo.actual_time is not None:
-            matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
             matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw)
-
-            matchAlliances = matchInfo.alliances
-            matchRed = matchAlliances["red"]
-            matchBlue = matchAlliances["blue"]
-
-            matchRedTeams = matchRed["team_keys"]
-            matchBlueTeams = matchBlue["team_keys"]
 
             matchRedScore = matchRed["score"]
             matchBlueScore = matchBlue["score"]
@@ -144,14 +150,23 @@ if excel == False:
             #print(str(matchTime) + "\n")
 
             if match.comp_level == "qm":
-                cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, MatchTime, ActualTime, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
-                                "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
-                                "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
-                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
-                                (matchNum, str(matchTime)[11:16], str(matchActTime)[11:16], int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
-                                int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
-                                int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
-                                int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
+                #cursor.execute("INSERT INTO BlueAllianceMatchData(MatchNumber, MatchTime, ActualTime, Red1, Red2, Red3, Blue1, Blue2, Blue3, RedScore, BlueScore, "
+                #                "RedFouls, BlueFouls, RedTechFouls, BlueTechFouls, RedAutoPoints, BlueAutoPoints, RedTelePoints, BlueTelePoints, "
+                #                "RedHangerPoints, BlueHangerPoints, RedCargoRanking, BlueCargoRanking, RedHangarRanking, BlueHangarRanking) "
+                #                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);", \
+                #                (matchNum, str(matchTime)[11:16], str(matchActTime)[11:16], int(str(matchRedTeams[0])[3:]), int(str(matchRedTeams[1])[3:]), int(str(matchRedTeams[2])[3:]), int(str(matchBlueTeams[0])[3:]), int(str(matchBlueTeams[1])[3:]), int(str(matchBlueTeams[2])[3:]), \
+                #                int(matchRedScore), int(matchBlueScore), int(matchRedFouls), int(matchBlueFouls), int(matchRedTechFouls), int(matchBlueTechFouls), \
+                #                int(matchRedAutoPoints), int(matchBlueAutoPoints), int(matchRedTelePoints), int(matchBlueTelePoints), int(matchRedHangarPoints), int(matchBlueHangarPoints), \
+                #                int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
+
+                cursor.execute("UPDATE BlueAllianceMatchData "
+                                f"SET ActualTime = {str(matchActTime)[11:16]}, RedScore = {int(matchRedScore)}, BlueScore = {int(matchBlueScore)}, "
+                                f"RedFouls = {int(matchRedFouls)}, BlueFouls = {int(matchBlueFouls)}, RedTechFouls = {int(matchRedTechFouls)}, BlueTechFouls = {int(matchBlueTechFouls)}, "
+                                f"RedAutoPoints = {int(matchRedAutoPoints)}, BlueAutoPoints = {int(matchBlueAutoPoints)}, RedTelePoints = {int(matchRedTelePoints)}, BlueTelePoints = {int(matchBlueTelePoints)}, "
+                                f"RedHangerPoints = {int(matchRedHangarPoints)}, BlueHangerPoints = {int(matchBlueHangarPoints)}, RedCargoRanking = {int(matchRedRankingPoints)}, BlueCargoRanking = {int(matchBlueRankingPoints)}, "
+                                f"RedHangarRanking = {bool(matchRedHangarRP)}, BlueHangerRanking = {bool(matchBlueHangarRP)} "
+                                f"WHERE MatchNumber = {matchNum}")
+
                 conn.commit()
 
     print("Time: %0.2f seconds" % (time.time() - start_time))
