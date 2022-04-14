@@ -160,11 +160,11 @@ if excel == False:
                 #                int(matchRedRankingPoints), int(matchBlueRankingPoints), bool(matchRedHangarRP), bool(matchBlueHangarRP)))
 
                 cursor.execute("UPDATE BlueAllianceMatchData "
-                                f"SET ActualTime = {str(matchActTime)[11:16]}, RedScore = {int(matchRedScore)}, BlueScore = {int(matchBlueScore)}, "
+                                f"SET ActualTime = '{str(matchActTime)[11:16]}', RedScore = {int(matchRedScore)}, BlueScore = {int(matchBlueScore)}, "
                                 f"RedFouls = {int(matchRedFouls)}, BlueFouls = {int(matchBlueFouls)}, RedTechFouls = {int(matchRedTechFouls)}, BlueTechFouls = {int(matchBlueTechFouls)}, "
                                 f"RedAutoPoints = {int(matchRedAutoPoints)}, BlueAutoPoints = {int(matchBlueAutoPoints)}, RedTelePoints = {int(matchRedTelePoints)}, BlueTelePoints = {int(matchBlueTelePoints)}, "
                                 f"RedHangerPoints = {int(matchRedHangarPoints)}, BlueHangerPoints = {int(matchBlueHangarPoints)}, RedCargoRanking = {int(matchRedRankingPoints)}, BlueCargoRanking = {int(matchBlueRankingPoints)}, "
-                                f"RedHangarRanking = {bool(matchRedHangarRP)}, BlueHangerRanking = {bool(matchBlueHangarRP)} "
+                                f"RedHangarRanking = {bool(matchRedHangarRP)}, BlueHangarRanking = {bool(matchBlueHangarRP)} "
                                 f"WHERE MatchNumber = {matchNum}")
 
                 conn.commit()
