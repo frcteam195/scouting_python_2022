@@ -11,6 +11,7 @@
 #       and view directions for how to start the cron job
 
 echo '**********************************************************'
+total_start_time=$(date +%s)
 
 echo 'Running BA OPRs'
 /usr/bin/python3 /home/pi/scouting_python_2022/BA/Oprs.py -db localhost
@@ -79,3 +80,9 @@ end_time=$(date +%s)
 elapsed=$(( end_time - start_time ))
 echo "Time: $elapsed seconds"
 echo ''
+
+total_end_time=$(date +%s)
+total_elapsed=$(( total_end_time - total_start_time ))
+echo "Total Run Time: $total_elapsed seconds"
+echo ''
+
