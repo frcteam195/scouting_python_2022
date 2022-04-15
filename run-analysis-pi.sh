@@ -31,6 +31,9 @@ echo 'Running insertFouls to add fouls and Ranking point data'
 echo 'Running SheetsLvl2Scouting'
 /usr/bin/python3 /home/pi/scouting_python_2022/SheetsLvl2Scouting.py -db localhost
 
+echo 'Running insertRobotImage.py'
+/usr/bin/python3 /home/pi/scouting_python_2022/insertRobotImage.py -db localhost
+
 echo 'Running analysisIR'
 /usr/bin/python3 /home/pi/scouting_python_2022/analysisIR.py -db localhost
 
@@ -48,7 +51,6 @@ start_time=$(date +%s)
 --ignore-table=team195_scouting.PickList1 \
 --ignore-table=team195_scouting.Watch1 \
 --ignore-table=team195_scouting.Watch2 \
---ignore-table=team195_scouting.Teams \
 --ignore-table=team195_scouting.AnalysisTypes \
 --ignore-table=team195_scouting.WheelTypes \
 --ignore-table=team195_scouting.DriveTypes \
