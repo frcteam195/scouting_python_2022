@@ -43,6 +43,46 @@ echo 'Running graphIR'
 echo 'Creating DB dump for entire DB as a backup with mysqldump'
 /home/pi/scouting_python_2022/dbdump-pi.sh event
 
+echo 'Running mysqldump to push select tables to AWS-dev'
+start_time=$(date +%s)
+/usr/bin/mysqldump -u admin -pteam195 team195_scouting \
+--ignore-table=team195_scouting.Final24 \
+--ignore-table=team195_scouting.DnpList \
+--ignore-table=team195_scouting.PickList1 \
+--ignore-table=team195_scouting.Watch1 \
+--ignore-table=team195_scouting.Watch2 \
+--ignore-table=team195_scouting.AnalysisTypes \
+--ignore-table=team195_scouting.WheelTypes \
+--ignore-table=team195_scouting.DriveTypes \
+--ignore-table=team195_scouting.MotorTypes \
+--ignore-table=team195_scouting.LanguageTypes \
+--ignore-table=team195_scouting.WordID \
+--ignore-table=team195_scouting.Users \
+--ignore-table=team195_scouting.AdHocMatchReport \
+--ignore-table=team195_scouting.AllianceStations \
+--ignore-table=team195_scouting.BlueAllianceEvents \
+--ignore-table=team195_scouting.ClimbStatus \
+--ignore-table=team195_scouting.ColorTypes \
+--ignore-table=team195_scouting.MatchScoutingL2 \
+--ignore-table=team195_scouting.ScorePredictor \
+--ignore-table=team195_scouting.ScorePredictorData > /home/pi/DB-backups/dbdump.sql
+/bin/sleep 1
+end_time=$(date +%s)
+elapsed=$(( end_time - start_time ))
+echo "Time: $elapsed seconds"
+#/bin/tar -czf dbdump.sql.tgz
+#/bin/sleep 1
+echo ''
+
+echo 'Running mysql to copy database to AWS-dev'
+start_time=$(date +%s)
+db=frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com
+/usr/bin/mysql -h $db -u admin -pEinstein195 team195_scouting < /home/pi/DB-backups/dbdump.sql
+end_time=$(date +%s)
+elapsed=$(( end_time - start_time ))
+echo "Time: $elapsed seconds"
+echo ''
+
 total_end_time=$(date +%s)
 total_elapsed=$(( total_end_time - total_start_time ))
 echo "Total Run Time: $total_elapsed seconds"
