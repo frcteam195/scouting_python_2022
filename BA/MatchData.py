@@ -11,6 +11,7 @@ import getopt
 import argparse
 import datetime as dt
 import time
+import pytz
 
 now = dt.datetime.now()
 print(now.strftime("%Y-%m-%d %H:%M:%S"))
@@ -96,13 +97,14 @@ if excel == False:
 
     qNum = 0
     eventInfo = tba.event_matches(event)
+    tz = pytz.timezone("America/Chicago")
     
     for match in eventInfo:
         matchInfo = tba.match(match.key)
         matchNum = matchInfo.match_number
         matchTimeRaw = matchInfo.time
         matchActTimeRaw = matchInfo.actual_time
-        matchTime = dt.datetime.fromtimestamp(matchTimeRaw)
+        matchTime = dt.datetime.fromtimestamp(matchTimeRaw, tz)
 
         matchAlliances = matchInfo.alliances
         matchRed = matchAlliances["red"]
@@ -117,7 +119,7 @@ if excel == False:
             conn.commit()
 
         if matchInfo.actual_time is not None:
-            matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw)
+            matchActTime = dt.datetime.fromtimestamp(matchActTimeRaw, tz)
 
             matchRedScore = matchRed["score"]
             matchBlueScore = matchBlue["score"]
