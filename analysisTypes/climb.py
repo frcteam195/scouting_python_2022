@@ -73,20 +73,27 @@ def climb(analysis, rsRobotMatches):
                     ClimbStatusString = "Err"
                     ClimbStatusColor = 7
                     ClimbStatusScore = 888
+                ClimbPointsList.append(ClimbStatusScore)
 
             # Perform some calculations
             numberOfMatchesPlayed += 1
-            ClimbPointsList.append(ClimbStatusScore)
 
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Display'] = str(ClimbStatusString)
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Value'] = ClimbStatusScore
             rsCEA['Match' + str(matchResults[analysis.columns.index('TeamMatchNo')]) + 'Format'] = ClimbStatusColor
 
     if numberOfMatchesPlayed > 0:
-        rsCEA['Summary1Display'] = round(statistics.mean(ClimbPointsList), 1)
-        rsCEA['Summary1Value'] = round(statistics.mean(ClimbPointsList), 1)
-        rsCEA['Summary2Display'] = round(statistics.median(ClimbPointsList), 1)
-        rsCEA['Summary2Value'] = round(statistics.median(ClimbPointsList), 1)
-        # 3 is rank
+        if len(ClimbPointsList) != 0:
+            rsCEA['Summary1Display'] = round(statistics.mean(ClimbPointsList), 1)
+            rsCEA['Summary1Value'] = round(statistics.mean(ClimbPointsList), 1)
+            rsCEA['Summary2Display'] = round(statistics.median(ClimbPointsList), 1)
+            rsCEA['Summary2Value'] = round(statistics.median(ClimbPointsList), 1)
+            # 3 is rank
+        else:
+            rsCEA['Summary1Display'] = 0
+            rsCEA['Summary1Value'] = 0
+            rsCEA['Summary2Display'] = 0
+            rsCEA['Summary2Value'] = 0
+    
 
     return rsCEA
