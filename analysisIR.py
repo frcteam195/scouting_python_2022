@@ -102,7 +102,7 @@ class analysis():
         if database == "aws-dev":
             print("Input database " + input_database)
             self.conn = mariaDB.connect(user='admin',
-                                       passwd='Einstein195',
+                                       passwd='xxxx',
                                         host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                        database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -110,7 +110,7 @@ class analysis():
         # Pi DB with remote access (e.g. from laptop)
         elif database == "pi-10":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='team195',
+                                        passwd='xxxx',
                                         host='10.0.20.195',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -118,7 +118,7 @@ class analysis():
         # Pi DB with remote access (e.g. from laptop)
         elif database == "pi-192":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='team195',
+                                        passwd='xxxx',
                                         host='192.168.1.195',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -126,7 +126,7 @@ class analysis():
         # Pi DB with local access (e.g. from the Pi itself)
         elif database == "localhost":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='team195',
+                                        passwd='xxxx',
                                         host='localhost',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -134,7 +134,7 @@ class analysis():
         # Connection to AWS database with proper data
         elif database == "aws-prod":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='Einstein195',
+                                        passwd='xxxx',
                                         host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()

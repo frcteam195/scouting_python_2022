@@ -70,14 +70,14 @@ start_time = time.time()
 if source_database == "aws-dev":
     # Connection to AWS Testing database - use when you would destroy tables with proper data
     connSrc = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
     cursorSrc = connSrc.cursor()
 
 elif source_database == "aws-prod":
     connSrc = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
 
@@ -86,14 +86,14 @@ elif source_database == "aws-prod":
 elif source_database == "pi-10":
     # Pi DB with remote access (e.g. from laptop)
     connSrc = mariaDB.connect(user='admin',
-                                passwd='team195',
+                                passwd='xxxx',
                                 host='10.0.20.195',
                                 database='team195_scouting')
     cursorScr = connSrc.cursor()
     
 elif source_database == "pi-192":
     connSrc = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='192.168.1.195',
                                 port='3306', 
                                 database='team195_scouting')
@@ -102,7 +102,7 @@ elif source_database == "pi-192":
 elif source_database == "localhost":
 # Pi DB with local access (e.g. from the Pi itself)
     connSrc = mariaDB.connect(user='admin',
-                                passwd='team195',
+                                passwd='xxxx',
                                 host='localhost',
                                 database='team195_scouting')
     cursorSrc = connSrc.cursor()
@@ -116,14 +116,14 @@ else:
 if destination_database == "aws-dev":
     # Connection to AWS Testing database - use when you would destroy tables with proper data
     connDes = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
 
 elif destination_database == "aws-prod":
     connDes = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
 
@@ -132,14 +132,14 @@ elif destination_database == "aws-prod":
 elif destination_database == "pi-10":
     # Pi DB with remote access (e.g. from laptop)
     connDes = mariaDB.connect(user='admin',
-                                passwd='team195',
+                                passwd='xxxx',
                                 host='10.0.20.195',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
     
 elif destination_database == "pi-192":
     connDes = mariaDB.connect(user='admin',
-                                passwd='Einstein195',
+                                passwd='xxxx',
                                 host='192.168.1.195',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
@@ -147,7 +147,7 @@ elif destination_database == "pi-192":
 elif destination_database == "localhost":
 # Pi DB with local access (e.g. from the Pi itself)
     connDes = mariaDB.connect(user='admin',
-                                passwd='team195',
+                                passwd='xxxx',
                                 host='localhost',
                                 database='team195_scouting')
     cursorDes = connDes.cursor()
