@@ -76,7 +76,7 @@ class analysis():
         if database == "aws-dev":
             print("Input database " + input_database)
             self.conn = mariaDB.connect(user='admin',
-                                       passwd='xxxx',
+                                       passwd='RapidReact2022',
                                         host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                        database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -84,7 +84,7 @@ class analysis():
         # Pi DB with remote access (e.g. from laptop)
         elif database == "pi-10":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='xxxx',
+                                        passwd='team195',
                                         host='10.0.20.195',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -100,7 +100,7 @@ class analysis():
         # Pi DB with local access (e.g. from the Pi itself)
         elif database == "localhost":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='xxxx',
+                                        passwd='team195',
                                         host='localhost',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()
@@ -108,7 +108,7 @@ class analysis():
         # Connection to AWS database with proper data
         elif database == "aws-prod":
             self.conn = mariaDB.connect(user='admin',
-                                        passwd='xxxx',
+                                        passwd='RapidReact2022',
                                         host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                         database='team195_scouting')
             self.cursor = self.conn.cursor()

@@ -36,14 +36,14 @@ print ("Excel status set to " + str(excel))
 if database == "aws-dev":
         print("Input database " + input_database)
         conn = mariaDB.connect(user='admin',
-                                    passwd='xxxx',
+                                    passwd='RapidReact2022',
                                     host='frcteam195testinstance.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                     database='team195_scouting')
         cursor = conn.cursor()
         
 elif database == "pi-10":
         conn = mariaDB.connect(user='admin',
-                                passwd='xxxx',
+                                passwd='team195',
                                 host='10.0.20.195',
                                 database='team195_scouting')
         cursor = conn.cursor()
@@ -57,14 +57,14 @@ elif database == "pi-192":
 
 elif database == "localhost":
         conn = mariaDB.connect(user='admin',
-                                passwd='xxxx',
+                                passwd='team195',
                                 host='localhost',
                                 database='team195_scouting')
         cursor = conn.cursor()
 
 elif database == "aws-prod":
         conn = mariaDB.connect(user='admin',
-                                passwd='xxxx',
+                                passwd='RapidReact2022',
                                 host='frcteam195.cmdlvflptajw.us-east-1.rds.amazonaws.com',
                                 database='team195_scouting')
         cursor = conn.cursor()
